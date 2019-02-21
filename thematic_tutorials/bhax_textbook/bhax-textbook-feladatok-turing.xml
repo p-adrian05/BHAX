@@ -15,7 +15,7 @@
             Megoldás videó:
         </para>
         <para>
-            Megoldás forrása:                
+            Megoldás forrása: <link xlink:href ="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/vegtelen_ciklus">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/vegtelen_ciklus</link>          
         </para>
         <para>
             Ebben az esetben a következő végtelen ciklus 100%-ban dolgoztat egy magot:
@@ -208,8 +208,59 @@ false]]></screen>
             Megoldás forrása:  
         </para>
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
+            Két változó értékének felcserélésének legegyszerűbb módja, amikor segédváltozót haszánálunk, amiben ideiglenesen
+            eltároljuk az első változó értékét, majd az elsőt egyenlővé tesszük a másodikkal és a másodikat a segédváltozóval.
+            Azonban léteznek módszerek segédváltozó nélküli cserére is.
         </para>
+        
+        <para>
+            Ebben az esetben segédváltozó nélkül cseréljük meg két változó értékét a különbségük kihasználásával.
+        </para>
+        
+         <programlisting language="c">
+   <![CDATA[
+#include<stdio.h>
+
+int main()
+{
+		int a = 3;
+		int b = 8;
+
+		//segedvaltozo nelkül
+    b = b-a;
+		a = a+b;
+		b = a-b;
+		printf("a=%d b=%d\n",a,b);
+   ]]>
+        </programlisting>
+        
+        <para>
+            A következő módszer pedig az EXOR-os csere.
+        </para>
+         <programlisting language="c">
+   <![CDATA[
+#include<stdio.h>
+
+int main()
+{
+		int a = 3;
+		int b = 8;
+
+		//exorra
+		//kettes számrendszerben:
+		//a = 8-> 0001
+		//b = 3-> 1100
+		
+		a = a^b; //1101
+		b = a^b; //0001
+		a = a^b; //1100
+		
+		printf("a=%d b=%d\n",a,b);
+   ]]>
+        </programlisting>
+        
+        
+        
     </section>                     
 
     <section>
