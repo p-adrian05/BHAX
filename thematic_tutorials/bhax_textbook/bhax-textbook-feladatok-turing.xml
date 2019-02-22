@@ -52,7 +52,7 @@
        
         <para>
             
-            0% terhelés eléréséhez meg kell hívnunk a <function>sleep(n)</function> függvényt, ami lelassítja az iterálás sebességét. 
+            0% terhelés eléréséhez meg kell hívnunk a <function>sleep(n)</function> metódust ami lelassítja az iterálás sebességét. 
         </para>
         <programlisting language="c">
    <![CDATA[
@@ -205,7 +205,7 @@ false]]></screen>
             Megoldás videó: <link xlink:href="https://bhaxor.blog.hu/2018/08/28/10_begin_goto_20_avagy_elindulunk">https://bhaxor.blog.hu/2018/08/28/10_begin_goto_20_avagy_elindulunk</link>
         </para>
         <para>
-            Megoldás forrása:  
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/val_csere.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/val_csere.c</link> 
         </para>
         <para>
             Két változó értékének felcserélésének legegyszerűbb módja, amikor segédváltozót haszánálunk, amiben ideiglenesen
@@ -277,8 +277,74 @@ int main()
             Megoldás forrása:  
         </para>
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
+            A labdapattogás nevű feladat klasszikus megoldása feltételvizsgálatokkal történik, ahol nyilvántartjuk a terminál méretét
+            (fordításkor <command>-lncurses</command> könyvtár használatával), a labda koordinátáinak kezdőértékét és lépések mértékét. 
+            Ezután if feltételvizsgálattal nézzük, hogy ha elérte az egyik oldalt a labda, akkor változtatjuk a lépések irányát. Használjuk még a
+            <command>usleep(n)</command> metódust aminek segítségével lassítjuk a labda mozgását és a <command>clear()</command> metódussal pedig
+            csak 1 labdát fogunk látni,mivel minden egyes iterációnál törli a ablakot.
+            Azonban if nélkül is megoldható a feladat:
         </para>
+        
+        <programlisting language="c++">
+   <![CDATA[
+#include <iostream>
+#include <vector>
+#include <unistd.h>
+using namespace std;
+
+const int szelesseg = 40;//ablak szelesseg
+const int magassag = 20;//ablak magassag
+int x=1, y=1; //labda kezdoertek
+int deltax=1,deltay=1; // hanyasaval lepkedjen
+vector<int> ablakx;
+vector<int> ablaky;
+
+void kirajzol();
+void mozgatas(){
+	x=x+deltax;
+	y=y+deltay;
+	deltax=deltax*ablakx[x];
+	deltay=deltay*ablaky[y];
+}
+
+int main(){
+
+    for (int i=0; i<szelesseg; i++)
+    {
+         ablakx.push_back(1);
+    }
+
+    for (int i=0; i<magassag; i++)
+    {
+        ablaky.push_back(1);
+    }
+
+    ablakx[0]=-1;//bal oldal
+    ablakx[szelesseg-1]=-1; // jobb oldal
+    ablaky[0]=-1; //teteje
+    ablaky[magassag]=-1; // alja
+
+    for(;;)
+    {
+        kirajzol();
+        mozgatas();
+        usleep(100000);
+    }
+
+}
+   ]]>
+        </programlisting>
+        
+        <para>
+            A fenti program C++-ban van megírva. Hasonlóan az if-es megoldáshoz itt is rögzítjük a kezdőértékeket. Ebben az esetben nem saját
+            ablakot rajzolunk ki, hogy lássunk ilyet is ,aminek előre meghatározzuk a magasságát és szélességét. A <command>kirajzol()</command>
+            metódus keretet rajzol ki, amiben majd pattog a labda, más dolga nincs. A <command>main()</command> metódusban az ablakunk x és y szélességével
+            töltjük fel a két vektort. Ezután beállítjuk -1 értékre a vektorok két elemét, hogy a <command>mozgatas()</command> 
+            metódusban megszorozzuk a labda lépéseinek nagyságát (ami egyben az irányért is felelős) az oldalak értékeivel. Ha -1-el szorzunk, akkor
+            ez az jelenti, hogy elérte az egyik oldalt és változtatjuk az irányt, hasonlóan az if-es megoldásnál, ahol ugyanez ifekkel történt.
+            
+        </para>
+
     </section>                     
 
     <section>
