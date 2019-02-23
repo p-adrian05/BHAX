@@ -274,7 +274,7 @@ int main()
             Megoldás videó: <link xlink:href="https://bhaxor.blog.hu/2018/08/28/labdapattogas">https://bhaxor.blog.hu/2018/08/28/labdapattogas</link>
         </para>
         <para>
-            Megoldás forrása:  
+            Megoldás forrása: <link xlink:href ="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/labda">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/labda</link>
         </para>
         <para>
             A labdapattogás nevű feladat klasszikus megoldása feltételvizsgálatokkal történik, ahol nyilvántartjuk a terminál méretét
@@ -392,6 +392,71 @@ int main(){
         <para>
             Megoldás forrása: <link xlink:href="https://gitlab.com/nbatfai/bhax/blob/master/attention_raising/Primek_R">https://gitlab.com/nbatfai/bhax/blob/master/attention_raising/Primek_R</link>
         </para>
+        
+        <para>
+            A Brun tétel azt mondja, hogy az ikerprímszámok reciprokából képzett összege konvergál egy számhoz. Ezt határt 
+            Brun konstansnak nevezzük. Ezzel ellentétben a prímszámok a végtelen felé tartanak.
+        </para>
+        <para>
+            Mik azok a prímszámok?
+        </para>
+        <para>
+            A prímszám olyan természetes szám, ami csak önmagával és eggyel osztható és minden természetes szám előállítható prímszámok
+            szorzataként. Ikerprímek pedig azok a prímszámok, amelyek egymás után következnek és különbségük 2.
+        </para>
+        <para>
+            A Brun tétel szimulációja a matematikai R nyelvben lesz megírva, használva a matlab csomagot a prímszámok számítására.
+        </para> 
+         <programlisting language="R">
+<![CDATA[
+
+sumTwinPrimes <- function(x){
+
+    primes = primes(x)
+    diff = primes[2:length(primes)]-primes[1:length(primes)-1]
+    idx = which(diff==2)
+    t1primes = primes[idx]
+    t2primes = primes[idx]+2
+    rt1plust2 = 1/t1primes+1/t2primes
+    return(sum(rt1plust2))
+}
+
+x=seq(13, 1000000, by=10000)
+y=sapply(x, FUN = sumTwinPrimes)
+plot(x,y,type="b")
+]]>
+        </programlisting>  
+        
+        <para>
+            Létrehozunk egy függvényt aminek paraméterként átadjuk, hogy meddig számolja függvényünk az ikerprímszámokat.
+            A primes vektorba kiszámoljuk a <command>primes(x)</command> fügvénnyel a prímszámokat.
+            A diff vektorban eltároljuk az egymásután következő prímszámok különbségét.
+            Az idx vektorban, pedig azokat a helyeket tároljuk, el ahol a különség 2, tehát ikerprímek találhatóak ott.
+            A t1primes vektorban elátároljuk az ikerprímek első párját, a t2primes-ban pedig hozzáadva minden első párhoz kettőt,
+            az ikerprímek második párját is.
+            Az rt1plust2 vektorban tároljuk minden párnak a reciprokainak az összegét, majd ezeket az összegeket <command>sum()</command> függvénnyel
+            összeadjuk és visszaadjuk ezt az értéket. 
+        </para>
+        <para>
+            Ezután kirajzoltatjuk és láthatjuk, hogy valóban egy felső határhoz konvergálnak az összegek.
+        </para>
+        
+<figure>
+            <title>A B<subscript>2</subscript> konstans közelítése</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/BrunKorok.png" scale="50" />
+                </imageobject>
+                <textobject>
+                    <phrase>A B<subscript>2</subscript> konstans közelítése</phrase>
+                </textobject>
+            </mediaobject>
+        </figure>       
+
+
+        
+        
+        
     </section>
     
     <section xml:id="bhax-textbook-feladatok-turing.MontyHall">
