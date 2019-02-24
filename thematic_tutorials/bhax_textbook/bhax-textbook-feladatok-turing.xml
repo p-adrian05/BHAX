@@ -471,8 +471,103 @@ plot(x,y,type="b")
             Megoldás forrása: <link xlink:href="https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/MontyHall_R">https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/MontyHall_R</link>
         </para>
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
+            A Monty Hall probléma egy amerikai televíziós vetélekedőben jelent meg, ahol a műsor végén a játékosnak 3 ajtó közül kellett választania. 
+            A nyeremény csak az egyik ajtó mögött volt. A játékos választása után a műsorvezető kinyitott egy üres ajtót és feltette a kérdést, hogy fenntartja-e a választását a játékos vagy
+            egy másik ajtót választ. A Monty Hall probléma kérdése, hogy számít-e, hogy a játékos megváltoztatja-e a választását.
+            Józan ésszel gondolkodva nem számít, mivel a maradék két ajtó közül az egyik mögött van a nyeremény, így 50-50% az esélye annak, hogy nyerünk.
+            A feladvány bizonyítása több matematikai professzoron is kifogott, köztük a világhírű Erdős Pálon is, akit csak a számítógépes szimuláció győzött meg, ami alapján
+            számít, hogy másik ajtót választunk, ugyanis ekkor megduplázódik az esélyünk a nyerésre.
         </para>
+        <para>
+            Amikor először választunk ajtót, akkor 1/3 az esélye annak, hogy eltaláljuk a nyertes ajtót és 2/3, hogy nem. Ezután a játékvezető kinyit egy ajtót, amelyik üres
+            és ha nem változtatunk a döntésünkön, továbbra is 1/3 lesz annak az esélye, hogy nyertünk. Viszont mivel már csak 2 ajtó van a játékban ezért ha változtatunk, akkor
+            2/3 lesz az esélyünk a nyerésre. 
+        </para>
+        
+        <para>Ennek bizonyítását láthatjuk R nyelven megfogalmazva:</para>
+         <programlisting language="R">
+<![CDATA[
+kiserletek_szama=1000000
+kiserlet = sample(1:3, kiserletek_szama, replace=T)
+jatekos = sample(1:3, kiserletek_szama, replace=T)
+musorvezeto=vector(length = kiserletek_szama)
+
+for (i in 1:kiserletek_szama) {
+
+    if(kiserlet[i]==jatekos[i]){
+    
+        mibol=setdiff(c(1,2,3), kiserlet[i])
+    
+    }else{
+    
+        mibol=setdiff(c(1,2,3), c(kiserlet[i], jatekos[i]))
+    
+    }
+
+    musorvezeto[i] = mibol[sample(1:length(mibol),1)]
+
+}
+
+nemvaltoztatesnyer= which(kiserlet==jatekos)
+valtoztat=vector(length = kiserletek_szama)
+
+for (i in 1:kiserletek_szama) {
+
+    holvalt = setdiff(c(1,2,3), c(musorvezeto[i], jatekos[i]))
+    valtoztat[i] = holvalt[sample(1:length(holvalt),1)]
+    
+}
+
+valtoztatesnyer = which(kiserlet==valtoztat)
+
+
+sprintf("Kiserletek szama: %i", kiserletek_szama)
+length(nemvaltoztatesnyer)
+length(valtoztatesnyer)
+length(nemvaltoztatesnyer)/length(valtoztatesnyer)
+length(nemvaltoztatesnyer)+length(valtoztatesnyer)
+]]>
+        </programlisting>  
+        
+        
+            
+        <para>
+            Először eltároljuk, hogy hány kisérletet végezzünk el, majd a kiserlet és jatekos vektorokban kisorsolunk 1 és 3 között véletlenszerűen számokat.
+            A műsorvezető vektorát beállítjuk a kísérletek számával. Ezután egy for ciklussal végigmegyünk minden kísérleten és ha kiserlet i-edig értéke megyegyezik a 
+            a játékos i-edig találatával, az jelenti, hogy eltalálta a játékos a nyereményt és a mibol vektorba az a két érték kerül be amelyeket a játékos nem
+            választott. (Ez a két érték az üres ajtókat jelenti ebben az esetben.)
+        </para>  
+        <para>
+            Ha a játékos nem találta el elsőre a kiserlet vektorban található számot, akkor a mibol vektorba már csak 1 egy érték kerülhet, az amelyik nem a nyeremény és nem
+            a játékos által kiválasztott érték. Ezután a musorvezeto vektorba berakjuk a mibol vektorban található számot, illetve ha két érték van benne akkor a kettőből az egyiket 
+            véletlenszerűen.
+        </para>
+        <para>
+            Ezután értkezik a kiértékelés. A nemvaltoztatesnyer vektorba kerülnek azok az esetek, amikor elsőre eltalálja a játékos a megfelelő ajtót.
+            Megint végigmegyünk a kísérleteken és a holvalt vektorba azok vagy az az érték kerül az 1, 2 és 3 közül amely nem egyenlő a műsorvezető és a játékos által 
+            választottal vagyis ekkor ha váltana a játékos akkor nyerne. A változtat vektorba pedig a holvalt vektor elemei közül az egyiket rakjuk át.
+        </para>
+        
+        <para>
+            A valtoztatesnyer vektorba pedig azok az értékek kerülnek, amelyek a kiserlet vektorba és a változtat vektorba találhatóak, vagyis ekkor az az ajtó a nyertes
+            ,amelyiket másodjára választanánk. Eztuán pedig kiiratjuk az esetek számait:    
+   </para>
+   
+             <programlisting language="R">
+<![CDATA[
+[1] "Kiserletek szama: 1000000"
+> length(nemvaltoztatesnyer)
+[1] 333590
+> length(valtoztatesnyer)
+[1] 666410
+> length(nemvaltoztatesnyer)/length(valtoztatesnyer)
+[1] 0.5005777
+> length(nemvaltoztatesnyer)+length(valtoztatesnyer)
+[1] 1000000
+]]>
+        </programlisting> 
+            
+            
     </section>
 
 </chapter>                

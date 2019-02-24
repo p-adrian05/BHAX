@@ -17,7 +17,7 @@
 #   https://bhaxor.blog.hu/2019/01/03/erdos_pal_mit_keresett_a_nagykonyvben_a_monty_hall-paradoxon_kapcsan
 # 
 
-kiserletek_szama=10000000
+kiserletek_szama=1000000
 kiserlet = sample(1:3, kiserletek_szama, replace=T)
 jatekos = sample(1:3, kiserletek_szama, replace=T)
 musorvezeto=vector(length = kiserletek_szama)
