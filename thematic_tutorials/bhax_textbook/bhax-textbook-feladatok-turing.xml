@@ -190,9 +190,23 @@ false]]></screen>
             akkor most hogy fog működni? Sehogy, mert ilyen <function>Lefagy</function>
             függvényt, azaz a T100 program nem is létezik.                
         </para>
+        <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/lefagy.png" scale="140" />
+                </imageobject>
+         </mediaobject>
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
+            Tegyük fel, hogy létezik olyan program (T100), ami el tudja dönteni egy másik programról, hogy van-e benne végtelen ciklus.
+            Ha van, akkor megáll a program, ha nincs, akkor pedig végtelen ciklusba kezd. Létrehozunk egy új programot (T1000) az előzőt (T100)
+            felhasználva és ha a T100 megállt, akkor végtelen ciklusba kezd, ha pedig a T100 kezdett végtelen ciklusba, akkor megáll.
+           
         </para>
+         <para>Mi történik, ha magát etetjük meg a programunkkal?</para>       
+         <para>
+             A megállás csak akkor lehetséges, ha a T100 nem áll meg, de ez pedig csak akkor lehet, ha a második argumentumként kapott saját programunk megáll.
+         </para>
+         <para>Ebből ellentmondásra jutottunk, tehát nem lehet ilyen programot írni.</para>
+         
     </section>        
                 
     <section>
