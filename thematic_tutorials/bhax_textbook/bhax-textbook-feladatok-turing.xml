@@ -350,7 +350,7 @@ int main(){
         </programlisting>
         
         <para>
-            A fenti program C++-ban van megírva. Hasonlóan az if-es megoldáshoz itt is rögzítjük a kezdőértékeket. Ebben az esetben nem saját
+            Hasonlóan az if-es megoldáshoz itt is rögzítjük a kezdőértékeket. Ebben az esetben nem saját
             ablakot rajzolunk ki, hogy lássunk ilyet is ,aminek előre meghatározzuk a magasságát és szélességét. A <command>kirajzol()</command>
             metódus keretet rajzol ki, amiben majd pattog a labda, más dolga nincs. A <command>main()</command> metódusban az ablakunk x és y szélességével
             töltjük fel a két vektort. Ezután beállítjuk -1 értékre a vektorok két elemét, hogy a <command>mozgatas()</command> 
@@ -371,7 +371,7 @@ int main(){
             Megoldás videó: <link xlink:href=""></link>
         </para>
         <para>
-            Megoldás forrása: <link xlink:href=""></link>
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/wordLength.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/wordLength.c</link>
         </para>
         <para>
             Tanulságok, tapasztalatok, magyarázat... 
@@ -388,11 +388,95 @@ int main(){
             Megoldás videó: <link xlink:href=""></link>
         </para>
         <para>
-            Megoldás forrása: <link xlink:href=""></link>
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/pagerank.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/pagerank.c</link>
         </para>
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
+            A Page Rank az interneten található oldalakat rangsorolja. Kezdetben minden oldalnak van egy szavazati pontja és ha
+            az egyik linkeli a másikat, akkor a linkelt oldal megkapja a linkelő pontját. Tehát egy oldal akkor lesz előkelőbb helyen egy google
+            kereséskor, ha minél több másik oldal linkel rá, illetve ezen oldalakra is minél többen linkelnek,
+            annál jobb minőségűnek fog számítani egy linkelése vagy szavazata.
+            Az alábbi algoritmusunk 4 honlapot rangsorol:      
         </para>
+        <programlisting language="c++">
+   <![CDATA[
+#include <stdio.h>
+#include <math.h>
+
+void kiir (double tomb[], int db)
+{
+  int i;
+
+  for (i = 0; i < db; ++i)
+    printf ("%f\n", tomb[i]);
+}
+
+double tavolsag (double PR[], double PRv[], int n)
+{
+  double osszeg = 0.0;
+  int i;
+
+  for (i = 0; i < n; ++i)
+    osszeg += (PRv[i] - PR[i]) * (PRv[i] - PR[i]);
+
+  return sqrt(osszeg);
+}
+
+int main (void)
+{
+
+  double L[4][4] = {
+    {0.0, 0.0, 1.0 / 3.0, 0.0},
+    {1.0, 1.0 / 2.0, 1.0 / 3.0, 1.0},
+    {0.0, 1.0 / 2.0, 0.0, 0.0},
+    {0.0, 0.0, 1.0 / 3.0, 0.0}
+  };
+
+  double PR[4] = { 0.0, 0.0, 0.0, 0.0 };
+  double PRv[4] = { 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0, 1.0 / 4.0 };
+
+  int i, j;
+
+  for (;;)
+  {
+
+    for (i = 0; i < 4; ++i)
+    {
+        PR[i] = 0.0;
+        for (j = 0; j < 4; ++j)
+            PR[i] += (L[i][j] * PRv[j]);
+    }
+        if (tavolsag (PR, PRv, 4) < 0.00000001)
+            break;
+
+      for (i = 0; i < 4; ++i)
+        PRv[i] = PR[i];
+
+  }
+
+  kiir (PR, 4);
+
+  return 0;
+}
+   ]]>
+        </programlisting>
+        
+        
+        <para>
+            Az L nevű többdimenziós tömbben vannak rögzítve mátrix formájában az adatok a linkelésekről, melyik oldalra melyik oldal linkel és mennyit.
+            A végtelen ciklusban nullázzuk PR összes elemét, majd rögtön hozzáadjuk az L mátrix és PRv vektor szorzatainak értékét.
+            Ezután a távolság metódusunkban végigmegyünk a PR és PRv vektorokon és egy változóban eltároljuk ezek különbségének a négyzetét (hogy ne legyen negatív) és gyököt
+            vonva visszaadjuk az értéket, amely ha kisebb mint 0.00000001, akkor kilépünk a végtelen ciklusból, ellenkező esetben
+            pedig PRv tömböt feltöltjük PR elemeivel. Végül kiiratjuk az értékeket.
+        </para>
+        
+        <screen>
+  <![CDATA[
+0.090909
+0.545455
+0.272727
+0.090909
+  ]]>
+        </screen>
     </section>
 
     <section xml:id="Brun">
@@ -404,7 +488,7 @@ int main(){
             Megoldás videó: <link xlink:href="https://youtu.be/xbYhp9G6VqQ">https://youtu.be/xbYhp9G6VqQ</link>
         </para>
         <para>
-            Megoldás forrása: <link xlink:href="https://gitlab.com/nbatfai/bhax/blob/master/attention_raising/Primek_R">https://gitlab.com/nbatfai/bhax/blob/master/attention_raising/Primek_R</link>
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/attention_raising/Primek_R/stp.r">https://github.com/p-adrian05/BHAX/blob/master/attention_raising/Primek_R/stp.r</link>
         </para>
         
         <para>
@@ -482,7 +566,7 @@ plot(x,y,type="b")
             Megoldás videó: <link xlink:href="https://bhaxor.blog.hu/2019/01/03/erdos_pal_mit_keresett_a_nagykonyvben_a_monty_hall-paradoxon_kapcsan">https://bhaxor.blog.hu/2019/01/03/erdos_pal_mit_keresett_a_nagykonyvben_a_monty_hall-paradoxon_kapcsan</link>
         </para>
         <para>
-            Megoldás forrása: <link xlink:href="https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/MontyHall_R">https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/MontyHall_R</link>
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/attention_raising/MontyHall_R/mh.r">https://github.com/p-adrian05/BHAX/blob/master/attention_raising/MontyHall_R/mh.r</link>
         </para>
         <para>
             A Monty Hall probléma egy amerikai televíziós vetélekedőben jelent meg, ahol a műsor végén a játékosnak 3 ajtó közül kellett választania. 
