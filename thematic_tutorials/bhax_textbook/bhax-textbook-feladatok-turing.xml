@@ -373,9 +373,43 @@ int main(){
         <para>
             Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/wordLength.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/wordLength.c</link>
         </para>
+<programlisting language="c">
+   <![CDATA[
+#include <stdio.h>
+
+int main()
+{
+	int word = 1;
+	int length = 0;
+	
+	do
+	{
+		length++;
+	} 
+	while (word<<=1);
+	
+	
+	printf("A szó %d bites\n", length);
+    
+    return 0;
+}
+   ]]>
+        </programlisting>
+
         <para>
-            Tanulságok, tapasztalatok, magyarázat... 
+            A típus méretét, illetve hogy hány bitet foglal, bitshifteléssel könnyen meghatározhatjuk. A while ciklusunkban mindig
+            shiftelünk egyet balra a biteken és addig növeljük a length változót, amíg csupa 0 bitet nem fog tartalmazni a word változónk. 
+            Mivel az int típusú változók 4 byte-on tárolódnak, ezért 32 bites lesz a szavunk.
         </para>
+        <screen>
+            <![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs$ gcc wordLength.c -o w
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs$ ./w
+A szó 32 bites
+
+            ]]>
+        </screen>
+
     </section>                     
 
     <section>

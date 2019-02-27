@@ -5,10 +5,12 @@ int main()
 	int word = 1;
 	int length = 0;
 	
-	while(word <<= 1)
+	do
 	{
 		length++;
-	}
+	} 
+	while (word<<=1);
+	
 	
 	printf("A szó %d bites\n", length);
     
