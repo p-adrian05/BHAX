@@ -15,7 +15,7 @@
             Megoldás videó:
         </para>
         <para>
-            Megoldás forrása: <link xlink:href ="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/vegtelen_ciklus">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/vegtelen_ciklus</link>          
+            Megoldás forrása: <link xlink:href ="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Turing/vegtelen_ciklus">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Turing/vegtelen_ciklus</link>          
         </para>
         <para>
             Ebben az esetben a következő végtelen ciklus 100%-ban dolgoztat egy magot:
@@ -219,7 +219,7 @@ false]]></screen>
             Megoldás videó: <link xlink:href="https://bhaxor.blog.hu/2018/08/28/10_begin_goto_20_avagy_elindulunk">https://bhaxor.blog.hu/2018/08/28/10_begin_goto_20_avagy_elindulunk</link>
         </para>
         <para>
-            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/val_csere.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/val_csere.c</link> 
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Turing/val_csere.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Turing/val_csere.c</link> 
         </para>
         <para>
             Két változó értékének felcserélésének legegyszerűbb módja, amikor segédváltozót haszánálunk, amiben ideiglenesen
@@ -288,7 +288,7 @@ int main()
             Megoldás videó: <link xlink:href="https://bhaxor.blog.hu/2018/08/28/labdapattogas">https://bhaxor.blog.hu/2018/08/28/labdapattogas</link>
         </para>
         <para>
-            Megoldás forrása: <link xlink:href ="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/labda">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/labda</link>
+            Megoldás forrása: <link xlink:href ="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Turing/labda">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Turing/labda</link>
         </para>
         <para>
             A labdapattogás nevű feladat klasszikus megoldása feltételvizsgálatokkal történik, ahol nyilvántartjuk a terminál méretét
@@ -371,7 +371,7 @@ int main(){
             Megoldás videó: <link xlink:href=""></link>
         </para>
         <para>
-            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/wordLength.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/wordLength.c</link>
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Turing/wordLength.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Turing/wordLength.c</link>
         </para>
 <programlisting language="c">
    <![CDATA[
@@ -422,7 +422,7 @@ A szó 32 bites
             Megoldás videó: <link xlink:href=""></link>
         </para>
         <para>
-            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/pagerank.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/pagerank.c</link>
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Turing/pagerank.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Turing/pagerank.c</link>
         </para>
         <para>
             A Page Rank az interneten található oldalakat rangsorolja. Kezdetben minden oldalnak van egy szavazati pontja és ha
