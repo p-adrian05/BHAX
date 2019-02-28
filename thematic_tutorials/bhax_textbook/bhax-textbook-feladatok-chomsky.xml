@@ -178,10 +178,50 @@ $(\exists y \forall x (y<x) \supset \neg (x \text{ prím}))$
             Megoldás videó: <link xlink:href="https://youtu.be/ZexiPy3ZxsA">https://youtu.be/ZexiPy3ZxsA</link>, <link xlink:href="https://youtu.be/AJSXOQFF_wk">https://youtu.be/AJSXOQFF_wk</link>
         </para>
 
+    <para>
+        Ahhoz, hogy a fenti mondatatokat megadjuk, definiálni kell következőket:
+    </para>
+        <programlisting language="tex">    
+<![CDATA[
+$ (x \text{ páros}) \leftrightharpoons \exists y(y+y=x)$
+$ (x < y) \leftrightharpoons \exists z(z+x=y) \wedge \neg (x=y)$ 
+$(x \vert y) \leftrightharpoons \exists z ( z \cdot x=y )\wedge ( x \neq 0)$ 
+$(x \text{ prím}) \leftrightharpoons  (\forall z( z \vert x )\supset ( z = x \vee z=S0))\wedge ( x \neq 0)\wedge ( x \neq S0)$ 
+]]></programlisting>  
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
+        Majd ezt lefordítva pdf formátumba ezt kapjuk:
         </para>
-    </section>                                                                                                                                                                            
+        <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/matlog.jpg" scale="90" />
+                </imageobject>
+         </mediaobject>
+
+         <para>
+            x akkor páros, ha van olyan y változó, amihez önmagát hozzáadva x-et kapjuk.
+         </para>
+        <para>
+            x kisebb mint y, ha van olyan z változó, amihez x-et hozzáadva y-t kapjuk és x nem egyenlő y-nal.
+        </para>
+         <para>
+            x osztója y-nak, ha létezik olyan z változó, hogy ha z-t megszorozzuk x-el, y-t kapjuk és x nem egyenlő 0-val.
+        </para>
+        <para>
+            x prímszám,  ha minden olyan z változó osztója x-nek ami egyenlő x-el vagy 1-gyel és x nem egyenlő 0-val és 1-gyel.
+        </para>
+        <para>
+            Végtelen sok prímszám van: Minden x változó esetén van olyan y változó, amely nagyobb mint x és y prímszám.
+        </para>
+        <para>
+            Végtelen sok iker-prímszám van: Minden x változó esetén van olyan y változó, amely nagyobb mint x, prímszám és hozzáadva kettőt is prímszám.
+        </para>
+        <para>
+            Véges sok prímszám van: Van olyan y változó, amely minden x változó esetén, ha x prím, akkor nagyobb mint x.
+        </para>
+        <para>
+            (2. megfogalmazás) Véges sok prímszám van: Van olyan y változó, amely ha minden x változó esetén, kisebb mint x, akkor x nem prímszám.
+        </para>
+   </section>                                                                                                                                                                            
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
     <section>
         <title>Deklaráció</title>
