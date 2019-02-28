@@ -67,7 +67,7 @@
             Megoldás videó: 
         </para>
         <para>
-            Megoldás forrása:  
+            Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Chomsky/realnumber.l">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Chomsky/realnumber.l</link>
         </para>
         <para>
             A lexer minta illesztésen alapulva legenerálja a lexikális elemzőnket, nekünk csak a mintát kell megadnunk, ami alapján figyeli a begépelt 
