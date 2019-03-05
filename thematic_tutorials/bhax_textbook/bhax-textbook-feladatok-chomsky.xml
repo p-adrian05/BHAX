@@ -50,9 +50,55 @@
         <para>
             Megoldás forrása:  
         </para>
-        <para>
-            Tanulságok, tapasztalatok, magyarázat...
-        </para>
+        <screen>
+        <![CDATA[
+<utasítás>::=
+    <összetett_utasítás> | <feltételes_utasítás> | <iterációs_utasítás> | 
+    <vezérlés_átadó_utasítás> |  <címkézett_utasítás> | <kifejezés_utasítás>| <nulla_utasítás>
+<összetett_utasítás>::= <deklaráció_lista> | <utasításlista>
+<deklaráció_lista>::= <deklaráció>
+<utasításlista>::= <utasítás>
+<feltételes_utasítás>::= if | if else | switch
+<iterációs_utasítás>::= while | do while | for
+<vezérlés_átadó_utasítás>::= break | return | goto | continue
+<címkézett_utasítás>::= <azonosító>
+<kifejezés_utasítás>::= <kifejezés>
+<nulla_utasítás>::= ;
+
+        ]]>
+    </screen>
+
+ <para>C99-el lefordul:</para>
+ <programlisting>
+         <![CDATA[
+    #include <stdio.h>
+
+    int main ()
+    {
+      // Printing to screen.
+      printf ("Hello World\n");
+    }
+ ]]>  
+         </programlisting>
+ <screen>
+         <![CDATA[
+adrian@adrian-MS-7817:~/Desktop/programs$ gcc -o a -std=c99 a.c
+adrian@adrian-MS-7817:~/Desktop/programs$ 
+ ]]>
+ </screen>
+ <para>Azonban C89-el nem fordul le:</para>
+    
+ <screen>
+         <![CDATA[
+adrian@adrian-MS-7817:~/Desktop/programs$ gcc -o a -std=c89 a.c
+a.c: In function ‘main’:
+a.c:5:7: error: C++ style comments are not allowed in ISO C90
+       // Printing to screen.
+       ^
+a.c:5:7: error: (this will be reported only once per input file)
+ ]]>
+ </screen>
+
     </section>                     
 
     <section>
