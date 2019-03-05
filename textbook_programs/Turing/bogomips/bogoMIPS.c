@@ -20,6 +20,8 @@ int main (void)
       delay (loops_per_sec);
       ticks = clock () - ticks;
 
+	printf ("%llu %llu\n", ticks, loops_per_sec);
+
       if (ticks >= CLOCKS_PER_SEC)
 	{
 	  loops_per_sec = (loops_per_sec / ticks) * CLOCKS_PER_SEC;

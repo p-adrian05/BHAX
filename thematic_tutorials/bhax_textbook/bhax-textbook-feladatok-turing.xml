@@ -371,7 +371,7 @@ int main(){
             Megoldás videó: <link xlink:href=""></link>
         </para>
         <para>
-            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Turing/wordLength.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Turing/wordLength.c</link>
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Turing/bogomips">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Turing/bogomips</link>
         </para>
 <programlisting language="c">
    <![CDATA[
@@ -409,6 +409,101 @@ A szó 32 bites
 
             ]]>
         </screen>
+
+        <para>
+            BogoMips:
+        </para>
+        <para>
+            Ez az algoritmus a Linux kernelben a CPU sebességét méri fel induláskor a busy-loop beállításához.A busy-loop azt jelenti, hogy
+            egy folyamat folyamatosan vizsgál egy feltételt, amíg az igaz nem lesz és a BogoMips mutatja meg, hogy hány másodpercig nem csinál semmit a
+            CPU.
+        </para>
+        <programlisting language="c">
+            <![CDATA[
+#include <time.h>
+#include <stdio.h>
+
+void delay (unsigned long long loops)
+{
+  for (unsigned long long i = 0; i < loops; i++);
+}
+
+int main (void)
+{
+  unsigned long long loops_per_sec = 1;
+  unsigned long long ticks;
+
+  printf ("Calibrating delay loop..");
+  fflush (stdout);
+
+  while ((loops_per_sec <<= 1))
+    {
+      ticks = clock ();
+      delay (loops_per_sec);
+      ticks = clock () - ticks;
+      printf ("%llu %llu\n", ticks, loops_per_sec);
+
+      if (ticks >= CLOCKS_PER_SEC)
+	{
+	  loops_per_sec = (loops_per_sec / ticks) * CLOCKS_PER_SEC;
+
+	  printf ("ok - %llu.%02llu BogoMIPS\n", loops_per_sec / 500000,
+		  (loops_per_sec / 5000) % 100);
+
+	  return 0;
+	}
+    }
+
+  printf ("failed\n");
+  return -1;
+}
+            ]]>
+        </programlisting>
+        <para>
+            A while ciklusban bitshifteléssel megyünk végig a 2 hatványain.
+            A ticks-ben tároljuk mennyi processzoridőt használt a CPU eddig, majd a delay() függvénynek
+            átadjuk loops_per_sec változót (aminek a bitjei mindig odébb vannak eggyel tolva), ahol elszámolunk
+            0-tól a változó végéig. 
+            Ezután megint lekérjük a processzoridőt kivonva az előző ticks-ben tárolt CPU időt, így megkapjuk,
+            mennyi ideig tartott a elszámolni a loops_per_sec változó végéig.
+            Majd megnézzük if-el, hogy nagyobb vagy egyenlő a kapott ticks, mint a CLOCKS_PER_SEC aminek az értéke
+            1 millió és ha ez igaz, akkor kiszámoljuk, hogy milyen érték kell ahhoz,hogy a ciklusértékéket megkapjuk, ezzel 
+            meghatározva a CPU sebességét. 
+        </para>
+<screen><![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Turing/bogomips$ ./bogo
+Calibrating delay loop..2 2
+1 4
+1 8
+1 16
+1 32
+1 64
+2 128
+3 256
+5 512
+9 1024
+16 2048
+31 4096
+58 8192
+115 16384
+266 32768
+489 65536
+919 131072
+1844 262144
+3678 524288
+3216 1048576
+4878 2097152
+9305 4194304
+19356 8388608
+37773 16777216
+76300 33554432
+148557 67108864
+292380 134217728
+583864 268435456
+1167209 536870912
+ok - 918.00 BogoMIPS
+]]></screen>  
+
 
     </section>                     
 
