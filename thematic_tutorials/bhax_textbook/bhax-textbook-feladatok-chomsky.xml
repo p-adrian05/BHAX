@@ -68,7 +68,7 @@
         ]]>
     </screen>
 
- <para>C99-el lefordul:</para>
+ <para>C99-el lefordul:</para>                                                                      
  <programlisting>
          <![CDATA[
     #include <stdio.h>
@@ -225,7 +225,9 @@ adrian@adrian-MS-7817:~/Desktop/programs$ gcc realnumber.c -o realnumber -lfl
             <listitem>                                    
                 <programlisting><![CDATA[if(signal(SIGINT, SIG_IGN)!=SIG_IGN)
     signal(SIGINT, jelkezelo);]]></programlisting>
-                <para>Ha a SIGINT jel nem volt figyelmen kívűl hagyva, akkor a jelkezelo függvény kezelje</para>
+                <para>Ha a SIGINT jel kezelése nem volt figyelmen kívűl hagyva, akkor a jelkezelo függvény kezelje, máskülönben figyelmen kívűl 
+                        legyen hagyva.
+                </para>
             </listitem>
             <listitem>                                    
                 <programlisting><![CDATA[for(i=0; i<5; ++i)]]></programlisting>  
@@ -245,7 +247,32 @@ adrian@adrian-MS-7817:~/Desktop/programs$ gcc realnumber.c -o realnumber -lfl
 
                 <programlisting><![CDATA[for(i=0; i<5; tomb[i] = i++)]]></programlisting>       
                 <para> Indulunk for ciklussal 0-tól 4-ig, majd tomb ielemét megváltoztatjuk arra az i-re ami megnövelés előtt volt. </para>
+            
+            <screen>
+        <![CDATA[
+adrian@adrian-MS-7817:~/Desktop/programs$ splint a.c
+Splint 3.1.2 --- 20 Feb 2018
+
+a.c: (in function main)
+a.c:9:26: Expression has undefined behavior (left operand uses i, modified by
+             right operand): tomb[i] = i++
+  Code has unspecified behavior. Order of evaluation of function parameters or
+  subexpressions is not defined, so if a value is used and modified in
+  different places not separated by a sequence point constraining evaluation
+  order, then the result of the expression is unspecified. (Use -evalorder to
+  inhibit warning)
+a.c:15:2: Path with no return in function declared to return int
+  There is a path through a function declared to return a value on which there
+  is no return statement. This means the execution may fall through without
+  returning a meaningful result to the caller. (Use -noret to inhibit warning)
+
+Finished checking --- 2 code warnings
+
+
+        ]]>
+    </screen>
             </listitem>
+            
             <listitem>                                    
 
                 <programlisting><![CDATA[for(i=0; i<n && (*d++ = *s++); ++i)]]></programlisting> 
@@ -255,24 +282,87 @@ adrian@adrian-MS-7817:~/Desktop/programs$ gcc realnumber.c -o realnumber -lfl
                     egyelnőségjelet használunk.
                 </para>           
             </listitem>
+     
             <listitem>                                    
 
                 <programlisting><![CDATA[printf("%d %d", f(a, ++a), f(++a, a));]]></programlisting>  
                  <para> Kiiratunk két egész számot. Mindkettőt az f függvény adja vissza. Első esetben az f függvénynek
                         átadjuk az a változót és az a változó 1-el megnövelt értékét. Másodszor pedig az a változó 1-el megnövelt értékét és a-t adjuk átadjuk
                         az f függvénynek.
-                 </para>          
+                 </para> 
+                  <screen>
+        <![CDATA[
+adrian@adrian-MS-7817:~/Desktop/programs$ splint a.c
+Splint 3.1.2 --- 20 Feb 2018
+
+a.c: (in function main)
+a.c:16:22: Argument 2 modifies a, used by argument 1 (order of evaluation of
+              actual parameters is undefined): f(a, ++a)
+  Code has unspecified behavior. Order of evaluation of function parameters or
+  subexpressions is not defined, so if a value is used and modified in
+  different places not separated by a sequence point constraining evaluation
+  order, then the result of the expression is unspecified. (Use -evalorder to
+  inhibit warning)
+a.c:16:30: Argument 1 modifies a, used by argument 2 (order of evaluation of
+              actual parameters is undefined): f(++a, a)
+a.c:16:17: Argument 2 modifies a, used by argument 3 (order of evaluation of
+    actual parameters is undefined): printf("%d %d", f(a, ++a), f(++a, a))
+a.c:16:28: Argument 3 modifies a, used by argument 2 (order of evaluation of
+    actual parameters is undefined): printf("%d %d", f(a, ++a), f(++a, a))
+a.c:2:5: Function exported but not used outside a: f
+  A declaration is exported, but not used outside this module. Declaration can
+  use static qualifier. (Use -exportlocal to inhibit warning)
+   a.c:6:1: Definition of f
+
+Finished checking --- 5 code warnings
+        ]]>
+</screen>        
             </listitem>
+                   
             <listitem>                                    
 
                 <programlisting><![CDATA[printf("%d %d", f(a), a);]]></programlisting>        
                     <para> Két egész számot iratunk ki, az egyik az f függvény által visszaadott szám, az a változót átadjuk az f-nek, a másik pedig az a változó.</para>
+            <screen>
+        <![CDATA[
+adrian@adrian-MS-7817:~/Desktop/programs$ splint a.c
+Splint 3.1.2 --- 20 Feb 2018
+
+a.c:2:5: Function exported but not used outside a: f
+  A declaration is exported, but not used outside this module. Declaration can
+  use static qualifier. (Use -exportlocal to inhibit warning)
+   a.c:6:1: Definition of f
+
+Finished checking --- 1 code warning
+
+        ]]>
+</screen>
             </listitem>
+
             <listitem>                                    
 
                 <programlisting><![CDATA[printf("%d %d", f(&a), a);]]></programlisting>          
                  <para> Két egész számot iratunk ki, az egyik az f függvény által visszaadott szám, az a változó memóriacímét átadjuk az f-nek, a másik pedig az a változó.</para>
+           <screen>
+        <![CDATA[
+adrian@adrian-MS-7817:~/Desktop/programs$ splint a.c
+Splint 3.1.2 --- 20 Feb 2018
+
+a.c: (in function main)
+a.c:16:19: Function f expects arg 1 to be int gets int *: &a
+  Types are incompatible. (Use -type to inhibit warning)
+a.c:2:5: Function exported but not used outside a: f
+  A declaration is exported, but not used outside this module. Declaration can
+  use static qualifier. (Use -exportlocal to inhibit warning)
+   a.c:6:1: Definition of f
+
+Finished checking --- 2 code warnings
+
+
+        ]]>
+</screen>
             </listitem>
+            
         </orderedlist>
         <para>
             Megoldás forrása:  
@@ -393,7 +483,55 @@ $(x \text{ prím}) \leftrightharpoons  (\forall z( z \vert x )\supset ( z = x \v
                 <para>függvénymutató egy egészet visszaadó és két egészet kapó függvényre mutató mutatót visszaadó, egészet kapó függvényre</para>                        
             </listitem>            
         </itemizedlist>            
+    <programlisting language="c">    
+<![CDATA[
 
+int *pointerFg(int *c)
+{
+    return c;
+}
+
+int fuggveny(int a, int b)
+{
+    return a;
+}
+
+typedef int(*A) (int,int);;
+A fuggveny2(int);
+
+
+int main()
+{
+    //egesz
+    int a = 1;
+
+    //egeszre mutato mutato
+    int *b;
+
+    //egesz referenciaja
+    b = &a;
+
+    //egeszek tombje
+    int tomb[5] = {1,2,3,4,5};
+
+    //egeszek tombjenek referenciaja
+    int *tombref = tomb;
+
+    //egeszre mutato mutatok tombje
+    int *tombMutato[5];
+
+    //egeszre mutato mutatot visszaado fuggveny
+    int *c = pointerFg(&a);
+
+    //egeszre mutato mutatot visszaado fuggvenyre mutato mutato
+    int *(*mutato)(int*) = pointerFg;
+
+    //egeszet visszaade es ket egészet kapo fuggvenyre mutato mutatot visszaado, egeszet kapo fuggveny
+    A st = fuggveny2(10);
+
+
+}
+]]></programlisting> 
        <para>
             Mit vezetnek be a programba a következő nevek?
         </para>
