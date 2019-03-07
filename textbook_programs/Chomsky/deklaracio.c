@@ -28,7 +28,7 @@ int main()
     int tomb[5] = {1,2,3,4,5};
 
     //egeszek tombjenek referenciaja
-    int *tombref = tomb;
+     int (&tombref)[5] = tomb;
 
     //egeszre mutato mutatok tombje
     int *tombMutato[5];

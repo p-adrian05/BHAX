@@ -515,7 +515,7 @@ int main()
     int tomb[5] = {1,2,3,4,5};
 
     //egeszek tombjenek referenciaja
-    int *tombref = tomb;
+    int (&tombref)[5] = tomb;
 
     //egeszre mutato mutatok tombje
     int *tombMutato[5];
@@ -538,34 +538,46 @@ int main()
 
         <itemizedlist>
             <listitem>
-                <programlisting><![CDATA[int a;]]></programlisting>            
+                <programlisting><![CDATA[int a;]]></programlisting>  
+                <para>Egy int típusú a nevű változó.</para>          
             </listitem>
             <listitem>
-                <programlisting><![CDATA[int *b = &a;]]></programlisting>            
+                <programlisting><![CDATA[int *b = &a;]]></programlisting>   
+                <para>b egészre mutató mutató a-ra mutat.</para>          
             </listitem>
             <listitem>
-                <programlisting><![CDATA[int &r = a;]]></programlisting>            
+                <programlisting><![CDATA[int &r = a;]]></programlisting>
+                <para>r egeszre mutató mutató, ami a címet tartalmazza.</para>             
             </listitem>
             <listitem>
-                <programlisting><![CDATA[int c[5];]]></programlisting>            
+                <programlisting><![CDATA[int c[5];]]></programlisting>     
+                <para>Öt elemű egészekból álló tömb.</para>        
             </listitem>
             <listitem>
-                <programlisting><![CDATA[int (&tr)[5] = c;]]></programlisting>            
+                <programlisting><![CDATA[int (&tr)[5] = c;]]></programlisting>  
+                <para>Öt elemű egészekből álló tombre mutató mutató, ami a c tömbre mutat.</para>           
             </listitem>
             <listitem>
-                <programlisting><![CDATA[int *d[5];]]></programlisting>            
+                <programlisting><![CDATA[int *d[5];]]></programlisting> 
+                <para>5 elemű egészekre mutató mutatókból álló tömb.</para>        
             </listitem>
             <listitem>
-                <programlisting><![CDATA[int *h ();]]></programlisting>            
+                <programlisting><![CDATA[int *h ();]]></programlisting> 
+                <para>Egy egésszel visszatérő paraméter nélküli függvényre mutató mutató.</para>           
             </listitem>
             <listitem>
-                <programlisting><![CDATA[int *(*l) ();]]></programlisting>            
+                <programlisting><![CDATA[int *(*l) ();]]></programlisting> 
+                <para>Egy egészre mutató mutatóval visszatérő, paraméter nélküli függvényre mutató mutató.</para>           
             </listitem>
             <listitem>
-                <programlisting><![CDATA[int (*v (int c)) (int a, int b)]]></programlisting>            
+                <programlisting><![CDATA[int (*v (int c)) (int a, int b)]]></programlisting>   
+                <para>Egy egésszel visszatérő 2 egészet váró függvényre mutató mutatóval 
+                        visszatérő 2 egészet váró függvény.
+                </para>         
             </listitem>            
             <listitem>
-                <programlisting><![CDATA[int (*(*z) (int)) (int, int);]]></programlisting>            
+                <programlisting><![CDATA[int (*(*z) (int)) (int, int);]]></programlisting> 
+                <para>Függvénymutató egy egészet visszaadó és két egészet kapó függvényre mutató mutatót visszaadó, egészet kapó függvényre mutató mutató. </para>        
             </listitem>            
         </itemizedlist>       
 
@@ -574,7 +586,7 @@ int main()
             Megoldás videó: 
         </para>
         <para>
-            Megoldás forrása:  
+            Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Chomsky/deklaracio.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Chomsky/deklaracio.c</link> 
         </para>
         <para>
             Tanulságok, tapasztalatok, magyarázat...
