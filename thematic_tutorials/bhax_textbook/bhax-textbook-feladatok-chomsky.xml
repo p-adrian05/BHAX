@@ -17,7 +17,17 @@
             Megoldás forrása:                
         </para>
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
+             <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/turing.png" scale="50" />
+                </imageobject>
+         </mediaobject>
+        </para>
+        <para>
+            A decimális számok N darab egyessel vannak ábrázolva unáris számrendszerben, nincs más számjegy. A turing gép az átváltást úgy 
+            hajtja végre, hogy addig von ki a megadott decimális számból egyet, amíg az nulla nem lesz és a tárba pakolja az egyeseket.
+            A feldolgozás mindig a szám utolsó számjegyével kezdődik. Ha ez 0, akkor 9-el a kék állapotba kerül és addig ismétlődik, amíg 0 nem lesz.
+            Ezután ez folytatódik a többi számjeggyel ugyanez.
         </para>
     </section>        
         
