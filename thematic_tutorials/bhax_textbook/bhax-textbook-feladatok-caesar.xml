@@ -32,8 +32,123 @@
             Megoldás forrása:                
         </para>
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
-        </para>            
+        Ebben a feladatban a kizáró vagyos (XOR) titkosítás van bemutatva. A kizáró vagyos
+        titkosításkor a titkosítandó szöveg bájtjait lefedjük a titkosító
+        kulcs bájtjaival és egy kizáró vagy múveletet végzünk el rajtuk. A kizáró vagy művelet
+        1 értéket ad, ha a két bit különböző és 0-t ha megegyező. Például:
+        </para>  
+        <screen>
+        <![CDATA[
+            Kódolás:
+            A tiszta szöveg bájtja:                         10011
+            A kulcs bájtja:                                 00110
+            A titkosított szöveg bájtjai XOR művelet után:  10101
+
+            Dekódolás:
+            A kulcs bájtja:                                     00110
+            A titkosított szöveg bájtjai:                       10101
+            XOR művelet után visszakapjuk az eredeti szöveget:  10011
+        ]]>
+        </screen>  
+                   <programlisting>
+         <![CDATA[
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+
+#define MAX_KULCS 100
+#define BUFFER_MERET 256
+
+
+int
+main (int argc, char **argv)
+{
+
+  char kulcs[MAX_KULCS];
+  char buffer[BUFFER_MERET];
+
+  int kulcs_index = 0;
+  int olvasott_bajtok = 0;
+
+  int kulcs_meret = strlen (argv[1]);
+  strncpy (kulcs, argv[1], MAX_KULCS);
+
+  while ((olvasott_bajtok = read (0, (void *) buffer, BUFFER_MERET)))
+    {
+
+      for (int i = 0; i < olvasott_bajtok; ++i)
+	{
+
+	  buffer[i] = buffer[i] ^ kulcs[kulcs_index];
+	  kulcs_index = (kulcs_index + 1) % kulcs_meret;
+
+	}
+
+      write (1, buffer, olvasott_bajtok);
+
+    }
+}
+ ]]>  
+         </programlisting>   
+         <para>
+            A program elején definiáljuk a kulcs maximum méretét és a beolvasáshoz szükséges buffer méretét.
+            Ezután a main függvényben létrehozzuk az ezekkel a méretekkel rendelkező char típusú tömböket.
+            A kulcs_index változó mutatja az aktuális elemét a kulcsnak, amivel majd végrehajtjuk a műveletet,
+            az olvasott_bajtok pedig a beolvasott bájtok számát fogja tárolni.
+            Az <command>strlen()</command> függvény segítségével rögzítjuk a kulcs méretét amit a parancssorban adunk
+            meg argumentumként.
+            A while ciklus addig fut, amíg tudunk olvasni a bemenetről és azt tároljuk a bufferben, ha beolvasott szöveg
+            végéhez értünk, akkor a <command>read()</command> függvény 0 értéket ad vissza és a ciklus véget ér.
+            A while ciklusban végigmegyünk a beolvasott bájtokon és végrehajtjuk a tikosítást alkalmazva a kizáró
+            vagy műveletet, majd az eredményt kiírjuk egy dokumentumba.
+         </para>  
+         <para>Fordítákor a c99 szabványt kell használnunk:</para>
+         <screen>
+        <![CDATA[
+            gcc exor.c -o e -std=c99
+        ]]>
+         </screen>   
+          <para>Eztuán létrehozunk egy szövegfájlt, amiben tároljuk a titkosítandó szövegünket</para>
+         <screen>
+<![CDATA[
+    adrian@adrian-MS-7817:~/Desktop$ more tiszta.szoveg
+    Nem tudok kimerítő leírást adni arról, hogy hogyan tudsz megtanulni
+    programozni -- nagyon összetett tudásról van szó. Egyet azonban
+    elárulhatok: a könyvek és tanfolyamok nem érnek túl sokat (sok,
+    valószínűleg a legtöbb hacker autodidakta). Aminek van értelme:
+     (a) kódot olvasni és kódot írni.
+ ]]>
+         </screen> 
+     <para>Majd futtatjuk a programot megadva paraméterként a kulcsot és a 
+            tiszta.szoveg fájlunk tartalmát a programba irányítjuk (ezt olvassa be). A kimenő
+            adatokat pedig a titkos.szoveg nevű fájlba irányítjuk. Ez lesz a titkosított szövegünk.
+     </para>
+         <screen>
+ <![CDATA[
+ adrian@adrian-MS-7817:~/Desktop$ ./e kulcs <tiszta.szoveg >titkos.szoveg
+     ]]>
+         </screen>  
+ <para>Kiírva a tikos.szoveg tartalmát láthatjuk a kódolt szövegünket:</para>
+         <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/exor.png" scale="50" />
+                </imageobject>
+         </mediaobject>
+<para>A dekódolás hasonlóan zajlik. Megadjuk azt a kulcsot amivel a kódolás történt és beolvassuk
+        a tikos.szoveg tartalmat.
+</para>
+         <screen>
+        <![CDATA[
+adrian@adrian-MS-7817:~/Desktop$ ./e kulcs <titkos.szoveg
+Nem tudok kimerítő leírást adni arról, hogy hogyan tudsz megtanulni
+programozni -- nagyon összetett tudásról van szó. Egyet azonban
+elárulhatok: a könyvek és tanfolyamok nem érnek túl sokat (sok,
+valószínűleg a legtöbb hacker autodidakta). Aminek van értelme:
+(a) kódot olvasni és kódot írni.
+
+        ]]>
+         </screen> 
+
     </section>        
     <section>
         <title>Java EXOR titkosító</title>
@@ -46,8 +161,67 @@
         <para>
             Megoldás forrása:                
         </para>
+ <programlisting>
+         <![CDATA[
+public class ExorTitkosító {
+    
+    public ExorTitkosító(String kulcsSzöveg,
+            java.io.InputStream bejövőCsatorna,
+            java.io.OutputStream kimenőCsatorna)
+            throws java.io.IOException {
+        
+        byte [] kulcs = kulcsSzöveg.getBytes();
+        byte [] buffer = new byte[256];
+        int kulcsIndex = 0;
+        int olvasottBájtok = 0;
+
+        while((olvasottBájtok =
+                bejövőCsatorna.read(buffer)) != -1) {
+            
+            for(int i=0; i<olvasottBájtok; ++i) {
+                
+                buffer[i] = (byte)(buffer[i] ^ kulcs[kulcsIndex]);
+                kulcsIndex = (kulcsIndex+1) % kulcs.length;
+                
+            }
+            
+            kimenőCsatorna.write(buffer, 0, olvasottBájtok);
+            
+        }
+        
+    }
+    
+    public static void main(String[] args) {
+        
+        try {
+            
+            new ExorTitkosító(args[0], System.in, System.out);
+            
+        } catch(java.io.IOException e) {
+            
+            e.printStackTrace();
+            
+        }
+        
+    }
+    
+}
+ ]]>  
+         </programlisting>   
+
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
+           Javaban egy ExorTitkosító publikus osztályt vagy objektumot hozunk létre amiben a munkát végezzük.
+           Először létrehozzuk a konstruktort, amivel majd átadjuk az objektumnak a kapott értékeket.
+           Jelen esetben a paraméterként átadott kulcsot tároljuk egy stringbe, majd a bejövő és kijövő
+           csatornát hozzuk létre.
+           Egy byte tömben tároljuk a megadott kulcs bájtjait, illetve a buffer méretet.
+           A while ciklusba addig olvasunk az int típusú beolvasottBájtok nevű változónkba,
+           amíg -1-et nem kapunk, és egy for ciklussal iterálunk az olvasott bájtokon egyesével végezve
+           a kizáró vagy műveletet a kulcsunk bájtjaival, amit tárolunk buffer tömbben.Végül a kimenő csatornán kiiratjuk a titkosított szöveget.
+            A main() metódusban példányosítjuk az ExorTitkosító objektumunkat és átadjuk neki
+            a paraméterként kapott kulcsot és a be és kimenő csatornát Mindezt try és catch ágba téve, az esetleges
+            hibák elkapásához.
+            
         </para>            
     </section>        
     <section>
