@@ -6,19 +6,113 @@
         </keywordset>
     </info>
     <section>
-        <title><type>int ***</type> háromszögmátrix</title>
-        <para>
-           
+        <title><type>double **</type> háromszögmátrix</title>
+         <para>
+            Írj egy olyan <function>malloc</function> és <function>free</function>
+            párost használó C programot, amely helyet foglal
+            egy alsó háromszög mátrixnak a szabad tárban!
         </para>
         <para>
-            Megoldás videó:
+            Megoldás videó: <link xlink:href="https://youtu.be/1MRTuKwRsB0">https://youtu.be/1MRTuKwRsB0</link>,
+            <link xlink:href="https://youtu.be/RKbX5-EWpzA">https://youtu.be/RKbX5-EWpzA</link>.
         </para>
         <para>
-            Megoldás forrása:                
+            Megoldás forrása: <link xlink:href="Caesar/tm.c">
+                <filename>bhax/thematic_tutorials/bhax_textbook_IgyNeveldaProgramozod/Caesar/tm.c</filename>
+            </link> 
         </para>
+        <figure>
+            <title>A <type>double **</type> háromszögmátrix a memóriában</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/doublecscs.png" scale="50" />
+                </imageobject>
+                <textobject>
+                    <phrase>A <type>double **</type> háromszögmátrix a memóriában</phrase>
+                </textobject>
+            </mediaobject>
+        </figure> 
+        <programlisting language="c"><![CDATA[#include <stdio.h>
+#include <stdlib.h>
+
+int
+main ()
+{
+    int nr = 5;
+    double **tm;
+
+    if ((tm = (double **) malloc (nr * sizeof (double *))) == NULL)
+    {
+        return -1;
+    }
+
+    for (int i = 0; i < nr; ++i)
+    {
+        if ((tm[i] = (double *) malloc ((i + 1) * sizeof (double))) == NULL)
+        {
+            return -1;
+        }
+
+    }
+
+    for (int i = 0; i < nr; ++i)
+        for (int j = 0; j < i + 1; ++j)
+            tm[i][j] = i * (i + 1) / 2 + j;
+
+    for (int i = 0; i < nr; ++i)
+    {
+        for (int j = 0; j < i + 1; ++j)
+            printf ("%f, ", tm[i][j]);
+        printf ("\n");
+    }
+
+    for (int i = 0; i < nr; ++i)
+    {
+        for (int j = 0; j < i + 1; ++j)
+            printf ("%f, ", tm[i][j]);
+        printf ("\n");
+    }
+
+    for (int i = 0; i < nr; ++i)
+        free (tm[i]);
+
+    free (tm);
+
+    return 0;
+}]]></programlisting>
+        
+
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
-        </para>            
+            A képen a double ** háromszögmátrix memóriafoglalását bemutató ábrát láthatjuk.
+            Az <command>nr</command> változóval megadjuk a háromszögmátrix magasságát. Jelen esetben ez 5 lesz.
+            A <command>double ** tm</command> egy mutatóra mutató mutató.
+            A <command> malloc</command>-al foglalunk memóriát ami egy mutatót ad vissza a lefoglalt
+            területre (double * mutatót), amit double ** mutatóvá típuskényszerítjük, így a tm mutatónkat rá tudjuk állítani erre a tárterületre.
+            A <command> malloc</command>-nak átadjuk
+            mekkora területet foglaljon le. Ebben az esetben a double * mutató mérete, ami 8, szorozva az nr változóval,
+            így 40 -et kapva ennyi bájtot foglalunk a memóriába.
+        </para> 
+        <para>
+        Ezután egy for ciklussal végigmegyünk ezen a területen 1-5-ig és minden double * mutatót is ráállítunk egy double típusú
+        területre, aminek a darabszámát mindig egyel növeljük,így az első mutató 1db double-re mutat, a második 2-re és így tovább haladva 5-ig, így 
+        kapjuk meg a háromszögmátrixot. Ezután értékeket adunk a változóinknak és kiiratjuk őket, majd felszabadítjuk a lefoglalt területeket.
+        </para>   
+ <screen>
+        <![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Caesar$ ./tm
+0.000000, 
+1.000000, 2.000000, 
+3.000000, 4.000000, 5.000000, 
+6.000000, 7.000000, 8.000000, 9.000000, 
+10.000000, 11.000000, 12.000000, 13.000000, 14.000000, 
+0.000000, 
+1.000000, 2.000000, 
+3.000000, 4.000000, 5.000000, 
+6.000000, 7.000000, 8.000000, 9.000000, 
+10.000000, 11.000000, 12.000000, 13.000000, 14.000000, 
+
+        ]]>
+        </screen>  
     </section>        
     <section>
         <title>C EXOR titkosító</title>
