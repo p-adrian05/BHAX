@@ -31,8 +31,10 @@
                     <phrase>A <type>double **</type> háromszögmátrix a memóriában</phrase>
                 </textobject>
             </mediaobject>
+            
         </figure> 
         <programlisting language="c"><![CDATA[#include <stdio.h>
+        
 #include <stdlib.h>
 
 int
@@ -329,9 +331,94 @@ public class ExorTitkosító {
         <para>
             Megoldás forrása:                
         </para>
+            <programlisting>
+         <![CDATA[
+int
+main (void)
+{
+
+  char kulcs[KULCS_MERET];
+  char titkos[MAX_TITKOS];
+  char *p = titkos;
+  int olvasott_bajtok;
+
+ 
+  while ((olvasott_bajtok =
+	  read (0, (void *) p,
+		(p - titkos + OLVASAS_BUFFER <
+		 MAX_TITKOS) ? OLVASAS_BUFFER : titkos + MAX_TITKOS - p)))
+    p += olvasott_bajtok;
+
+  // maradek hely nullazasa a titkos bufferben  
+  for (int i = 0; i < MAX_TITKOS - (p - titkos); ++i)
+    titkos[p - titkos + i] = '\0';
+
+  // osszes kulcs eloallitasa
+ for (int ii = '0'; ii <= '9'; ++ii)
+    for (int ji = '0'; ji <= '9'; ++ji)
+      for (int ki = '0'; ki <= '9'; ++ki)
+	for (int li = '0'; li <= '9'; ++li)
+	  for (int mi = '0'; mi <= '9'; ++mi)
+	    for (int ni = '0'; ni <= '9'; ++ni)
+	      for (int oi = '0'; oi <= '9'; ++oi)
+		for (int pi = '0'; pi <= '9'; ++pi)
+		  {
+		    kulcs[0] = ii;
+		    kulcs[1] = ji;
+		    kulcs[2] = ki;
+		    kulcs[3] = li;
+		    kulcs[4] = mi;
+		    kulcs[5] = ni;
+		    kulcs[6] = oi;
+		    kulcs[7] = pi;
+
+
+		if (exor_tores (kulcs, KULCS_MERET, titkos, p - titkos))
+		      printf
+			("Kulcs: [%c%c%c%c%c%c%c%c]\nTiszta szoveg: [%s]\n",
+			 ii, ji, ki, li, mi, ni, oi, pi, titkos);
+
+		    // ujra EXOR-ozunk, igy nem kell egy masodik buffer  
+		    exor (kulcs, KULCS_MERET, titkos, p - titkos);
+
+  return 0;
+}
+ ]]>  
+         </programlisting> 
+
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
-        </para>            
+       Ez az exor törő program 0-9-ig számokat tartalmazó 8 számjegyű számmal kódolt szöveget töri fel. A program teljes egészében a forrásban
+       látható. Hosszúsága miatt csak a main() függvényt szúrtam be. Hasonlóan az exor titkosítónál, itt is meg kell adni a max kulcs méretet, jelen esetben ez 8, illetve
+       a titkos szövegünk max méretét. A while ciklusban beolvassuk a titkos szöveget, majd a titkos bufferben nullázzuk a maradék helyet. Ezután az összes lehetséges
+       kulcsot előállítjuk for ciklusokkal 0-9-ig, közben alkalmazva a kulcsokon a kizáró vagy műveletét a tikos szöveggel és ha van találat akkor kiiratjuk a kulcsot és a már
+       feltört szöveget, majd újra exorozunk, így nem kell új buffer.
+        </para>
+        <para>Az exor titkosító programunkkal titkosítottunk egy szöveget a megfelelő kulcsot megadva, majd az exor törővel sikerült ezt feltörni, második találatra.
+              Minél több különböző számot tartalmaz a kucsunk, annál tovább fog tartani a törés. Jelen esetben egy egyszerűbb kulccsal lett titkosítva a sz9veg, a törés gyorsabbá tétele miatt.
+        </para>
+        <screen>
+        <![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Caesar$ ./e 10000001 <tiszta.szoveg > titkos.szoveg
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Caesar$ ./t <titkos.szoveg
+Kulcs: [10000000]
+Tiszta szoveg: [Nem tudnk kimer­tő le­rást `dni arr³l, hogx hogyan!tudsz mdgtanulnh
+progralozni --!nagyon ¶sszeteut tudárról vao szó. Dgyet aznnban
+el¡rulhatnk: a k÷nyvek ès tanfomyamok ndm érnej túl snkat (soj,
+valórzínűldg a leguöbb habker autndidakta(. Aminej van éstelme:
+)a) kódnt olvasoi és k³dot ísni.
+
+]
+Kulcs: [10000001]
+Tiszta szoveg: [Nem tudok kimerítő leírást adni arról, hogy hogyan tudsz megtanulni
+programozni -- nagyon összetett tudásról van szó. Egyet azonban
+elárulhatok: a könyvek és tanfolyamok nem érnek túl sokat (sok,
+valószínűleg a legtöbb hacker autodidakta). Aminek van értelme:
+(a) kódot olvasni és kódot írni.
+
+
+        ]]>
+         </screen> 
+
     </section>        
     <section>
         <title>Neurális OR, AND és EXOR kapu</title>
