@@ -432,8 +432,165 @@ valószínűleg a legtöbb hacker autodidakta). Aminek van értelme:
             Megoldás forrása: <link xlink:href="https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/NN_R">https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/NN_R</link>               
         </para>
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
-        </para>            
+            A neurális háló vagy számítógépes idegháló az emberi agy által fogadott elektromos jelek
+            feldolgozásán, összegyűjtésén és szétterjesztésén alapszik. Az ábrán látható az idegsejt
+            matematikai modellje:
+        </para>  
+               <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/neural.png" scale="500" />
+                </imageobject>
+         </mediaobject>  
+
+         <para>
+            A bemeneten számok érkeznek amelyeknek van egy súlya, amit összeadunk és a neuron akkor fog
+            "tüzelni", ha a bemeneti értékek súlyozott összege meghalad egy bizonyos köszöböt, ami a W0 lesz -1 értékkel, ez az eltolássúly.
+            Ezután egy g aktivációs függvényt alkalmaz a kapott értékre, majd tovább adja a függvény értékét.
+         </para> 
+         <programlisting>
+         <![CDATA[
+library(neuralnet)
+
+a1    <- c(0,1,0,1)
+a2    <- c(0,0,1,1)
+OR    <- c(0,1,1,1)
+
+or.data <- data.frame(a1, a2, OR)
+
+nn.or <- neuralnet(OR~a1+a2, or.data, hidden=0, linear.output=FALSE, stepmax = 1e+07, threshold = 0.000001)
+
+plot(nn.or)
+
+compute(nn.or, or.data[,1:2])
+ ]]>  
+         </programlisting>   
+         <para>
+            R nyelvben dolgozunk, amihez telepíteni kell először a neuralnet csomagot.
+            A a1 és a2-be berakjuk az értékeket és az OR-ban megadjuk mit kellene kapnia ha logikai vagy művelettet laklamzaunk
+            a1 és a2-re, tehát megtanítjuk a szabályokat. Ez alapján elkezni magát tanítani a program, a súlyokat
+            beállítja, majd a compute parancssal leelenőrizzük, hogy valóban a megadott értékeinkre helyes eredmnényt 
+            ad a program, amit megtanult, hogyan állítson elő. Láthatjuk, hogy jó eredményeket kaptunk, illetve a 
+            jó erdeményhez nagyon közelitő értékeket.
+         </para>
+         <screen>
+        <![CDATA[
+ compute(nn.or, or.data[,1:2])
+$neurons
+$neurons[[1]]
+       a1 a2
+[1,] 1  0  0
+[2,] 1  1  0
+[3,] 1  0  1
+[4,] 1  1  1
+
+$net.result
+            [,1]
+[1,] 0.001332171
+[2,] 0.999639318
+[3,] 0.999002995
+[4,] 1.000000000
+        ]]>
+         </screen> 
+
+    <para>Illetve vizuálisan is láthatjuk a hálónkat a súlyokkal:</para>
+    <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/orhalo.png" scale="40" />
+                </imageobject>
+         </mediaobject>  
+     <programlisting>
+         <![CDATA[
+a1    <- c(0,1,0,1)
+a2    <- c(0,0,1,1)
+OR    <- c(0,1,1,1)
+AND   <- c(0,0,0,1)
+
+orand.data <- data.frame(a1, a2, OR, AND)
+
+nn.orand <- neuralnet(OR+AND~a1+a2, orand.data, hidden=0, linear.output=FALSE, stepmax = 1e+07, threshold = 0.000001)
+
+plot(nn.orand)
+
+compute(nn.orand, orand.data[,1:2])
+ ]]>  
+         </programlisting>  
+         
+         <para> Ebben az esetben már az és logikai műveletet is megtanítjuk a programnak, az előzővel megegyező módon.</para>
+         <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/orandhalo.png" scale="50" />
+                </imageobject>
+         </mediaobject>  
+
+         <para>Az exor művelet megtanítása ugyanezzel az algoritmussal azonban már nem működik. Nem kapunk helyes eredményt, ezért
+            ide egy más algoritmus fog kelleni.
+         </para>
+         <screen>
+        <![CDATA[
+ compute(nn.or, or.data[,1:2])
+$neurons[[1]]
+       a1 a2
+[1,] 1  0  0
+[2,] 1  1  0
+[3,] 1  0  1
+[4,] 1  1  1
+
+$net.result
+          [,1]
+[1,] 0.4999969
+[2,] 0.5000000
+[3,] 0.4999995
+[4,] 0.5000025
+        ]]>
+         </screen> 
+        
+<programlisting>
+         <![CDATA[
+a1      <- c(0,1,0,1)
+a2      <- c(0,0,1,1)
+EXOR    <- c(0,1,1,0)
+
+exor.data <- data.frame(a1, a2, EXOR)
+
+nn.exor <- neuralnet(EXOR~a1+a2, exor.data, hidden=2, linear.output=FALSE, stepmax = 1e+07, threshold = 0.000001)
+
+plot(nn.exor)
+
+compute(nn.exor, exor.data[,1:2])
+ ]]>  
+         </programlisting>  
+         <para>A különbség ez előző algoritmusokhoz képest itt annyi, hogy több rejtett neuronnal dolgozunk, jelen esetben 2-vel, tehát
+         több rétegű neuronokkal lehetséges a tanítás. A hidden értékét kell 2-re állítani. Láthatjuk az eredmény így már helyes lesz:</para>
+         <screen>
+        <![CDATA[
+$neurons[[1]]
+       a1 a2
+[1,] 1  0  0
+[2,] 1  1  0
+[3,] 1  0  1
+[4,] 1  1  1
+
+$neurons[[2]]
+     [,1]       [,2]         [,3]
+[1,]    1 0.99999978 5.691445e-07
+[2,]    1 0.99333503 9.999998e-01
+[3,]    1 0.99437209 9.999994e-01
+[4,]    1 0.00586727 1.000000e+00
+
+
+$net.result
+            [,1]
+[1,] 0.001187882
+[2,] 0.998911294
+[3,] 0.998926671
+[4,] 0.001178602
+        ]]>
+         </screen> 
+         <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/exorhalo.png" scale="40" />
+                </imageobject>
+         </mediaobject>  
     </section>        
     <section>
         <title>Hiba-visszaterjesztéses perceptron</title>
