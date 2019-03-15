@@ -604,8 +604,57 @@ $net.result
             Megoldás forrása:                
         </para>
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
-        </para>            
+            Ebben a feladatban a mandelbrot halmaz által generált kép rgb kódjait áttesszük a neurális háló inputjába, egy három rétegű hálót csinálunk és végül különböző számítások alapján kapunk
+            a 3. rétegben egy számot.
+        </para>      
+        <programlisting>
+         <![CDATA[
+#include <iostream>
+#include "mlp.hpp"
+#include "png++/png.hpp"
+
+int main (int argc, char **argv)
+{
+    png::image <png::rgb_pixel> png_image (argv[1]);
+    int size = png_image.get_width()*png_image.get_height();
+    
+    Perceptron* p = new Perceptron(3, size, 256, 1);
+
+    double* image = new double[size];
+    
+    for(int i {0}; i<png_image.get_width(); ++i)
+         for(int j {0}; j<png_image.get_height(); ++j)
+            image[i*png_image.get_width()+j] = png_image[i][j].red;
+
+    double value = (*p) (image);
+
+    std::cout << value << std::endl;
+
+    delete p;
+    delete [] image;
+
+}
+ ]]>  
+         </programlisting> 
+         <para>Használjuk az mlp.hpp-t amiben a perceptron osztály van. Beimportáljuk az előállított képünket. A perceptron objektumnak foglalunk szabad területet. Megadjuk
+            , hogy hány réteget használunk, a kép méretét, és hogy 1 szám legyen az eredmény. Lefoglalunk a képnek helyet, majd feltöltjük for ckulussal
+              a paraméterben megadott képpel, végül meghívjuk a függvény operátort aminek átadjuk a képet. Végül kiiírjuk a függvény által visszaadott értéket.
+         </para> 
+         <para> Az alábbi módon fordítjuk:</para>
+                  <screen>
+        <![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Caesar$ g++ mlp.hpp main.cpp -o perc -lpng -std=c++11
+
+        ]]>
+         </screen> 
+         <para>Majd lefuttatva, átadva a képet megkapjuk az értéket:</para>
+         <screen>
+        <![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Caesar$ ./perc mandel.png
+0.585456
+        ]]>
+         </screen> 
+    
     </section>        
         
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
