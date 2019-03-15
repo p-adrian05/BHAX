@@ -17,9 +17,8 @@
             <link xlink:href="https://youtu.be/RKbX5-EWpzA">https://youtu.be/RKbX5-EWpzA</link>.
         </para>
         <para>
-            Megoldás forrása: <link xlink:href="Caesar/tm.c">
-                <filename>bhax/thematic_tutorials/bhax_textbook_IgyNeveldaProgramozod/Caesar/tm.c</filename>
-            </link> 
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Caesar/tm.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Caesar/tm.c</link>
+            
         </para>
         <figure>
             <title>A <type>double **</type> háromszögmátrix a memóriában</title>
@@ -36,50 +35,40 @@
         <programlisting language="c"><![CDATA[#include <stdio.h>
         
 #include <stdlib.h>
-
 int
 main ()
 {
     int nr = 5;
     double **tm;
-
     if ((tm = (double **) malloc (nr * sizeof (double *))) == NULL)
     {
         return -1;
     }
-
     for (int i = 0; i < nr; ++i)
     {
         if ((tm[i] = (double *) malloc ((i + 1) * sizeof (double))) == NULL)
         {
             return -1;
         }
-
     }
-
     for (int i = 0; i < nr; ++i)
         for (int j = 0; j < i + 1; ++j)
             tm[i][j] = i * (i + 1) / 2 + j;
-
     for (int i = 0; i < nr; ++i)
     {
         for (int j = 0; j < i + 1; ++j)
             printf ("%f, ", tm[i][j]);
         printf ("\n");
     }
-
     for (int i = 0; i < nr; ++i)
     {
         for (int j = 0; j < i + 1; ++j)
             printf ("%f, ", tm[i][j]);
         printf ("\n");
     }
-
     for (int i = 0; i < nr; ++i)
         free (tm[i]);
-
     free (tm);
-
     return 0;
 }]]></programlisting>
         
@@ -112,7 +101,6 @@ adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Caesar$ ./tm
 3.000000, 4.000000, 5.000000, 
 6.000000, 7.000000, 8.000000, 9.000000, 
 10.000000, 11.000000, 12.000000, 13.000000, 14.000000, 
-
         ]]>
         </screen>  
     </section>        
@@ -125,7 +113,7 @@ adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Caesar$ ./tm
             Megoldás videó:
         </para>
         <para>
-            Megoldás forrása:                
+            Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Caesar/exor/exor.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Caesar/exor/exor.c</link>              
         </para>
         <para>
         Ebben a feladatban a kizáró vagyos (XOR) titkosítás van bemutatva. A kizáró vagyos
@@ -139,7 +127,6 @@ adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Caesar$ ./tm
             A tiszta szöveg bájtja:                         10011
             A kulcs bájtja:                                 00110
             A titkosított szöveg bájtjai XOR művelet után:  10101
-
             Dekódolás:
             A kulcs bájtja:                                     00110
             A titkosított szöveg bájtjai:                       10101
@@ -151,37 +138,25 @@ adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Caesar$ ./tm
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
-
 #define MAX_KULCS 100
 #define BUFFER_MERET 256
-
-
 int
 main (int argc, char **argv)
 {
-
   char kulcs[MAX_KULCS];
   char buffer[BUFFER_MERET];
-
   int kulcs_index = 0;
   int olvasott_bajtok = 0;
-
   int kulcs_meret = strlen (argv[1]);
   strncpy (kulcs, argv[1], MAX_KULCS);
-
   while ((olvasott_bajtok = read (0, (void *) buffer, BUFFER_MERET)))
     {
-
       for (int i = 0; i < olvasott_bajtok; ++i)
 	{
-
 	  buffer[i] = buffer[i] ^ kulcs[kulcs_index];
 	  kulcs_index = (kulcs_index + 1) % kulcs_meret;
-
 	}
-
       write (1, buffer, olvasott_bajtok);
-
     }
 }
  ]]>  
@@ -241,7 +216,6 @@ programozni -- nagyon összetett tudásról van szó. Egyet azonban
 elárulhatok: a könyvek és tanfolyamok nem érnek túl sokat (sok,
 valószínűleg a legtöbb hacker autodidakta). Aminek van értelme:
 (a) kódot olvasni és kódot írni.
-
         ]]>
          </screen> 
 
@@ -255,7 +229,7 @@ valószínűleg a legtöbb hacker autodidakta). Aminek van értelme:
             Megoldás videó:
         </para>
         <para>
-            Megoldás forrása:                
+            Megoldás forrása:<link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Caesar/exor/ExorTitkos%C3%ADt%C3%B3.java">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Caesar/exor/ExorTitkos%C3%ADt%C3%B3.java</link>                  
         </para>
  <programlisting>
          <![CDATA[
@@ -270,7 +244,6 @@ public class ExorTitkosító {
         byte [] buffer = new byte[256];
         int kulcsIndex = 0;
         int olvasottBájtok = 0;
-
         while((olvasottBájtok =
                 bejövőCsatorna.read(buffer)) != -1) {
             
@@ -329,30 +302,26 @@ public class ExorTitkosító {
             Megoldás videó:
         </para>
         <para>
-            Megoldás forrása:                
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Caesar/exor/t.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Caesar/exor/t.c</link>               
         </para>
             <programlisting>
          <![CDATA[
 int
 main (void)
 {
-
   char kulcs[KULCS_MERET];
   char titkos[MAX_TITKOS];
   char *p = titkos;
   int olvasott_bajtok;
-
  
   while ((olvasott_bajtok =
 	  read (0, (void *) p,
 		(p - titkos + OLVASAS_BUFFER <
 		 MAX_TITKOS) ? OLVASAS_BUFFER : titkos + MAX_TITKOS - p)))
     p += olvasott_bajtok;
-
   // maradek hely nullazasa a titkos bufferben  
   for (int i = 0; i < MAX_TITKOS - (p - titkos); ++i)
     titkos[p - titkos + i] = '\0';
-
   // osszes kulcs eloallitasa
  for (int ii = '0'; ii <= '9'; ++ii)
     for (int ji = '0'; ji <= '9'; ++ji)
@@ -371,16 +340,12 @@ main (void)
 		    kulcs[5] = ni;
 		    kulcs[6] = oi;
 		    kulcs[7] = pi;
-
-
 		if (exor_tores (kulcs, KULCS_MERET, titkos, p - titkos))
 		      printf
 			("Kulcs: [%c%c%c%c%c%c%c%c]\nTiszta szoveg: [%s]\n",
 			 ii, ji, ki, li, mi, ni, oi, pi, titkos);
-
 		    // ujra EXOR-ozunk, igy nem kell egy masodik buffer  
 		    exor (kulcs, KULCS_MERET, titkos, p - titkos);
-
   return 0;
 }
  ]]>  
@@ -406,7 +371,6 @@ progralozni --!nagyon ¶sszeteut tudárról vao szó. Dgyet aznnban
 el¡rulhatnk: a k÷nyvek ès tanfomyamok ndm érnej túl snkat (soj,
 valórzínűldg a leguöbb habker autndidakta(. Aminej van éstelme:
 )a) kódnt olvasoi és k³dot ísni.
-
 ]
 Kulcs: [10000001]
 Tiszta szoveg: [Nem tudok kimerítő leírást adni arról, hogy hogyan tudsz megtanulni
@@ -414,8 +378,6 @@ programozni -- nagyon összetett tudásról van szó. Egyet azonban
 elárulhatok: a könyvek és tanfolyamok nem érnek túl sokat (sok,
 valószínűleg a legtöbb hacker autodidakta). Aminek van értelme:
 (a) kódot olvasni és kódot írni.
-
-
         ]]>
          </screen> 
 
@@ -429,7 +391,7 @@ valószínűleg a legtöbb hacker autodidakta). Aminek van értelme:
             Megoldás videó: <link xlink:href="https://youtu.be/Koyw6IH5ScQ">https://youtu.be/Koyw6IH5ScQ</link>
         </para>
         <para>
-            Megoldás forrása: <link xlink:href="https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/NN_R">https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/NN_R</link>               
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/attention_raising/NN_R/nn.r">https://github.com/p-adrian05/BHAX/blob/master/attention_raising/NN_R/nn.r</link>               
         </para>
         <para>
             A neurális háló vagy számítógépes idegháló az emberi agy által fogadott elektromos jelek
@@ -450,17 +412,12 @@ valószínűleg a legtöbb hacker autodidakta). Aminek van értelme:
          <programlisting>
          <![CDATA[
 library(neuralnet)
-
 a1    <- c(0,1,0,1)
 a2    <- c(0,0,1,1)
 OR    <- c(0,1,1,1)
-
 or.data <- data.frame(a1, a2, OR)
-
 nn.or <- neuralnet(OR~a1+a2, or.data, hidden=0, linear.output=FALSE, stepmax = 1e+07, threshold = 0.000001)
-
 plot(nn.or)
-
 compute(nn.or, or.data[,1:2])
  ]]>  
          </programlisting>   
@@ -482,7 +439,6 @@ $neurons[[1]]
 [2,] 1  1  0
 [3,] 1  0  1
 [4,] 1  1  1
-
 $net.result
             [,1]
 [1,] 0.001332171
@@ -504,13 +460,9 @@ a1    <- c(0,1,0,1)
 a2    <- c(0,0,1,1)
 OR    <- c(0,1,1,1)
 AND   <- c(0,0,0,1)
-
 orand.data <- data.frame(a1, a2, OR, AND)
-
 nn.orand <- neuralnet(OR+AND~a1+a2, orand.data, hidden=0, linear.output=FALSE, stepmax = 1e+07, threshold = 0.000001)
-
 plot(nn.orand)
-
 compute(nn.orand, orand.data[,1:2])
  ]]>  
          </programlisting>  
@@ -534,7 +486,6 @@ $neurons[[1]]
 [2,] 1  1  0
 [3,] 1  0  1
 [4,] 1  1  1
-
 $net.result
           [,1]
 [1,] 0.4999969
@@ -549,13 +500,9 @@ $net.result
 a1      <- c(0,1,0,1)
 a2      <- c(0,0,1,1)
 EXOR    <- c(0,1,1,0)
-
 exor.data <- data.frame(a1, a2, EXOR)
-
 nn.exor <- neuralnet(EXOR~a1+a2, exor.data, hidden=2, linear.output=FALSE, stepmax = 1e+07, threshold = 0.000001)
-
 plot(nn.exor)
-
 compute(nn.exor, exor.data[,1:2])
  ]]>  
          </programlisting>  
@@ -569,15 +516,12 @@ $neurons[[1]]
 [2,] 1  1  0
 [3,] 1  0  1
 [4,] 1  1  1
-
 $neurons[[2]]
      [,1]       [,2]         [,3]
 [1,]    1 0.99999978 5.691445e-07
 [2,]    1 0.99333503 9.999998e-01
 [3,]    1 0.99437209 9.999994e-01
 [4,]    1 0.00586727 1.000000e+00
-
-
 $net.result
             [,1]
 [1,] 0.001187882
@@ -598,10 +542,10 @@ $net.result
             C++
         </para>
         <para>
-            Megoldás videó:
+            Megoldás videó:<link xlink:href="https://youtu.be/XpBnR31BRJY">https://youtu.be/XpBnR31BRJY</link> 
         </para>
         <para>
-            Megoldás forrása:                
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Caesar/perceptron">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Caesar/perceptron</link>                              
         </para>
         <para>
             Ebben a feladatban a mandelbrot halmaz által generált kép rgb kódjait áttesszük a neurális háló inputjába, egy három rétegű hálót csinálunk és végül különböző számítások alapján kapunk
@@ -612,27 +556,21 @@ $net.result
 #include <iostream>
 #include "mlp.hpp"
 #include "png++/png.hpp"
-
 int main (int argc, char **argv)
 {
     png::image <png::rgb_pixel> png_image (argv[1]);
     int size = png_image.get_width()*png_image.get_height();
     
     Perceptron* p = new Perceptron(3, size, 256, 1);
-
     double* image = new double[size];
     
     for(int i {0}; i<png_image.get_width(); ++i)
          for(int j {0}; j<png_image.get_height(); ++j)
             image[i*png_image.get_width()+j] = png_image[i][j].red;
-
     double value = (*p) (image);
-
     std::cout << value << std::endl;
-
     delete p;
     delete [] image;
-
 }
  ]]>  
          </programlisting> 
@@ -644,7 +582,6 @@ int main (int argc, char **argv)
                   <screen>
         <![CDATA[
 adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Caesar$ g++ mlp.hpp main.cpp -o perc -lpng -std=c++11
-
         ]]>
          </screen> 
          <para>Majd lefuttatva, átadva a képet megkapjuk az értéket:</para>
@@ -658,4 +595,4 @@ adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Caesar$ ./perc mandel.png
     </section>        
         
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-</chapter>                
+</chapter>
