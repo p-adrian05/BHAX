@@ -69,8 +69,37 @@
             A struktúra egy fix szerkezetú rekord. A void típus tartománya üres,nincsenek műveletei. A const megagásával nevesített konstanst deklarálunk. Saját típus definiáláshoz TYPEDEF-el lehetséges, de ez csak a típus nevét adja meg nem hoz létre új típust.
             Struktúra deklarásása STRUCT-al lehetésges, union pedig UNION-nal. A C csak egydimenziós tömböket kezel. Deklaráláshoz az indexek darabszámát kell megadni, ami 0-tól darabszám-1-ig fut. A C a tömböt mutató típusként kezeli. A tömb neve a tömb első elemét címzi.
             Van automatikus deklaráció, int egész típus lesz ha egy névhez nem adunk visszatérésí típust.
-        
         </para>
+        <para>Kifejezések</para>
+        <para>
+            A Kifejezések szintaktikai eszközök. A kövekező összetevőkből áll: operandusok, operátorok, kerek zárójelek.
+            Az operandus literál, nevesített konstans, változó vagy függvényhívás lehet. Az értéket képviseli. Az operátorok
+            műveleti jelek. A kerek zárójelek pedig a műveletek végrehajtási sorrendjét befolyásolják. Redundánsan alkalmazható.
+            Alakjuk lehet prefix, az operátor az operandusok előtt állnnak(* 3 5), infix(3 * 5) és postfix(3 5 *). A kifejetés kiértékelése történhez balról-jobbra, jobbról-balra vagy 
+            balról-jobbra a predencia táblázat figyelembevételével, az operátorok erősségének figyelembevételével. Zárójelek használatával a predenciatáblázat szerinti végrehajtási sorrendet felül lehet írni.
+            Logikai operátorok esetén, pl és művelet esetén, úgy is eldőlhet a kifejezés értéke, hogy nem végezzük el az összes műveletet, ez a rövidzár kiértékelés. 
+            A kifejetés típusának meghatározásánál kétféle elvet követnek a nyelvek: típsuegyenértékűséget és típuskényszerítést.
+            Az előbbi esetén egy kifejezésben egy kétoperandusú operátornak csak azonos típusú operandusai lehetnek. Az utóbbi esetben azonban
+            két különbőző típusú operandusai lehetnek egy kétoperandusú operátornak. A műveletek viszont csak az azonos belső ábrázolású operandusok között végezhetők el 
+            különböző típusú operandusok esetén konverzió van.
+            A c kifejezésorientált nyelv és a típuskényszerítést elvét vallja. A mutató típusú tartományának elemeivel összeadás és kivonás végezhető.
+        </para>
+        <para>Utasítások</para>
+        <para>Az utasítások segítségével generálja a fordítóprogram a tárgyprogramot. Két nagy csoportja van: deklarációs és végrehajtható utasítások
+              A deklarációs utasítás a fordítóprogramnak szólnak, valamilyen szolgáltatást kérnek, üzemmódot állítanak be, információt szolgáltatnak a tárgykód generáláshoz.
+              A végrehajtható utasításokból készül a tárgykód, ezeket az alábbiak szerint csoportosítjuk: Értékadó utasítás, üres utasítás, ugró, elágaztató, 
+            ciklusszervező, hívó, vezérlésátadó, I/O utasítások és egyéb utasítások.
+            Az értékadó utasítás feladata beállítani vagy módosítani egy változó értékét. Az üres utasítás hatására a CPU egy üres gépi utasítást hajt végre. Pl continue, null.
+            Az ugró utasítás átadjuk a vezérlést egy adott pontról egy adott cimkével elátott utasításra. Ez a GOTO.
+            Elágaztató utasítások közé tartotik a feltéletes utasítás ami kétriányú, ami arra szolgál, hogy a program két tevékenység közül válasszon. If, else.
+            A többirányú elágaztató utasítés C-ben a switch(kifejezés) case (feltétel) : (tevékenység). Ez arra szolgál, hogy a program kölcsönösen kizáró akárhány tevékenység közül egyet végrehajtsunk.
+            A ciklusszervező utasítások lehetővé teszik, hogy a program egy bizonyos tevékenységet akárhányszor megismételjen.
+            Két szélsőséges eset amikor egyszerm sem fut le, ami az üres ciklus és a másik, hogy soha nem áll le, ez a végtelen ciklus. A feltételes ciklus egy feltétel teljesülése szerint
+            ismétlődik. A ciklusok fajtái: Kezdőfeltételes(while). Végfeltételes( do utasítás while(feltétel)), előírt lépésszámú(for). A végtelen ciklusból szabályosan a break utasítással tudnunk kilépni.
+            A continue vezérlő utasítás a ciklus magjában alkalmazható. A ciklus hátralevő utasításai nem hajta végre, hanem az ismétlődés feltételeit vizsgálja meg és vagy újabb cikluslépésbe kezd, 
+            vagy befejezi a ciklust. A reuturn[kifejezés] pedig szabályosan befejezteti a függévényt és visszaadja a vezérlést a hívónak.
+        
+         </para>
     </section>        
     <section>
         <title>Programozás bevezetés</title>
