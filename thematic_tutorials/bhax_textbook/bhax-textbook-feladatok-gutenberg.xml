@@ -1,0 +1,90 @@
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:lang="hu">
+    <info>
+        <title>Helló, Gutenberg!</title>
+        <keywordset>
+            <keyword/>
+        </keywordset>
+        <cover>
+            <para>
+                Programozás tankönyvek rövid olvasónaplói.
+            </para>
+        </cover>
+    </info>
+    <section>
+        <title>Programozási alapfogalmak</title>     
+        <para>Juhász István - Magas szintű programozási nyelvek 1</para>   
+        <para>
+            A programnyelvek három szintjét különböztetjük meg: gépi nyelv, assembly szintű nyelv, magas szintű nyelv.
+            A magas szintű nyelven nyelven megírt programot forrásprogramnak nevezzük. Összeállítását szintaktikai és szemantikai
+            szabályok alapján vegzi a fordító program ami gépi nyelvre fordítja a programot, hogy a processzor végre tudja hajtani
+            a programot. A fordítóprogram a következő lépéseket hajtja végre: lexikális elemzés, szintaktikai elemzés, szemantikai elemzés,
+            kódgenerálás. A másik technika egy forrásprogram végrehajtására az interpreteres technika, ami nem készít tárgyprogramot, hanem
+            az utasításokat értelmezi és azonnal végre is hajtja. Minden programnyelvnek megvan a saját szabványa, amit hivatkozási nyelvnek
+            hívunk. </para>
+        <para>Programnyelvek osztályozása</para> 
+        <para>Imperatív nyelvek: a programozó egy programszöveget ír, algoritmust kódol ami működteti a processzort.
+             Alcsoportjai: eljárásorientált és objektumorientált nyelvek.
+        </para>
+        <para>Deklaratív nyelvek: Nem algoritmikus nyelvek, a proramozó csak a problémát oldja meg, a nyelvi implementációkban
+            van beépítve a megoldás megkeresésének módja, a programozónak nincs lehetősége memóriaműveletekre. Alcsoportjai:
+            Funkcionális és logikai nyelvek.
+        </para>
+        <para>Karakterkészlet</para>
+         <para> 
+            Minden program forrászövegének legkisebb alkotórészei a karakterek, amit minden nyelv definiál 3 kategóriába: betűk, számjegyek
+            egyéb karakterek.
+            A lexikális egységek a program azon elemei, melyeket a fordító a lexikális elemzés során felsimer és tokenizál. Fajtái: 
+            többkarateres szimbólum, szimbolikus név, címke, megjegyzés, literál.
+            A többkarateres szimbolumok olyan karaktersorozatok, amelyeknek csak a nyelv tulajdonít jelentést.Pl.: ++, --, /*,*/.
+            Szimbolikus nevek közül az azonosító olyan karaktersorozat, ami betűvel kezdődik és betűvel vagy számjeggyel folytatódhat.
+            A kulcsszavak vagy védett szavak olyan szavak amelyeknek a nyelv jelentést tulajdonít. Pl.: if, for, case, break.
+            A stantard azonosítónak a nyelv tulajdonít jelentést, de a programozó által megváltoztatjató, például a NULL.
+            A megjegyzés olyan programozási eszköz, melynek segítségével a programban olyan karaktersorozatok írása megengedett, amelyek
+            nem a fordítónak szól, hanem a programot olvasónak. Általában a ezek a program működésével kapcsolatos magyarázó szövegek.
+            A literál pedig olyan eszköz aminek segítségével fix értékek építhetők be a program szövegébe.
+         </para>
+         <para>Adattípusok</para>
+         <para>
+            Az adattípusnak van egy neve, ami egy azonosító. Minden adattípus mögött van egy belső ábrázolális mód. A reprezentáció
+            az egyes típusok tartományába tartozó értékek tárban való megjenelését határozza meg, tehát, hogy az egyes elemek hány bájtra képződnek le.
+            Saját típust úgy tudunk létrehozni, hogy megadjuk a tartományát, a műveleteit és a reprezentációját. Két nagy csoportjuk van:
+            az egyszerű adattípus, tartománya atomi értékeket tartalmaz és összetett adattípus, aminek tartományának elemei is valamilyen
+            típussal rendelkeznek.
+            Az egyszerá adattípusba tartozik az egész típus, belső ábrázolásuk fix pontos.A valós típusok belső ábrázoláluk lebegőpontos.
+            A karakteres típus elemei karakterek, karakterlánc típusé pedig karaktersorozatok. A logikai típus, igaz vagy hamis értéket tárol.
+            Az összetett típusok közül a két legfontosabb a tomb és a rekord. A tömb statikus és homogén összetett típus, amelyben az elemek azonos
+            típusúak. A tömböt mint típust meghatározza a dimenzióinak száma, hány sor, hány oszlopból áll, az elemek indexei, elemek sorszáma, amely egész típusú és az elemek típusa.
+             A mutató típus egyszerű típus, amely tárcímeket tárolhat. Egyik legfontosabb művelete a megcímzett tárterületen elhelyezkedő érték elérése.
+        </para>
+        <para>A nevesített konstansnak három része van: név, típus, érték és mindig deklarálni kell, ennek értéke ekkor eldől és nem változtatható meg.
+        A változónak négy része van? név, attribútumok, cím, érték.A név egy azonosító. Az attribútum a típusa és deklarációval kap értéket, amely változtatható a program futása során.
+        Mindaddig amíg nincs értéke, addig határozatlan, tehát nem használható fel. Explicit vagy automatikus deklaráció lehetséges. Előbbi esetén a programozó végzi a deklarációt, utóbbi esetben
+        pedig a fordítóprogram rendel attribútumot azokhoz a változókhoz amelyek nincsenek explicit módon megadva, deklarálva. A változóhoz cím rendelhető két féle módon:
+        dinamukus tárkiosztás: a futás előtt eldől a változó címe és futás alatt ez nem változik. Dinamikus tárkiosztás esetén a rendszer végzi a cím hozzásrendelést.
+        </para>
+        <para>
+            A C nyelvnek vannak aritmetikai és származtatott típusai. Az aritmetikai típusokhoz tartoznak az integrális típusok: egész(int,short,long), karakter(char),felsorolásos és 
+            valós(float, double, long double). A származtatott típusokhoz tartozik a tömb, függény, mutató, struktúra, union és vannak a void típusok. Az aritmetikai típusok
+            az egyszerű, a származtatottak pedig az összetett típusok. Nincs logikai típus. A hamis az int 0, minde más inthez rendelt érték igaznak minősül. Az unsigned típusminősítő nem előjeles ábrázolást, a signed pedig előjeles ábrázolást jelöl.
+            A struktúra egy fix szerkezetú rekord. A void típus tartománya üres,nincsenek műveletei. A const megagásával nevesített konstanst deklarálunk. Saját típus definiáláshoz TYPEDEF-el lehetséges, de ez csak a típus nevét adja meg nem hoz létre új típust.
+            Struktúra deklarásása STRUCT-al lehetésges, union pedig UNION-nal. A C csak egydimenziós tömböket kezel. Deklaráláshoz az indexek darabszámát kell megadni, ami 0-tól darabszám-1-ig fut. A C a tömböt mutató típusként kezeli. A tömb neve a tömb első elemét címzi.
+            Van automatikus deklaráció, int egész típus lesz ha egy névhez nem adunk visszatérésí típust.
+        
+        </para>
+    </section>        
+    <section>
+        <title>Programozás bevezetés</title>
+        <para>                
+            <citation>KERNIGHANRITCHIE</citation>
+        </para>
+        <para>
+            Megoldás videó: <link xlink:href="https://youtu.be/zmfT9miB-jY">https://youtu.be/zmfT9miB-jY</link>
+        </para>        
+    </section>        
+    <section>
+        <title>Programozás</title>
+        <para>                
+            <citation>BMECPP</citation>
+        </para>
+    </section>        
+</chapter>                
