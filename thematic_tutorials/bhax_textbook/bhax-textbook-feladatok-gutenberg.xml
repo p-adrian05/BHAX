@@ -108,12 +108,49 @@
         </para>
         <para>
             Megoldás videó: <link xlink:href="https://youtu.be/zmfT9miB-jY">https://youtu.be/zmfT9miB-jY</link>
-        </para>        
+        </para> 
+         <para>Vezérlési szerkezetek</para>
+            <para> 
+                A kifejezések utasítássá válnak, ha pontosvessző követi őket. C-ben a pontosvessző utasítás lezáró jel és nem 
+                elválasztó szimbólum. A kapcsos zárójelek közé pedig deklarációkat és utasításokat egyetlen blokkba foghatunk össze. Ez egyetlen utasítással lesz egenyértékű. 
+                Az if-else utasítással döntést, választást írunk le. A switch utasítás a többirányú programelágaztatás egyik eszköze. A switch kiértékeli a 
+                zárojelek közötti kifejezést és összehasonlítja az összes esettel(case). Ha valamelyik case azonos a kifejezés értékével, akkor a végrehajtás ennél kezdődik. Ha nincs egyező eset 
+                akkor a default cimkével elátott case kerül végrehajtásra. Mivel case-ek cimkeként működnek, miután végrehajtódott, a következő case-re ugrik ezért gondoskodin kell a 
+                kilépésről break utasítással.
+                A while utasítás fejével található utasítás kiértékelésre kerül és ha az értéke nem 0, akkor végrehajtja az utasítást, majd újra kiértékeli a kifejezést, addig amíg 0 nem lesz és véget és a végrehajtás. 
+                A for utasítás ugyanígy működik, csak 1 helyett 3 kifejezést kell megadni. Az első és 3. kifejetés értékadás vagy függvényhívás. A 2. pedig relációs kifejezés. 
+                A do-while utasítás ciklusban a kiugrási feltétel teljesülését nem a ciklus elején, hanem a végén vizsgálja a ciklustörzs végrehajtása után. A törzs tehát legalább egyszer végrehajtódik.
+                A break utasítással a vizsgálat előtt is ki lehet ugrani a ciklusból hasonlóan a switch-ből. 
+                A continue utasítás a break-hez kapcsolódik és a ciklus következő iterációjának megkezdését idézi elő. A while és a do esetében ez azt jelenti, hogy azonnal végrehajtódik a felté telvizsgálat, 
+                a for esetében pedig a vezérlés azonnal az újrainicializálási lépésre kerül.
+                A goto utasítással a a vezérlés feltétel nélkül átadható egy cimkét megadva. A címkézett utasítás azonosító: alakú előtagok, amelyek az 
+                azonosítót címkeként deklarálják. A címke a goto célpontjaként szolgál. A nulla utasítás alakja pontosvessző, ami hordozhat címkét közvetlenül valamely összetett utasítás előtt, vagy a
+                while-hoz hasonló valamelyik ciklusutasítás számára üres ciklustörzset képezhet.
+            </para>       
     </section>        
     <section>
         <title>Programozás</title>
         <para>                
             <citation>BMECPP</citation>
         </para>
+        <para> A C++ nem objektumorientált tulajdonságai</para>
+        <para> 
+              A C++ nyelv a C továbbfejlesztett változata.A C nyelv veszélyesebb elemeit cseréli le biztonságosabb megoldásokra
+             és átláthatóbb, kényelmesebb szolgáltatásokat tesz lehetővé.
+             C++-ban egy egy függvény üres paraméterlistával void függvénynek minősél, C-ben pedig azt hogy tetszőleges számú paraméterrel hívható. 
+             A main függvényben nem kötelező a return használata, mivel a fordító automatikusan return 0 jelzőt fordít a kódba. 
+             Bevezették a bool típust ami true vagy false értéket vehet fel. Beépített típus lett a wchar_t a több bájtos sztringliterálok 
+             definiálására. Minden olyan helyen állhat változódeklaráció, ahol utasítás is állhat. A függvénynevek túlterhelése is megjelent, 
+             így lehetőség van azonos függvények létrehozására, amennyiben az argumentumlistájuk különöző. Lehetőség lett arra, hogy a függvények argumentumainak
+             alapértelmezett értéket adjunk meg, amennyiben a függvényhíváskor nem adunk meg értéket az argumentumoknak. A C-ben pointerek segítségével 
+             kell megoldanunk a függvényparaméterek cí szerinti átadását. Ezt a problémát oldja meg a C++ referenciatípus bevezetése, ami feleslegessé 
+             teszi a pointereknek a cím szerinti paraméterátadásban betöltött szerepét. Ekkor csak egy és jelet kell írnunk a paraméter deklalárciójában a név elé.
+             Továbbá kihasználva ekkor cím szerint adjuk át az argumentumot, nagyméretű argumentumok esetén teljesítménynövekedés érhető el, ha csak az argumentumok címét adjuk át, és 
+             nem másoljuk le őket.
+
+        </para>
+
+
+
     </section>        
 </chapter>                
