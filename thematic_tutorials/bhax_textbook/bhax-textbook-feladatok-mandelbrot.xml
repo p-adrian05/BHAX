@@ -6,29 +6,336 @@
         </keywordset>
     </info>
     <section>
-        <title>A Mandelbrot halmaz</title>
+       <title>A Mandelbrot halmaz</title>
         <para>
-                
+            Írj olyan C programot, amely kiszámolja a Mandelbrot halmazt!     
         </para>
         <para>
-            Megoldás videó:
+            Megoldás videó: <link xlink:href="https://youtu.be/gvaqijHlRUs">https://youtu.be/gvaqijHlRUs</link>
         </para>
         <para>
-            Megoldás forrása:                
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/attention_raising/CUDA/mandelpngt.c%2B%2B">https://github.com/p-adrian05/BHAX/blob/master/attention_raising/CUDA/mandelpngt.c%2B%2B</link>
+        </para>  
+        <para>
+            A Mandelbrot halmazt 1980-ban találta meg Benoit Mandelbrot a 
+            komplex számsíkon. Komplex számok azok a számok, amelyek körében 
+            válaszolni lehet az olyan egyébként értelmezhetetlen kérdésekre, 
+            hogy melyik az a két szám, amelyet összeszorozva -9-et kapunk, 
+            mert ez a szám például a 3i komplex szám.
         </para>
+        <para>             
+            A Mandelbrot halmazt úgy láthatjuk meg, hogy a sík origója középpontú 4 
+            oldalhosszúságú négyzetbe lefektetünk egy, mondjuk 800x800-as 
+            rácsot és kiszámoljuk, hogy a rács pontjai mely komplex számoknak 
+            felelnek meg. A rács minden pontját megvizsgáljuk a 
+            z<subscript>n+1</subscript>=z<subscript>n</subscript>
+            <superscript>2</superscript>+c, 
+            (0&lt;=n) képlet alapján úgy, hogy a c az éppen vizsgált rácspont. 
+            A z0 az origó. Alkalmazva a képletet a 
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    z<subscript>0</subscript> = 0
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    z<subscript>1</subscript> = 0<superscript>2</superscript>+c = c
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    z<subscript>2</subscript> = c<superscript>2</superscript>+c
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    z<subscript>3</subscript> = (c<superscript>2</superscript>+c)<superscript>2</superscript>+c
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    z<subscript>4</subscript> = ((c<superscript>2</superscript>+c)<superscript>2</superscript>+c)<superscript>2</superscript>+c
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    ... s így tovább.
+                </para>
+            </listitem>
+        </itemizedlist>
+        <para>
+            Azaz kiindulunk az origóból (z<subscript>0</subscript>) 
+            és elugrunk a rács első pontjába a z<subscript>1</subscript> = c-be, 
+            aztán a c-től függően a további z-kbe. Ha ez az utazás kivezet a 
+            2 sugarú körből, akkor azt mondjuk, hogy az a vizsgált rácspont 
+            nem a Mandelbrot halmaz eleme. Nyilván nem tudunk végtelen sok 
+            z-t megvizsgálni, ezért csak véges sok z elemet nézünk meg minden 
+            rácsponthoz. Ha eközben nem lép ki a körből, akkor feketére 
+            színezzük, hogy az a c rácspont a halmaz része. (Színes meg úgy 
+            lesz a kép, hogy változatosan színezzük, például minél későbbi 
+            z-nél lép ki a körből, annál sötétebbre). 
+        </para> 
+       
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/mandel.png" scale="50" />
+            </imageobject>
+        </mediaobject>
+        <programlisting >
+<![CDATA[#include <stdio.h>
+#include <iostream>
+#include "png++/png.hpp"
+#include <sys/times.h>
+
+#define MERET 600
+#define ITER_HAT 32000
+void
+mandel (int kepadat[MERET][MERET]) {
+
+   
+    clock_t delta = clock ();
+    struct tms tmsbuf1, tmsbuf2;
+    times (&tmsbuf1);
+
+    float a = -2.0, b = .7, c = -1.35, d = 1.35;
+    int szelesseg = MERET, magassag = MERET, iteraciosHatar = ITER_HAT;
+
+    
+    float dx = (b - a) / szelesseg;
+    float dy = (d - c) / magassag;
+    float reC, imC, reZ, imZ, ujreZ, ujimZ;
+ 
+    int iteracio = 0;
+
+    for (int j = 0; j < magassag; ++j)
+    {
+        
+        for (int k = 0; k < szelesseg; ++k)
+        {
+            reC = a + k * dx;
+            imC = d - j * dy;
+            // z_0 = 0 = (reZ, imZ)
+            reZ = 0;
+            imZ = 0;
+            iteracio = 0;
+
+            while (reZ * reZ + imZ * imZ < 4 && iteracio < iteraciosHatar)
+            {
+                // z_{n+1} = z_n * z_n + c
+                ujreZ = reZ * reZ - imZ * imZ + reC;
+                ujimZ = 2 * reZ * imZ + imC;
+                reZ = ujreZ;
+                imZ = ujimZ;
+
+                ++iteracio;
+            }
+            kepadat[j][k] = iteracio;
+        }
+    }
+
+    times (&tmsbuf2);
+    std::cout << tmsbuf2.tms_utime - tmsbuf1.tms_utime
+              + tmsbuf2.tms_stime - tmsbuf1.tms_stime << std::endl;
+
+    delta = clock () - delta;
+    std::cout << (float) delta / CLOCKS_PER_SEC << " sec" << std::endl;
+
+}
+
+int
+main (int argc, char *argv[])
+{
+
+    if (argc != 2)
+    {
+        std::cout << "Hasznalat: ./mandelpng fajlnev";
+        return -1;
+    }
+
+    int kepadat[MERET][MERET];
+
+    mandel(kepadat);
+
+    png::image < png::rgb_pixel > kep (MERET, MERET);
+
+    for (int j = 0; j < MERET; ++j)
+    {
+        for (int k = 0; k < MERET; ++k)
+        {
+            kep.set_pixel (k, j,
+                png::rgb_pixel (255 -
+                (255 * kepadat[j][k]) / ITER_HAT,
+                 255 -
+                (255 * kepadat[j][k]) / ITER_HAT,
+                255 -
+                (255 * kepadat[j][k]) / ITER_HAT));
+        }
+    }
+
+    kep.write (argv[1]);
+    std::cout << argv[1] << " mentve" << std::endl;
+
+}
+}]]>
+</programlisting> 
+ 
+   
+<para>
+            A void metódusban számoltatjuk ki az adatokat a mandelbrot halmaz képi megjelenítéséhez. Előtte definiáljuk a kép méretét és az iterációs határértéket.
+        Ezután megmérjük mennyi idő alatt történik a számolás, majd megadjuk a számításhoz szükséges adatokat. Két for ciklussal végigmegyünk a 
+        magasságon és szélességen és kiszámítjuk minden rács csomóponthoz tartozó komplex számot. A while ciklusban a z{n+1} = z_n * z_n + c iterációkat 
+        számoljuk, míg a |z_n| kisebb mint 2 vagy az iterációk száma nem érte el a 255-t, ha viszont elértük, akkor ez az jelenti, hogy 
+        a kiindulási c komplex számra az iteráció konvergens, tehát a c a mandelbrot halmaz eleme. Ezután kiiratjuk az eltelt időt, 
+        majd a main-ben összeállítjuk a képet.
+        </para>
+        <para>Fordításkor használjuk a png könyvtárat a kép készítéséhez, majd futtatva megkapjuk a képet és az ehhez szükséges időtartamot.</para>
+        <screen>
+<![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/attention_raising/CUDA$ g++ mandelpngt.c++ -lpng16  -o mandelpngt
+adrian@adrian-MS-7817:~/Desktop/BHAX/attention_raising/CUDA$ ./mandelpngt t.png
+1894
+18.9422 sec
+t.png mentve
+
+ ]]>
+         </screen> 
+
+
     </section>        
         
     <section>
-        <title>A Mandelbrot halmaz a <filename>std::complex</filename> osztállyal</title>
+         <title>A Mandelbrot halmaz a <filename>std::complex</filename> osztállyal</title>
         <para>
-                
+            Írj olyan C++ programot, amely kiszámolja a Mandelbrot halmazt!                     
         </para>
         <para>
-            Megoldás videó:
+            Megoldás videó: <link xlink:href="https://youtu.be/gvaqijHlRUs">https://youtu.be/gvaqijHlRUs</link>
         </para>
         <para>
-            Megoldás forrása:                
-        </para>
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/attention_raising/Mandelbrot/3.1.2.cpp">https://github.com/p-adrian05/BHAX/blob/master/attention_raising/Mandelbrot/3.1.2.cpp</link>               
+        </para>       
+            <programlisting >
+<![CDATA[#include <iostream>
+#include "png++/png.hpp"
+#include <complex>
+
+int
+main ( int argc, char *argv[] )
+{
+
+  int szelesseg = 1920;
+  int magassag = 1080;
+  int iteraciosHatar = 255;
+  double a = -1.9;
+  double b = 0.7;
+  double c = -1.3;
+  double d = 1.3;
+
+  if ( argc == 9 )
+    {
+      szelesseg = atoi ( argv[2] );
+      magassag =  atoi ( argv[3] );
+      iteraciosHatar =  atoi ( argv[4] );
+      a = atof ( argv[5] );
+      b = atof ( argv[6] );
+      c = atof ( argv[7] );
+      d = atof ( argv[8] );
+    }
+  else
+    {
+      std::cout << "Hasznalat: ./3.1.2 fajlnev szelesseg magassag n a b c d" << std::endl;
+      return -1;
+    }
+
+  png::image < png::rgb_pixel > kep ( szelesseg, magassag );
+
+  double dx = ( b - a ) / szelesseg;
+  double dy = ( d - c ) / magassag;
+  double reC, imC, reZ, imZ;
+  int iteracio = 0;
+
+  std::cout << "Szamitas\n";
+
+  // j megy a sorokon
+  for ( int j = 0; j < magassag; ++j )
+    {
+      // k megy az oszlopokon
+
+      for ( int k = 0; k < szelesseg; ++k )
+        {
+
+          // c = (reC, imC) a halo racspontjainak
+          // megfelelo komplex szam
+
+          reC = a + k * dx;
+          imC = d - j * dy;
+          std::complex<double> c ( reC, imC );
+
+          std::complex<double> z_n ( 0, 0 );
+          iteracio = 0;
+
+          while ( std::abs ( z_n ) < 4 && iteracio < iteraciosHatar )
+            {
+              z_n = z_n * z_n + c;
+
+              ++iteracio;
+            }
+
+          kep.set_pixel ( k, j,
+                          png::rgb_pixel ( iteracio%255, (iteracio*iteracio)%255, 0 ) );
+        }
+
+      int szazalek = ( double ) j / ( double ) magassag * 100.0;
+      std::cout << "\r" << szazalek << "%" << std::flush;
+    }
+
+  kep.write ( argv[1] );
+  std::cout << "\r" << argv[1] << " mentve." << std::endl;
+
+}]]>
+</programlisting> 
+ 
+<para>
+    C++-ban a komplex számokkal való számoláshoz importálni kell a komplex osztályt. Az előző programhoz hasonlóan itt is 
+    megadjuk a kép szélességét, magasságát, iterációs határt, számítás adatait, majd beolvassuk az argumentumként kapott adatokat és 
+    azokkal dolgozunk. A for ciklusokkal megyünk végig a háló sorain és oszlopain. A reC és imC a háló rácspontjait számoljuk és a 
+    rácspontokhoz tartozó komplex számokat a complex osztály segítségével. While ciklussal addig megyünk a rácsopontokon, amíg z_n abszolútértéke kisebb mint 4, illetve amíg az iteráció nem éri el a 255-t.
+    Eztután állítjuk be a pixeleket feketére ahol a z elem nem lépett ki a halmazból. Végül kimentjük a képet, az argumentumban megadott névvel.
+</para>
+     <para>Fordításkor használjuk a png könyvtárat a kép készítéséhez.Futtatáskor pedig megadjuk az elkészült kép milyen nével jöjjön kétre és a számítás adatait.</para>
+        <screen>
+<![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/attention_raising/Mandelbrot$ g++ 3.1.2.cpp -lpng -O3 -o 3.1.2
+adrian@adrian-MS-7817:~/Desktop/BHAX/attention_raising/Mandelbrot$ ./3.1.2 mandel.png 1920 1080 1020 0.4127655418209589255340574709407519549131 0.4127655418245818053080142817634623497725 0.2135387051768746491386963270997512154281 0.2135387051804975289126531379224616102874
+Szamitas
+mandel.png mentve.
+adrian@adrian-MS-7817:~/Desktop/BHAX/attention_raising/Mandelbrot$ 
+ ]]>
+        </screen> 
+        <para>Ezekkel az adatokkal ezt az eredményt kapjuk:</para>
+         <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/mandel2.png" scale="20" />
+            </imageobject>
+        </mediaobject>
+
+     <para>A következő adatokkal pedig ezt a képet kapjuk:</para>
+     <screen>
+<![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/attention_raising/Mandelbrot$ ./3.1.2 mandel.png 1920 1080 2040 -0.01947381057309366392260585598705802112818 -0.0194738105725413418456426484226540196687 0.7985057569338268601555341774655971676111 0.79850575693437919611028519284445792436
+Szamitas
+mandel.png mentve.
+
+ ]]>
+        </screen> 
+         <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/mandel3.png" scale="20" />
+            </imageobject>
+        </mediaobject>
+
     </section>        
                 
     <section>
@@ -47,40 +354,211 @@
     </section>                     
 
     <section>
-        <title>A Mandelbrot halmaz CUDA megvalósítása</title>
+         <title>A Mandelbrot halmaz CUDA megvalósítása</title>
         <para>
         </para>
         <para>
-            Megoldás videó: 
+            Megoldás videó: <link xlink:href="https://youtu.be/gvaqijHlRUs">https://youtu.be/gvaqijHlRUs</link>
         </para>
         <para>
-            Megoldás forrása:  
+            Megoldás forrása:<link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/attention_raising/CUDA/mandelpngc_60x60_100.cu">https://github.com/p-adrian05/BHAX/blob/master/attention_raising/CUDA/mandelpngc_60x60_100.cu</link>              
         </para>
+        <para>
+            A CUDA egy többszálas, párhuzamos feldolgozási platform és API, amit nvidia készített, ezért csak nvidia grafikus kártyákkal használható.
+            Ennek segítségével tudunk számításokat végezni a GPU-val CPU helyett. Az első feladatban a mandelbrot halmaz kiszámításához 
+            csak 1 szálon a CPU-t vettük igénybe ami közel 19 másodpercet vett igénybe.
+        </para>
+        <para>
+            A CUDA-ban van egy rácsunk, amibe minden oszlopba és sorba berakunk 60db blokkot és blokkonként berakunk 100 szálat, így egyszerre fog számolni 
+            60x60x100-at, 60db blokkban a 100 úgy jön ki, hogy 10x10. Mi esetünkben ki akarunk számolni egy 600x600 pixeles képet és ezt felhasználva minde pixelnek megfelel egy szál, így egyszerre számolódnak a 
+            pixelek ellentétben a CPU-s verziónál, ahol 1 szálunk volt. 
+        </para>
+           <programlisting >
+<![CDATA[#include <png++/image.hpp>
+#include <png++/rgb_pixel.hpp>
+
+#include <sys/times.h>
+#include <iostream>
+
+
+#define MERET 600
+#define ITER_HAT 32000
+
+__device__ int
+mandel (int k, int j)
+{
+  // Végigzongorázza a CUDA a szélesség x magasság rácsot:
+  // most eppen a j. sor k. oszlopaban vagyunk
+
+  // számítás adatai
+  float a = -2.0, b = .7, c = -1.35, d = 1.35;
+  int szelesseg = MERET, magassag = MERET, iteraciosHatar = ITER_HAT;
+
+  // a számítás
+  float dx = (b - a) / szelesseg;
+  float dy = (d - c) / magassag;
+  float reC, imC, reZ, imZ, ujreZ, ujimZ;
+  // Hány iterációt csináltunk?
+  int iteracio = 0;
+
+  // c = (reC, imC) a rács csomópontjainak
+  // megfelelő komplex szám
+  reC = a + k * dx;
+  imC = d - j * dy;
+  // z_0 = 0 = (reZ, imZ)
+  reZ = 0.0;
+  imZ = 0.0;
+  iteracio = 0;
+
+  while (reZ * reZ + imZ * imZ < 4 && iteracio < iteraciosHatar)
+    {
+      // z_{n+1} = z_n * z_n + c
+      ujreZ = reZ * reZ - imZ * imZ + reC;
+      ujimZ = 2 * reZ * imZ + imC;
+      reZ = ujreZ;
+      imZ = ujimZ;
+
+      ++iteracio;
+
+    }
+  return iteracio;
+}
+
+
+/*
+__global__ void
+mandelkernel (int *kepadat)
+{
+
+  int j = blockIdx.x;
+  int k = blockIdx.y;
+
+  kepadat[j + k * MERET] = mandel (j, k);
+
+}
+*/
+
+__global__ void
+mandelkernel (int *kepadat)
+{
+
+  int tj = threadIdx.x;
+  int tk = threadIdx.y;
+
+  int j = blockIdx.x * 10 + tj;
+  int k = blockIdx.y * 10 + tk;
+
+  kepadat[j + k * MERET] = mandel (j, k);
+
+}
+
+void
+cudamandel (int kepadat[MERET][MERET])
+{
+
+  int *device_kepadat;
+  cudaMalloc ((void **) &device_kepadat, MERET * MERET * sizeof (int));
+
+  // dim3 grid (MERET, MERET);
+  // mandelkernel <<< grid, 1 >>> (device_kepadat);
+  
+  dim3 grid (MERET / 10, MERET / 10);
+  dim3 tgrid (10, 10);
+  mandelkernel <<< grid, tgrid >>> (device_kepadat);  
+  
+  cudaMemcpy (kepadat, device_kepadat,
+	      MERET * MERET * sizeof (int), cudaMemcpyDeviceToHost);
+  cudaFree (device_kepadat);
+
+}
+
+int
+main (int argc, char *argv[])
+{
+
+  // Mérünk időt (PP 64)
+  clock_t delta = clock ();
+  // Mérünk időt (PP 66)
+  struct tms tmsbuf1, tmsbuf2;
+  times (&tmsbuf1);
+
+  if (argc != 2)
+    {
+      std::cout << "Hasznalat: ./mandelpngc fajlnev";
+      return -1;
+    }
+
+  int kepadat[MERET][MERET];
+
+  cudamandel (kepadat);
+
+  png::image < png::rgb_pixel > kep (MERET, MERET);
+
+  for (int j = 0; j < MERET; ++j)
+    {
+      //sor = j;
+      for (int k = 0; k < MERET; ++k)
+	{
+	  kep.set_pixel (k, j,
+			 png::rgb_pixel (255 -
+					 (255 * kepadat[j][k]) / ITER_HAT,
+					 255 -
+					 (255 * kepadat[j][k]) / ITER_HAT,
+					 255 -
+					 (255 * kepadat[j][k]) / ITER_HAT));
+	}
+    }
+  kep.write (argv[1]);
+
+  std::cout << argv[1] << " mentve" << std::endl;
+
+  times (&tmsbuf2);
+  std::cout << tmsbuf2.tms_utime - tmsbuf1.tms_utime
+    + tmsbuf2.tms_stime - tmsbuf1.tms_stime << std::endl;
+
+  delta = clock () - delta;
+  std::cout << (float) delta / CLOCKS_PER_SEC << " sec" << std::endl;
+
+}]]>
+</programlisting> 
+<para>A fordításhoz a következő, parancsot kell használni, nem a megszokott g++ fordítót:</para>
+<screen>
+<![CDATA[
+nvcc mandelpngc_60x60_100.cu -lpng16 -03 -o mandelpngc
+ ]]>
+        </screen> 
+<para> A program futtatásához nvidia kártyára van szükség, amivel nem rendelkezem, így nem tudjuk meg
+    mennyivel lenne gyorsabb a CPU-hoz képest, de valahol 50-70 szeres gyorsulást lehet tapasztalni.
+</para>
     </section>                     
 
     <section>
-        <title>Mandelbrot nagyító és utazó C++ nyelven</title>
+       <title>Mandelbrot nagyító és utazó C++ nyelven</title>
         <para>
             Építs GUI-t a Mandelbrot algoritmusra, lehessen egérrel nagyítani egy területet, illetve egy pontot
             egérrel kiválasztva vizualizálja onnan a komplex iteréció bejárta z<subscript>n</subscript> komplex számokat!
         </para>
-            
         <para>
-            Megoldás forrása:  
+            Megoldás videó: <link xlink:href=""></link>
+            Illetve <link xlink:href="https://bhaxor.blog.hu/2018/09/02/ismerkedes_a_mandelbrot_halmazzal">https://bhaxor.blog.hu/2018/09/02/ismerkedes_a_mandelbrot_halmazzal</link>.        </para>
+        <para>
+            Megoldás forrása: <link xlink:href=""></link>
         </para>
 
-        <para>
-            Megoldás videó: 
-        </para>
-        <para>
-            Megoldás forrása:  
-        </para>
     </section>                     
                                                                                                                                                                             
     <section>
-        <title>Mandelbrot nagyító és utazó Java nyelven</title>
+       <title>Mandelbrot nagyító és utazó Java nyelven</title>
         <para>
         </para>
+        <para>
+            Megoldás videó: <link xlink:href="https://youtu.be/Ui3B6IJnssY">https://youtu.be/Ui3B6IJnssY</link>, 4:27-től.
+            Illetve <link xlink:href="https://bhaxor.blog.hu/2018/09/02/ismerkedes_a_mandelbrot_halmazzal">https://bhaxor.blog.hu/2018/09/02/ismerkedes_a_mandelbrot_halmazzal</link>.
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/apbs02.html#id570518">https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/apbs02.html#id570518</link>
+        </para>
+
     </section>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 </chapter>                
