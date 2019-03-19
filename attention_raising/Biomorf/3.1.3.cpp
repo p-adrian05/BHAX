@@ -73,7 +73,7 @@ main ( int argc, char *argv[] )
     double dx = ( xmax - xmin ) / szelesseg;
     double dy = ( ymax - ymin ) / magassag;
 
-    std::complex<double> cc ( reC, imC );
+    std::complex<double> c ( reC, imC );
 
     std::cout << "Szamitas\n";
 
@@ -93,8 +93,10 @@ main ( int argc, char *argv[] )
             for (int i=0; i < iteraciosHatar; ++i)
             {
 
-                z_n = std::pow(z_n, 3) + cc;
-                //z_n = std::pow(z_n, 2) + std::sin(z_n) + cc;
+                //z_n = std::pow(z_n, 3) + c;
+                //z_n = std::pow(z_n, 2) + std::sin(z_n) + c;
+                //z_n = std::pow(z_n, 2) + std::pow(z_n, 6) +c;
+                z_n = std::pow(z_n, 3) + c;
                 if(std::real ( z_n ) > R || std::imag ( z_n ) > R)
                 {
                     iteracio = i;
@@ -103,7 +105,7 @@ main ( int argc, char *argv[] )
             }
 
             kep.set_pixel ( x, y,
-                            png::rgb_pixel ( (iteracio*20)%255, (iteracio*40)%255, (iteracio*60)%255 ));
+                            png::rgb_pixel ( (iteracio*20)%255, (iteracio*20)%255, (iteracio*60)%255 ));
         }
 
         int szazalek = ( double ) y / ( double ) magassag * 100.0;
