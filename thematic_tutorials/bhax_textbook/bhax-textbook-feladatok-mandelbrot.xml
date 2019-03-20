@@ -301,8 +301,10 @@ main ( int argc, char *argv[] )
     C++-ban a komplex számokkal való számoláshoz importálni kell a komplex osztályt. Az előző programhoz hasonlóan itt is 
     megadjuk a kép szélességét, magasságát, iterációs határt, számítás adatait, majd beolvassuk az argumentumként kapott adatokat és 
     azokkal dolgozunk. A for ciklusokkal megyünk végig a háló sorain és oszlopain. A reC és imC a háló rácspontjait számoljuk és a 
-    rácspontokhoz tartozó komplex számokat a complex osztály segítségével. While ciklussal addig megyünk a rácsopontokon, amíg z_n abszolútértéke kisebb mint 4, illetve amíg az iteráció nem éri el a 255-t.
-    Eztután állítjuk be a pixeleket feketére ahol a z elem nem lépett ki a halmazból. Végül kimentjük a képet, az argumentumban megadott névvel.
+    rácspontokhoz tartozó komplex számokat a complex osztály segítségével. A while ciklus során, azt figyeljük, mennyire távolodik el a z_n a z_0 ponttól
+    vagyis a koordinátarendszer középpontjától. Ha ez a távolság nagyobb lesz 2-nél, akkor a vizsgált c pontban az iteráció nem sűrűsödik be az origóhoz közeli 
+    valamelyik pontban. Ha az iterációs harát elérése miatt lépünk ki a while ciklusból, akkor ebben a pontban az iteráció konvergens és a Mandelbrot 
+    halmaz eleméneek tekintjük, és feketére szinezzük. Végül kimentjük a képet az argumentumban megadott névvel.
 </para>
      <para>Fordításkor használjuk a png könyvtárat a kép készítéséhez.Futtatáskor pedig megadjuk az elkészült kép milyen nével jöjjön kétre és a számítás adatait.</para>
         <screen>
