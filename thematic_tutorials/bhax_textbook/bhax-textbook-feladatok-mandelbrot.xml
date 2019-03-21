@@ -777,9 +777,39 @@ nvcc mandelpngc_60x60_100.cu -lpng16 -03 -o mandelpngc
             Illetve <link xlink:href="https://bhaxor.blog.hu/2018/09/02/ismerkedes_a_mandelbrot_halmazzal">https://bhaxor.blog.hu/2018/09/02/ismerkedes_a_mandelbrot_halmazzal</link>.
         </para>
         <para>
-            Megoldás forrása: <link xlink:href="https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/apbs02.html#id570518">https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/apbs02.html#id570518</link>
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Mandelbrot/java_nagyito">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Mandelbrot/java_nagyito</link>
         </para>
 
+        <para>
+            A következő képen a Mandelbrot halmaz utazó van bemutatva. A Mandelbrot halmazon belül egy pontra kattintva vizualizálja onnan a komplex iteréció bejárta z<subscript>n</subscript> komplex számokat. Ezek azok a számok 
+            amelyek nem mennek ki a végtelenbe.
+            A MandelbrotHalmazNagyító.java programot kell fordítani javac paranccsal és futtatni a java paranccsal, majd jobb klikkel a kiválasztva a pontot a mandelbrot halmazon belül.
+        </para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/iteracio.png" scale="50" />
+            </imageobject>
+</mediaobject>
+    <para>
+        Nagyításkor a program által kiszámolt Mandelbrot halmaz valamenyik részét nagyítjuk és annak is valamenyik részét és így tovább. Az egeren bal klikkel tudjuk kiválasztani a nagyítás helyét.
+    </para >
+     <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/nagyito.png" scale="50" />
+            </imageobject>
+</mediaobject>
+    <para>Ha a nagyítások során leromlott a pontosság, akkor az n gomb nyomásával növelni tudjuk a számítások iterációs határát.
+        A program futása alatt az s billentyűt lenyomva a kiszámolt halmazról egy felvételt készít a program, amit ugyanabban a könyvtárba ment ahol a program van,</para>
+<mediaobject>
+            <imageobject>
+                <imagedata fileref="img/nagyito2.png" scale="40" />
+            </imageobject>
+</mediaobject>
+<mediaobject>
+            <imageobject>
+                <imagedata fileref="img/nagyito3.png" scale="50" />
+            </imageobject>
+</mediaobject>
     </section>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 </chapter>                
