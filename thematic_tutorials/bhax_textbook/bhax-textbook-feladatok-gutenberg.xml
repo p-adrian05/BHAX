@@ -100,6 +100,32 @@
             vagy befejezi a ciklust. A reuturn[kifejezés] pedig szabályosan befejezteti a függévényt és visszaadja a vezérlést a hívónak.
         
          </para>
+
+        <para>A programok szerkezete</para>
+        <para>
+            A program szövege programegységekre tagolható. Az alábbi porgramegységek léteznek: alprogram, blokk, csomag, taszk.
+            Az alprogram az eljárásorientált nyelvekben a procedurális absztrakció első megjenenési formája. Az alprogram az újrafelhasználás 
+            eszköze. Csak egyszer kell megírni és a programrész azon pontjain, ahol szerepelne, csak hivatkozni kell rá. Ezt formális paraméterekkel 
+            látjuk el, általánosabban írjuk meg az újrafelhasználás érdekében. Az alprogram a felépítése: név, formális paraméter lista, törzs, környezet.
+            A név egy azonosító, a formális paraméter is a fej része, amiven a azonosítók szerepelnek és ezek a törzsben saját programozási eszközök nevei lehetnek és egy általános 
+            szerepkört írnak le, amit a hívás helyén kell konkretizálni az aktuális paraméterek megadásával. A törzsben deklarációs és végrehajtható utítások szereplnek.
+            Az alprogramban lokális eszközök vannak, ami kívűlről nem látható, érhető el, viszont a törzsben hivatkozhatunk globális nevekre.
+            A környezet globális változók együttese. Az alprogramnak két fajtája van: eljárás és függvény. Az eljárás egy tevékenységet hajt végre, és ennek eredményét használjuk fel. 
+            A függvény pedig egyetlen értéket határoz meg, rendelkeznie kell visszatérési értékkel. A függvény mellékhatásának nevezzük, azt ha megváltoztatja környezetét, paramétereit.
+            Az eljárás szabályosan befejeződök, ha elértük a végét vagy külön utasítással, pl goto utasítással ki lehet lépni a megadott cimkén folytatva a programot. 
+            A visszatérési értéket külön utasítás adja vissza, amely egyben be is fejezteti a függvényt. A függvény, csak akkor fejeződök be szabályosan ha ad visszatérési értéket. 
+            A goto utasítás függvény esetében szabálytanak befejeződést jelent. Egy programegységek meghívhat egy másikat és az egy újabbat és így tovább, ez nevezzük 
+            hívási láncnak. A hívási lánc első tagja mindig a főprogram. A legutoljára meghívott programegység fejezi be legelőször a működés és a vezérlés visszatér az őt megelőző 
+            programegységbe. Azt amikor egy aktív alprogramot hívunk meg rekurziónak nevezünk. Ez lehet közvetlen, amikor egy alprogram önmagát 
+            hívja meg és közvetett amikor a hívási láncban már a korábban szereplő alprogramot hívjuk meg. Egyes nyelvek esetén egy alprogramnak meg lehet adni mádsodlagos belépési pontot, tehát 
+            nem csak a fejen keresztül lehet meghívni. Paraméterkiértékelésnek nevezzük azt a folyamatot, amikor amikor egy alprogram hívásánál egymáshoz
+            rendelődnek a formális és aktuális paraméterek, és meghatározódnak azok az információk, amelyek a paraméterátadásnál a kommunikációt szolgáltatják. 
+            A blokk olyan programegység, amely csak a másik programegység belsejében helyezkedhet el, külső szinten nem állhat. A blokknak van kezdete, törzse és vége. A kezdetet és véget egy speciális karaktersorozat 
+            vagy alapszó jelzi, a törzsben lehetnek deklarációs és végrehajtható utasítások. A blokknak nincs paramétere és bárhol elhelyezhető. Aktivizálni úgy lehet a blokkot, hogy 
+            rákerül a vezérlés vagy GOTO urasítással ráugrunk a kezdetére. 
+        </para>
+
+
     </section>        
     <section>
         <title>Programozás bevezetés</title>
