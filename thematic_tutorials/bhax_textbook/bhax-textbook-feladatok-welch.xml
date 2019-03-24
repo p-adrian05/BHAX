@@ -36,6 +36,168 @@
         <para>
             Megoldás forrása:                
         </para>
+
+        <para>
+            Az LZW algoritmus fa struktúrában ábrázolja a beérkező bináris adatokat. Az input adatok feldolgozása során 
+            a gyökértől indulva, addig követjük a fa ágait, amíg egy olyan részsztringhez nem érünk, amely már nincs benne a fában. 
+            Ekkor a részsztring utolsó karakterével, ami éppen feldolgozás alatt van, bővítjük a fát. A következő inputtal egy 
+            új részsztringet indítunk és újra a gyökértől próbáljuk meg illeszteni az inputot. Az algoritmus teljes neve Lempel-Ziv-Welch
+            , amit Abraham Lempel, Jacob Ziv, és Terry Welch dolgozott ki, ami egy veszteségmentes tömörítő algoritmus. Ezt az algoritmust használja 
+            a gif formátum, illetve sok tömörítő program is, pl compress, gzip, zip. 
+        </para>
+
+        <para>
+            A program legelején először is létrehozunk egy binfa struktúrát. Ezzel létrehozunk egy binfa típust, amiben deklarálunk egy 
+            egész típusú változót, ebben tároljuk majd a beérkező adatot. Ezután a fa bal és jobb oldali mutatóját adjuk meg, ami a gyökér jobb illetve bal 
+            gyerekére fog mutatni, majd létrehozzunk a binfa típusra mutató mutatót. Az uj_elem() függvényben memória területet foglalunk le a mutatónak.
+            A main függvényben dolgozzuk fel a beérkező adatokat. Létrehozzuk a gyoker mutatót, amit ráállítunk a neki lefoglalt memória területre, majd ennek
+            megadjuk az értékét, ami '/' lesz mivel ez lesz a fő, első gyökér. Ezután létrehozunk egy fa mutatót. 
+            Következik az adatok beolvasása a inputból és megnézzük a beolvasott értéket, hogy ha 0, akkor megvizsgáljuk,hogy a fa mutató bal gyereke null értékű-e , tehát nincs gyereke. 
+            Ebben az esetben a fa mutató bal gyerekének lefoglalunk helyet és az értékét 0-ra állítjuk. Ezután ennek az új gyermeknek a jobb és bal mutatóját állítjuk null-ra és a fa mutatóját 
+            ráállítjuk a az új gyökérre. Ha pedig a fa bal gyermeke nem null-ra mutat, akkor a fát ráállítjuk a bal gyermekére, vagyis az lesz az aktuális gyökér.
+            1 érték esetén ugyanez játszódik le, csak a jobb oldali elemeket vizsgáljuk.
+            Végül kiiratjuk az elkészült fánkat, végigjárva inorder bejárással, közben számolva a fa magasságát, majd felszabadítva a memóriát. 
+
+
+        </para>
+
+<programlisting language="c">
+<![CDATA[ #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+typedef struct binfa
+{
+  int ertek;
+  struct binfa *bal_nulla;
+  struct binfa *jobb_egy;
+
+} BINFA, *BINFA_PTR;
+
+BINFA_PTR
+uj_elem ()
+{
+  BINFA_PTR p;
+
+  if ((p = (BINFA_PTR) malloc (sizeof (BINFA))) == NULL)
+    {
+      perror ("memoria");
+      exit (EXIT_FAILURE);
+    }
+  return p;
+}
+
+extern void kiir (BINFA_PTR elem);
+extern void szabadit (BINFA_PTR elem);
+
+int
+main (int argc, char **argv)
+{
+  char b;
+
+  BINFA_PTR gyoker = uj_elem ();
+  gyoker->ertek = '/';
+  BINFA_PTR fa = gyoker;
+
+  while (read (0, (void *) &b, 1))
+    {
+      write (1, &b, 1);
+      if (b == '0')
+	{
+	  if (fa->bal_nulla == NULL)
+	    {
+	      fa->bal_nulla = uj_elem ();
+	      fa->bal_nulla->ertek = 0;
+	      fa->bal_nulla->bal_nulla = fa->bal_nulla->jobb_egy = NULL;
+	      fa = gyoker;
+	    }
+	  else
+	    {
+	      fa = fa->bal_nulla;
+	    }
+	}
+      else
+	{
+	  if (fa->jobb_egy == NULL)
+	    {
+	      fa->jobb_egy = uj_elem ();
+	      fa->jobb_egy->ertek = 1;
+	      fa->jobb_egy->bal_nulla = fa->jobb_egy->jobb_egy = NULL;
+	      fa = gyoker;
+	    }
+	  else
+	    {
+	      fa = fa->jobb_egy;
+	    }
+	}
+    }
+
+  printf ("\n");
+  kiir (gyoker);
+  extern int max_melyseg;
+  printf ("melyseg=%d", max_melyseg);
+  szabadit (gyoker);
+}
+
+static int melyseg = 0;
+int max_melyseg = 0;
+
+void
+kiir (BINFA_PTR elem)
+{
+  if (elem != NULL)
+    {
+      ++melyseg;
+      if (melyseg > max_melyseg)
+	max_melyseg = melyseg;
+      kiir (elem->jobb_egy);
+      for (int i = 0; i < melyseg; ++i)
+	printf ("---");
+      printf ("%c(%d)\n", elem->ertek < 2 ? '0' + elem->ertek : elem->ertek,
+	      melyseg);
+      kiir (elem->bal_nulla);
+      --melyseg;
+    }
+}
+
+void
+szabadit (BINFA_PTR elem)
+{
+  if (elem != NULL)
+    {
+      szabadit (elem->jobb_egy);
+      szabadit (elem->bal_nulla);
+      free (elem);
+    }
+}
+]]>
+        </programlisting>  
+
+
+    <para>
+        Fordításkor használjuk az c99 szabványt, majd futtatáskor az adat.txt-ben lévő adatokat irányítjuk be a programba.
+    </para> 
+        <screen>
+<![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch$ gcc z.c -o z -std=c99
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch$ ./z <adat.txt
+000111011101101100001110
+
+------------1(4)
+---------1(3)
+---------------1(5)
+------------0(4)
+------1(2)
+---------0(3)
+---/(1)
+---------1(3)
+------0(2)
+---------0(3)
+------------0(4)
+
+ ]]>
+        </screen> 
+
     </section>        
         
     <section>
