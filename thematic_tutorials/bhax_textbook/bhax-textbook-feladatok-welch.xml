@@ -34,7 +34,7 @@
             Megoldás videó:
         </para>
         <para>
-            Megoldás forrása:                
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z.c</link>               
         </para>
 
         <para>
@@ -57,7 +57,6 @@
             ráállítjuk a az új gyökérre. Ha pedig a fa bal gyermeke nem null-ra mutat, akkor a fát ráállítjuk a bal gyermekére, vagyis az lesz az aktuális gyökér.
             1 érték esetén ugyanez játszódik le, csak a jobb oldali elemeket vizsgáljuk.
             Végül kiiratjuk az elkészült fánkat, végigjárva inorder bejárással, közben számolva a fa magasságát, majd felszabadítva a memóriát. 
-
 
         </para>
 
@@ -209,10 +208,156 @@ adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch$ ./z <adat.txt
             Megoldás videó:
         </para>
         <para>
-            Megoldás forrása:                
+            Megoldás forrása:                 
         </para>
-    </section>        
-                        
+
+    <para>A fa adatstruktúrákat három féleképpen lehet bejárni:inorder,postorder és preorder módon.</para>
+    <para>A bejárások előtt először megnézzük, hogy a bejárandó fa nem üres. Inorder esetben először végigjárjuk a gyökérelem jobb oldali részfáját, feldolgozzuk a gyökérelemet 
+      majd végigmegyünk a bal oldali részfán.</para>
+    <programlisting language="c">
+<![CDATA[ 
+
+void
+kiir (BINFA_PTR elem)
+{
+  if (elem != NULL)
+    {
+      ++melyseg;
+      if (melyseg > max_melyseg)
+	    max_melyseg = melyseg;
+
+      kiir (elem->jobb_egy);
+
+      for (int i = 0; i < melyseg; ++i)
+	    printf ("---");
+      printf ("%c(%d)\n", elem->ertek < 2 ? '0' + elem->ertek : elem->ertek,
+	      melyseg);
+
+      kiir (elem->bal_nulla);
+
+      --melyseg;
+    }
+}
+
+]]>
+        </programlisting>  
+ <screen>
+<![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch$ gcc z.c -o z -std=c99
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch$ ./z <adat.txt
+000111011101101100001110
+
+------------1(4)
+---------1(3)
+---------------1(5)
+------------0(4)
+------1(2)
+---------0(3)
+---/(1)
+---------1(3)
+------0(2)
+---------0(3)
+------------0(4)
+
+ ]]>
+        </screen>
+    <para>Preorder bejárásnál először dolgozzuk fel a gyökérelemet, majd bejárjuk a gyökérelem bal oldali részfáját, majd ezután a jobb oldali részfáját.</para>
+  
+<programlisting language="c">
+    <![CDATA[ 
+
+void
+kiir (BINFA_PTR elem)
+{
+  if (elem != NULL)
+    {
+      ++melyseg;
+      if (melyseg > max_melyseg)
+	    max_melyseg = melyseg;
+      for (int i = 0; i < melyseg; ++i)
+	    printf ("---");
+      printf ("%c(%d)\n", elem->ertek < 2 ? '0' + elem->ertek : elem->ertek,
+	      melyseg);
+
+      kiir (elem->bal_nulla);
+      kiir (elem->jobb_egy);
+
+      --melyseg;
+    }
+}
+
+]]>
+</programlisting>  
+<screen>
+<![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch/test$ ./z <adat.txt
+000111011101101100001110
+
+---/(1)
+------0(2)
+---------0(3)
+------------0(4)
+---------1(3)
+------1(2)
+---------0(3)
+---------1(3)
+------------0(4)
+---------------1(5)
+------------1(4)
+
+
+ ]]>
+        </screen>
+
+      <para>Postorder bejárás pedig a preorder ellentetje, tehát ekkor a gyökérelem bal oldali részfáját járjuk be először, utána a jobb oldalit és ezután dolgozzuk 
+        fel a gyökérelemet.
+      </para>
+ 
+<programlisting language="c">
+    <![CDATA[ 
+
+void
+kiir (BINFA_PTR elem)
+{
+  if (elem != NULL)
+    {
+      ++melyseg;
+      if (melyseg > max_melyseg)
+	    max_melyseg = melyseg;
+
+      kiir (elem->bal_nulla);
+      kiir (elem->jobb_egy);
+
+      for (int i = 0; i < melyseg; ++i)
+	    printf ("---");
+      printf ("%c(%d)\n", elem->ertek < 2 ? '0' + elem->ertek : elem->ertek,
+	      melyseg);
+
+      --melyseg;
+    }
+}
+
+]]> 
+</programlisting>   
+<screen>
+<![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch/test$ ./z <adat.txt000111011101101100001110
+
+------------0(4)
+---------0(3)
+---------1(3)
+------0(2)
+---------0(3)
+---------------1(5)
+------------0(4)
+------------1(4)
+---------1(3)
+------1(2)
+---/(1)
+ ]]>
+ </screen>
+</section> 
+
     <section>
         <title>Tag a gyökér</title>
         <para>
