@@ -368,8 +368,195 @@ adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch/test$ ./z <adat.txt
             Megoldás videó:
         </para>
         <para>
-            Megoldás forrása:                
+            Megoldás forrása:<link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a7.cpp">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a7.cpp</link>               
         </para>
+
+<programlisting language="c++">
+    <![CDATA[ 
+
+class LZWBinFa
+{
+public:
+   LZWBinFa ():fa (&gyoker)
+    {
+    }
+    ~LZWBinFa ()
+    {
+        szabadit (gyoker.egyesGyermek ());
+        szabadit (gyoker.nullasGyermek ());
+    }
+
+    void operator<< (char b) 
+    {
+        
+        if (b == '0')
+        {
+          
+            if (!fa->nullasGyermek ())
+            {
+                
+                Csomopont *uj = new Csomopont ('0');
+                fa->ujNullasGyermek (uj);
+                fa = &gyoker;
+            }
+            else			
+            {
+                
+                fa = fa->nullasGyermek ();
+            }
+        }
+       
+        else
+        {
+            if (!fa->egyesGyermek ())
+            {
+                Csomopont *uj = new Csomopont ('1');
+                fa->ujEgyesGyermek (uj);
+                fa = &gyoker;
+            }
+            else
+            {
+                fa = fa->egyesGyermek ();
+            }
+        }
+    }
+
+]]> 
+</programlisting>   
+
+<para>
+  Ebben az osztályban a fa gyökere nem mutató, hanem egy objektum, a fa a mutató, ami mindig az épülő fa aktuális csomópontjára mutat. 
+  Az LZWBinFa konstruktor ráállítja a fa mutatót a gyökérre, a dekonstruktorban pedig felszabadítjuk a gyoker gyerekeit. 
+  Tagfüggvényként túlterheljük a <screen><![CDATA[<<]]> </screen> operátort és az inputot eszerint tesszük a fába.
+  Ha a bemenő karakter 0, akkor megnézzük, hogy az aktuális csomópontnak van-e 0-ás gyermeke, tehát a fa mutató éppen rá mutat-e. 
+  Ha nincs, akkor példányosítjuk a '0' betűt, új csomópontot hozunk étre. Ezután az aktuális csomópont nullás gyermekét ráállítjuk az új csomópontjra és 
+  a fával visszaállunk a gyökérre.
+  Ha van nullás gyerkmek, akkor a fa mutatót ráállítjuk. '1' es karakter esetén ugyanez játszódik le.
+</para>
+
+<programlisting language="c++">
+    <![CDATA[ 
+private:
+ class Csomopont
+    {
+    public:
+        Csomopont (char b = '/'):betu (b), balNulla (0), jobbEgy (0)
+        {
+        };
+        ~Csomopont ()
+        {
+        };
+        
+        Csomopont *nullasGyermek () const
+        {
+            return balNulla;
+        }
+        
+        Csomopont *egyesGyermek () const
+        {
+            return jobbEgy;
+        }
+        
+        void ujNullasGyermek (Csomopont * gy)
+        {
+            balNulla = gy;
+        }
+        
+        void ujEgyesGyermek (Csomopont * gy)
+        {
+            jobbEgy = gy;
+        }
+       
+        char getBetu () const
+        {
+            return betu;
+        }
+
+    private:
+        char betu;
+        
+        Csomopont *balNulla;
+        Csomopont *jobbEgy;
+
+        Csomopont (const Csomopont &); //másoló konstruktor
+        Csomopont & operator= (const Csomopont &);
+    };
+
+]]> 
+</programlisting>   
+
+<para>
+    A beágyazott Csomopont osztály privát, hogy csak az LZWBinFa osztályon belül tudjuk elérni.
+    A paraméter nélküli konstruktor az alapértelmezett '/' betűvel hozza létre a csomópontot. Ilyet hívunk a fából, 
+    aki tagként tartalmazza a gyökeret, mert ha más betűvel hívjuk meg, akkor azt teszi a betű tagba, a két gyerkmekre mutató mutatót pedig nullra állítjuk. 
+    Ezután függvények következnek, amik visszaadjak az aktuális csomópont jobb és bal gyermekét. A metódusok peddig arra szolgálnak, hogy az aktuális 
+    csomópont akutális gyerekeit ráállítsák az új csomópontokra. Végül létrehozzuk a privát változókat, mutatókat és a másoló konstruktort, amit letiltunk.
+</para>
+<programlisting language="c++">
+    <![CDATA[ 
+int
+main (int argc, char *argv[])
+{
+    
+    if (argc != 4)
+    {    
+        usage ();
+        return -1;
+    }
+
+    char *inFile = *++argv;
+    if (*((*++argv) + 1) != 'o')
+    {
+        usage ();
+        return -2;
+    }
+    std::fstream beFile (inFile, std::ios_base::in);
+    if (!beFile)
+    {
+        std::cout << inFile << " nem letezik..." << std::endl;
+        usage ();
+        return -3;
+    }
+
+    std::fstream kiFile (*++argv, std::ios_base::out);
+
+    unsigned char b;		
+    LZWBinFa binFa;		
+    while (beFile.read ((char *) &b, sizeof (unsigned char)))
+    {
+        for (int i = 0; i < 8; ++i)
+        {    
+            if (b & 0x80)
+                binFa << '1';
+            else
+                binFa << '0';
+            b <<= 1;
+        }
+
+    }
+    kiFile << binFa;
+    kiFile << "depth = " << binFa.getMelyseg () << std::endl;
+    kiFile << "mean = " << binFa.getAtlag () << std::endl;
+    kiFile << "var = " << binFa.getSzoras () << std::endl;
+
+    kiFile.close ();
+    beFile.close ();
+    return 0;
+}
+]]> 
+</programlisting>
+<para>A main függvényben először ellenőrizzük, hogy helyen bemenetet kaptunk parancssorból, 
+  majd létrehozzuk a binFa objektumot és a b változóba olvassuk be bejövő fájl bájtjait. Eztuán következik az adatok beolvasása 
+  fájlból, amit binárisan olvasunk be, for ciklussal megnézzük egyenként a b-ben lévő bájt bitjeit. Ha a végigmegyünk a biteken és végig 0 lesz, kivéve a vége az 
+  0 vagy 1, akkor aszerint tesszük a fába az '1' vagy '0' betűt. Végül a kimeneti csatornába egy fájlba kiirjuk a fát, illetve pár adatot a megépült fáról: magasság, szórás, átlag.
+</para>   
+<para>Futtatáskor meg kell adni egy fájlt amiból olvas és a kimenő fájl nevét, amiben a fát írja ki.</para>
+<screen>
+<![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch$ g++ z3a7.cpp -o fa
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch$ ./fa adat.txt -o test.txt
+ ]]>
+ </screen>
     </section>        
                 
     <section>
@@ -382,7 +569,7 @@ adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch/test$ ./z <adat.txt
             Megoldás videó: 
         </para>
         <para>
-            Megoldás forrása:  
+            Megoldás forrása:<link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a8.cpp">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a8.cpp</link>  
         </para>
     </section>                     
 
