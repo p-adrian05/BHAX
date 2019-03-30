@@ -366,6 +366,7 @@ main (int argc, char *argv[])
     kiFile << "depth = " << binFa.getMelyseg () << std::endl;
     kiFile << "mean = " << binFa.getAtlag () << std::endl;
     kiFile << "var = " << binFa.getSzoras () << std::endl;
+
     kiFile.close ();
     beFile.close ();
 

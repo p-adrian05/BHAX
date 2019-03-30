@@ -75,11 +75,11 @@ public:
     }
     ~LZWBinFa ()
     {
-		
         szabadit (gyoker->egyesGyermek ());
         szabadit (gyoker->nullasGyermek ());
         delete gyoker;
     }
+
 
     void operator<< (char b) 
     {
@@ -186,8 +186,8 @@ private:
     int melyseg, atlagosszeg, atlagdb;
     double szorasosszeg;
     
-    LZWBinFa (const LZWBinFa &);
-    LZWBinFa & operator= (const LZWBinFa &);
+     LZWBinFa (const LZWBinFa &);
+     LZWBinFa & operator= (const LZWBinFa &);
 
     
     void kiir (Csomopont * elem, std::ostream & os)
@@ -214,7 +214,23 @@ private:
             delete elem;
         }
     }
+Csomopont *  masol ( Csomopont * elem, Csomopont * regifa ) {
 
+          Csomopont * ujelem = NULL;
+
+          if ( elem != NULL ) {
+               ujelem = new Csomopont ( elem->getBetu() );
+
+               ujelem->ujEgyesGyermek ( masol ( elem->egyesGyermek (), regifa ) );
+               ujelem->ujNullasGyermek ( masol ( elem->nullasGyermek (), regifa ) );
+
+               if ( regifa == elem )
+                    fa = ujelem;
+
+          }
+
+          return ujelem;
+     }
 protected:			
     Csomopont *gyoker;
     int maxMelyseg;
@@ -364,6 +380,7 @@ main (int argc, char *argv[])
     kiFile << "depth = " << binFa.getMelyseg () << std::endl;
     kiFile << "mean = " << binFa.getAtlag () << std::endl;
     kiFile << "var = " << binFa.getSzoras () << std::endl;
+
 
     kiFile.close ();
     beFile.close ();

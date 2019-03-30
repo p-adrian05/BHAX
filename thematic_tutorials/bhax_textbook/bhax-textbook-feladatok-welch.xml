@@ -646,6 +646,89 @@ protected:
         <para>
             Megoldás forrása:  
         </para>
+<programlisting language="c++">
+    <![CDATA[ 
+
+LZWBinFa ( const LZWBinFa & regi ) {
+          std::cout << "LZWBinFa copy ctor" << std::endl;
+
+          gyoker.ujEgyesGyermek ( masol ( regi.gyoker.egyesGyermek (), regi.fa ) );
+          gyoker.ujNullasGyermek ( masol ( regi.gyoker.nullasGyermek (), regi.fa ) );
+
+          if ( regi.fa == & ( regi.gyoker ) )
+               fa = &gyoker;
+
+     }
+    
+LZWBinFa ( LZWBinFa && regi ) {
+          std::cout << "LZWBinFa move ctor" << std::endl;
+
+          gyoker.ujEgyesGyermek ( regi.gyoker.egyesGyermek() );
+          gyoker.ujNullasGyermek ( regi.gyoker.nullasGyermek() );
+
+          regi.gyoker.ujEgyesGyermek ( nullptr );
+          regi.gyoker.ujNullasGyermek ( nullptr );
+
+     }
+
+]]>
+</programlisting> 
+<programlisting language="c++">
+    <![CDATA[ 
+ Csomopont *  masol ( Csomopont * elem, Csomopont * regifa ) {
+
+          Csomopont * ujelem = NULL;
+
+          if ( elem != NULL ) {
+               ujelem = new Csomopont ( elem->getBetu() );
+
+               ujelem->ujEgyesGyermek ( masol ( elem->egyesGyermek (), regifa ) );
+               ujelem->ujNullasGyermek ( masol ( elem->nullasGyermek (), regifa ) );
+
+               if ( regifa == elem )
+                    fa = ujelem;
+
+          }
+
+          return ujelem;
+     }
+
+]]>
+</programlisting> 
+<programlisting language="c++">
+    <![CDATA[ 
+LZWBinFa binFa3 = std::move ( binFa );
+
+     kiFile << "depth = " << binFa3.getMelyseg () << std::endl;
+     kiFile << "mean = " << binFa3.getAtlag () << std::endl;
+     kiFile << "var = " << binFa3.getSzoras () << std::endl;
+
+]]>
+</programlisting> 
+
+<screen>
+<![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch$ g++ z3a9.cpp -o fa
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch$ ./fa adat.txt -o test.txt
+LZWBinFa copy ctor
+------------1(3)
+---------1(2)
+------1(1)
+---/(0)
+---------1(2)
+------0(1)
+depth = 3
+mean = 2.5
+var = 0.707107
+LZWBinFa dtor
+LZWBinFa move ctor
+LZWBinFa dtor
+LZWBinFa dtor
+
+ ]]>
+ </screen>
+
+
     </section>                     
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 </chapter>                
