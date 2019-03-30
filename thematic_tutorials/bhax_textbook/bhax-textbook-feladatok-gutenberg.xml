@@ -125,6 +125,33 @@
             rákerül a vezérlés vagy GOTO urasítással ráugrunk a kezdetére. 
         </para>
 
+        <para>Paraméterkiértékelés</para>
+        <para>
+            Paraméterkiértékelés az a folyamat, amikor egy alprogram hívásánál egymáshoz rendelődnek a formális és aktuális 
+            paraméterek. A formális paraméterlista az elsődleges, az alprogram specifikációját tartalmazza,csak egy darad van belőle.
+            Az aktuális paraméterlistából annyi lehet ahányszor meghívjuk az alprogramot. Tehát mindig az aktuális paramétereket rendeljük a 
+            formálisakhoz. Ennek két típusa van: sorrendi és név szerinti kötés. A sorrendi kötés esetén a formális paraméterekhez a felsorolás sorrendjében 
+            rendelődnek hozzá az aktuális paraméterek. A név szerinti kötés esetén pedig a paraméterlistában határozhatjuk meg az 
+            egymáshoz rendelést. Ezek kombinációja is alkalmazható. Abban az esetben, amikor a formális paraméterek száma fix, ekkor 
+            az aktuális paraméterek számának meg kell egyeznie a formális paraméterek számával vagy kevesebb lehet. 
+            A típusokról néhány nyelv az típsuegyenértékűséget vallja, ekkor az aktuális paraméter típusának azonosnak kell lennie a formális 
+            paraméter típusával vagy létezik a típuskényszerítés elve, ami alapján a paramétertípusok konvertálhatóak.
+        </para>
+        <para>Paraméterátadás</para>
+        <para>
+            A paraméterátadásnál van egy hívó, ami tetszóleges programegység és egy hívott, amely egy alprogram. Paraméterátadási módok:
+            érték, cím, eredmény, érték-eredmény, név és szöveg szerinti. Érték szerinti átadás esetén, a formális paraméterekek van címkomponensük a hívott
+            alprogram területén és az aktuális paraméternek rendelkeznie kell értékkomponenssel a hívó oldalán. A hívott program semmit sem tud a hívóról, 
+            a saját területén dolgozik. Az információáramlás egyirányú. Cím szerinti paraméterátadáskor a formális paramétereknek nincs címkomponensük a hívott alprogram 
+            területén, aktuális paraméternek viszont rendelkeznie kell. Kiértékeléskor meghatározódik az aktuális paraméter címe és átadódik a hívott 
+            programnak. Az információáramlás kétriányú.Az információátadás kétirányú, az alprogram a hívó területérıl átvehet értéket, és írhat is oda.
+            Eredmény szerinti átadáskor a kommunikáció egyirányú, a hívottól a hívó felé irányulé és van értékmásolás.
+            Érték-eredmény esetén van címkomponens a hivott területen és az aktuális paraméternek rendelkeznie kell érték és címkomponenssel. Kétirányú a kommunikációs, kétszer van 
+            értékmásolás. Név szerinti paraméterátadásnál az aktuális paraméter egy szimbólumsorozat lehet. Az információáramlás iránya az aktuális paraméter adott
+            szövegkörnyezetbeli értelmezésétıl függ. A szöveg szerinti paraméterátadás a név szerintinek egy változat.
+            Alprogramok esetén típust paraméterként átadni nem lehet. Az alpogramok formális paramétereinek három csoportja van:
+            input paraméterek, output és input-output paraméterek.
+        </para>
 
     </section>        
     <section>
