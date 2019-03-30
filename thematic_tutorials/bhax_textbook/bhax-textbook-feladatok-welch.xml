@@ -17,12 +17,150 @@
             Megoldás videó:
         </para>
         <para>
-            Megoldás forrása:                
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Welch/polargen">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Welch/polargen</link>                
         </para>
         <para>
             Tanulságok, tapasztalatok, magyarázat... térj ki arra is, hogy a JDK forrásaiban a Sun programozói
             pont úgy csinálták meg ahogyan te is, azaz az OO nemhogy nem nehéz, hanem éppen természetes neked!
-        </para>                
+        </para> 
+        <para>Java-ban:</para>
+        <programlisting language="java">
+<![CDATA[ 
+
+public class PolárGenerátor {
+    
+    boolean nincsTárolt = true;
+    double tárolt;
+    
+    public PolárGenerátor() {
+        
+        nincsTárolt = true;
+        
+    }
+    
+    public double következő() {
+        
+        if(nincsTárolt) {
+            
+            double u1, u2, v1, v2, w;
+            do {
+                u1 = Math.random();
+                u2 = Math.random();
+                
+                v1 = 2*u1 - 1;
+                v2 = 2*u2 - 1;
+                
+                w = v1*v1 + v2*v2;
+                
+            } while(w > 1);
+            
+            double r = Math.sqrt((-2*Math.log(w))/w);
+            
+            tárolt = r*v2;
+            nincsTárolt = !nincsTárolt;
+            
+            return r*v1;
+            
+        } else {
+            nincsTárolt = !nincsTárolt;
+            return tárolt;
+        }
+    }
+    
+    public static void main(String[] args) {
+        
+        PolárGenerátor g = new PolárGenerátor();
+        
+        for(int i=0; i<10; ++i)
+            System.out.println(g.következő());
+        
+    }
+    
+}
+
+]]>
+        </programlisting>  
+<para>C++-ban:</para>
+ <programlisting language="c++">
+<![CDATA[ 
+
+#include <cstdlib>
+#include <cmath>
+#include <ctime>
+#include <iostream>
+class PolarGen
+{
+public:
+  PolarGen ()
+  {
+    nincsTarolt = true;
+    std::srand (std::time (NULL));
+  }
+   ~PolarGen ()
+  {
+
+  }
+double kovetkezo ()
+{
+  if (nincsTarolt)
+    {
+      double u1, u2, v1, v2, w;
+      do
+	{
+	  u1 = std::rand () / (RAND_MAX + 1.0);
+	  u2 = std::rand () / (RAND_MAX + 1.0);
+	  v1 = 2 * u1 - 1;
+	  v2 = 2 * u2 - 1;
+	  w = v1 * v1 + v2 * v2;
+	}
+      while (w > 1);
+
+      double r = std::sqrt ((-2 * std::log (w)) / w);
+
+      tarolt = r * v2;
+      nincsTarolt = !nincsTarolt;
+
+      return r * v1;
+    }
+  else
+    {
+      nincsTarolt = !nincsTarolt;
+      return tarolt;
+    }
+}
+private:
+  bool nincsTarolt;
+  double tarolt;
+};
+
+int main (int argc, char **argv)
+{
+  PolarGen pg;
+
+  for (int i = 0; i < 10; ++i)
+    std::cout << pg.kovetkezo () << std::endl;
+
+  return 0;
+}
+]]>
+        </programlisting>
+         <screen>
+<![CDATA[
+adrian@adrian-MS-7817:~/Desktop$ g++ polargen.cpp -o p
+adrian@adrian-MS-7817:~/Desktop$ ./p
+0.33827
+0.159026
+1.07617
+-0.573861
+0.407831
+0.337813
+1.1272
+1.33273
+-1.67664
+0.401283
+
+ ]]>
+        </screen>
     </section>        
 
     <section>
@@ -644,7 +782,7 @@ protected:
             Megoldás videó: 
         </para>
         <para>
-            Megoldás forrása:  
+            Megoldás forrása:<link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a9.cpp">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a9.cpp</link>   
         </para>
 <programlisting language="c++">
     <![CDATA[ 
