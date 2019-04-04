@@ -19,7 +19,31 @@
         </para>
         <para>
             Tanulságok, tapasztalatok, magyarázat...
-        </para>            
+        </para> 
+          <mediaobject>
+    <imageobject>
+            <imagedata fileref="img/uml.png" scale="60" />
+            </imageobject>
+     </mediaobject>
+     <para>
+         Az Ant osztályba a hanyga tulajdonságai vannak meghatározva. Az x és y a koordinátái, a dir pedig az irány amibe 
+         tart. A + jel azt jelenti, hogy public elérésű, tehát az osztályon kívűl is látszódik, elérhető. A - pedig private, tehát  
+         Az ants egy vektor, ami a hangyákat tárolja.
+     </para>
+     <para>
+         Az AntWin osztályban a width és height tulajdonság az ablak szélessége, magassága pixelekben, a cellwidth és cellheigth pedig a pixelek vagy cellák 
+         szélessége,magassága amiben a hangyák vannak ábrázolva, megjelenítve. Az antThread az ablaknak egy szála amivel a hangyaszámításokat végzi. 
+         A grids a két rácsot jelenti, a gridldx pedig a a két rácspont közül egyet tárol. A max és min pedig a min 1 és max 255 feromon lehetséges értékét jelenti.
+         A függvények közül ott van a konstruktor és a destruktor. A closeEvent() a kikapcsolási esemény ami meghívja az AntThread osztályból a finish() metódust ami leállítja az ablakot a running hamis értékre állításával, 
+         keyPressEvent() a gombnyomásokat dolgozza fel, a paintEvent() 
+         pedig a hangyák színezését alakítja.
+     </para>
+     <para>
+         Az AntThread osztályban a tulajdonságok hasonlóak mint az AntWinben, kiegészítve párral. Az evaporation párolgás mértékét tárolja, feromonok száma, 
+         hangyák száma egy cellában. A funkcióknál konstruktor és a destruktor, publikus funkciók mint a run() és finish(), illetve az isRunning függvény, ami visszaad egy igaz vagy hamist.
+         Nem publikus, private függvények pl feromonok beállítására a setPheromone(), hangya mozgatáshoz MoveAnts(), új irány megadása newDir()-el.
+     </para>
+
     </section>        
     <section>
         <title>Java életjáték</title>
