@@ -362,9 +362,11 @@ adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Conway/sejtautomata_c++$ 
             Megoldás videó: 
         </para>
         <para>
-            Megoldás forrása: <link xlink:href=""></link>               
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Conway/brainB">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Conway/brainB</link>               
         </para>
         <para>
+            A program célja az esportolók tesztelése. Az egérgombot lenyomva tartva kell egy mozgó négyzetben lévő körben tartani az egérmutatót, miközben újabb dobozok jelennek meg. Ha eleveszítjük, akkor lassul a mozgás.
+        </para> 
             <screen><![CDATA[
 adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Conway/brainB$ qmake brainB.pro
 adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Conway/brainB$ make
@@ -375,10 +377,8 @@ main.cpp:31:10: fatal error: QtWidgets: No such file or directory
 compilation terminated.
 Makefile:228: recipe for target 'main.o' failed
 make: *** [main.o] Error 1
-
-
     ]]></screen>
-        </para>            
+                   
     </section>        
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 </chapter>                

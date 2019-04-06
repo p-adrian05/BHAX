@@ -152,7 +152,20 @@
             Alprogramok esetén típust paraméterként átadni nem lehet. Az alpogramok formális paramétereinek három csoportja van:
             input paraméterek, output és input-output paraméterek.
         </para>
-
+        <para>A blokk és hatáskör</para>
+        <para>
+            A blokk olyan programegység, amely csak másik programegység belsejében helyezkedhet el, külső szinten nem állhat.
+            A blokknak van kezdete, törzse és vége. A kezdetet és a véget egy-egy speciális karaktersorozat vagy alapszó jelzi és nincs paramétere. Bárhol elhelyezhető 
+            ahol végrehajtható utasítás állhat. A blokkot aktivizálni úgy lehet, hogy rákerül a sor, vagy GOTO utasítással.
+            Egy név hatásköre alatt értjük a program szövegének azon részét, ahol az adott név ugyanazt a programozási eszközt hivatkozza.
+            A név hatásköre a programegységekhez kapcsolódik. Egy programegységben deklarált nevet a programegység lokális nevének nevezzük. Azt a nevet amely ezen kívűl 
+            van deklarálva, de ott hivatkozunk rá, szabad névnek hívjuk. Kétféle határkörkezelés van: statikus és dinamukus. A statikus fordítási időben történik.
+            Statikus hatáskörkezelés esetén egy lokális név hatásköre az a programegység, amelyben deklaráltuk és minden olyan programegység, amelyet ez az adott programegység tartalmaz.
+            A hatáskör csak befelé terjed. Az a név amely nem lokális név, de az adott programegységben látható, globális névnek hívjuk.
+            Dinamikus hatáskörkezelésnél egy név hatásköre az a programegység, amelyben deklaráltuk és minden olyan programegység, amely ezen programegységbıl induló hívási láncban
+            helyezkedik el.Statikus hatáskörkezelés esetén a programban szereplı összes név hatásköre a forrásszöveg alapján egyértelműen megállapítható. Dinamikus hatáskörkezelésnél viszont a hatáskör futási 
+            időben változhat.
+        </para>
     </section>        
     <section>
         <title>Programozás bevezetés</title>
@@ -200,7 +213,15 @@
              teszi a pointereknek a cím szerinti paraméterátadásban betöltött szerepét. Ekkor csak egy és jelet kell írnunk a paraméter deklalárciójában a név elé.
              Továbbá kihasználva ekkor cím szerint adjuk át az argumentumot, nagyméretű argumentumok esetén teljesítménynövekedés érhető el, ha csak az argumentumok címét adjuk át, és 
              nem másoljuk le őket.
-
+        </para>
+        <para>Operátorok és túlterhelésük</para>
+        <para>
+            A C++ operátoros kifejezései az összeadás, szorzás, kivonás, osztás és egyéb operátorok végzik az adott műveletet.
+            Az operátorok kiértékelési sorrendjét szigorú szabályrendszer rögzíti, ezt zárójelekkel befolyásolhatjuk. A szabályrendszert a 
+            precedenciatáblázat tartalmazza. Az operátorok olyan speciális nevű függvények, amelyek kiértékelése egy speciális szabályrendszer alapján működik.
+            Az operator kulcsszóval adjuk meg, hogy egy speciális függvényről van szó. Mivel a függvénynevek különböző argumentumok esetén túlterhelhetőek, 
+            ezért az operátorok neveit is túlterhelhetjük. Ezzel nem az a cél, hogy már bevált operátorok működését megváltoztassuk, hanem hogy az általunk 
+            deifinált típusokra is megadhassuk.
         </para>
 
 
