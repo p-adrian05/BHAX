@@ -17,9 +17,18 @@
         <para>
             Megoldás forrása: <link xlink:href=""></link>               
         </para>
-        <para>
-            Tanulságok, tapasztalatok, magyarázat...
-        </para> 
+         <screen><![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/attention_raising/Myrmecologist$ qmake myrmecologist.pro 
+adrian@adrian-MS-7817:~/Desktop/BHAX/attention_raising/Myrmecologist$ make
+g++ -c -m64 -pipe -O2 -Wall -W -D_REENTRANT -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED -I/usr/share/qt4/mkspecs/linux-g++-64 -I. -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4 -I. -I. -o main.o main.cpp
+main.cpp:27:10: fatal error: QCommandLineOption: No such file or directory
+ #include <QCommandLineOption>
+          ^~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+Makefile:224: recipe for target 'main.o' failed
+make: *** [main.o] Error 1
+
+    ]]></screen>
           <mediaobject>
     <imageobject>
             <imagedata fileref="img/uml.png" scale="60" />
