@@ -15,7 +15,7 @@
             Megoldás videó: <link xlink:href="https://bhaxor.blog.hu/2018/10/10/myrmecologist">https://bhaxor.blog.hu/2018/10/10/myrmecologist</link>
         </para>
         <para>
-            Megoldás forrása: <link xlink:href=""></link>               
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/attention_raising/Myrmecologist">https://github.com/p-adrian05/BHAX/tree/master/attention_raising/Myrmecologist</link>               
         </para>
          <screen><![CDATA[
 adrian@adrian-MS-7817:~/Desktop/BHAX/attention_raising/Myrmecologist$ qmake myrmecologist.pro 
