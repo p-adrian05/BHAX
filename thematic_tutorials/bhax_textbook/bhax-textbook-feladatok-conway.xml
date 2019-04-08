@@ -17,25 +17,27 @@
         <para>
             Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/attention_raising/Myrmecologist">https://github.com/p-adrian05/BHAX/tree/master/attention_raising/Myrmecologist</link>               
         </para>
-         <screen><![CDATA[
-adrian@adrian-MS-7817:~/Desktop/BHAX/attention_raising/Myrmecologist$ qmake myrmecologist.pro 
-adrian@adrian-MS-7817:~/Desktop/BHAX/attention_raising/Myrmecologist$ make
-g++ -c -m64 -pipe -O2 -Wall -W -D_REENTRANT -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED -I/usr/share/qt4/mkspecs/linux-g++-64 -I. -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4 -I. -I. -o main.o main.cpp
-main.cpp:27:10: fatal error: QCommandLineOption: No such file or directory
- #include <QCommandLineOption>
-          ^~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-Makefile:224: recipe for target 'main.o' failed
-make: *** [main.o] Error 1
-
-    ]]></screen>
-          <mediaobject>
+        <mediaobject>
     <imageobject>
-            <imagedata fileref="img/uml.png" scale="60" />
+            <imagedata fileref="img/hangya.png" scale="30" />
             </imageobject>
      </mediaobject>
      <para>
-         Az Ant osztályba a hanyga tulajdonságai vannak meghatározva. Az x és y a koordinátái, a dir pedig az irány amibe 
+         Fordításkor a letöltött Qt keretrendszerben található qmake-et használjuk. P billentyűvel lehet megállítani, szüneteltetni a hangyák mozgását q-val pedig 
+         kilépni a programból.
+     </para>
+         <screen><![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/attention_raising/Myrmecologist$ /home/adrian/Qt/5.12.2/gcc_64/bin/qmake myrmecologist.pro 
+adrian@adrian-MS-7817:~/Desktop/BHAX/attention_raising/Myrmecologist$ make
+adrian@adrian-MS-7817:~/Desktop/BHAX/attention_raising/Myrmecologist$ ./myrmecologist -w 250 -m 150 -n 400 -t 10 -p 5 -f 80 -d 0 -a 255 -i 3 -s 3 -c 22
+    ]]></screen>
+          <mediaobject>
+     <imageobject>
+        <imagedata fileref="img/uml.png" scale="60" />
+        </imageobject>
+     </mediaobject>
+     <para>
+         Az Ant osztályba a hangya tulajdonságai vannak meghatározva. Az x és y a koordinátái, a dir pedig az irány amibe 
          tart. A + jel azt jelenti, hogy public elérésű, tehát az osztályon kívűl is látszódik, elérhető. A - pedig private, tehát  
          Az ants egy vektor, ami a hangyákat tárolja.
      </para>
@@ -377,17 +379,27 @@ adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Conway/sejtautomata_c++$ 
             A program célja az esportolók tesztelése. Az egérgombot lenyomva tartva kell egy mozgó négyzetben lévő körben tartani az egérmutatót, miközben újabb dobozok jelennek meg. Ha eleveszítjük, akkor lassul a mozgás.
         </para> 
             <screen><![CDATA[
-adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Conway/brainB$ qmake brainB.pro
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Conway/brainB$ /home/adrian/Qt/5.12.2/gcc_64/bin/qmake brainB.pro 
 adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Conway/brainB$ make
-g++ -c -m64 -pipe -fopenmp -O2 -Wall -W -D_REENTRANT -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_SHARED -I/usr/share/qt4/mkspecs/linux-g++-64 -I. -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtGui -I/usr/include/qt4 -I. -I. -o main.o main.cpp
-main.cpp:31:10: fatal error: QtWidgets: No such file or directory
- #include <QtWidgets>
-          ^~~~~~~~~~~
-compilation terminated.
-Makefile:228: recipe for target 'main.o' failed
-make: *** [main.o] Error 1
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Conway/brainB$ ./BrainB
     ]]></screen>
-                   
+    
+      <mediaobject>
+    <imageobject>
+            <imagedata fileref="img/brainb2.png" scale="40" />
+            </imageobject>
+     </mediaobject>
+      <mediaobject>
+    <imageobject>
+            <imagedata fileref="img/brainb.png" scale="20" />
+            </imageobject>
+     </mediaobject> 
+     <para>Statisztika:</para> 
+          <mediaobject>
+    <imageobject>
+            <imagedata fileref="img/brainbStat.png" scale="60" />
+            </imageobject>
+     </mediaobject>
     </section>        
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 </chapter>                
