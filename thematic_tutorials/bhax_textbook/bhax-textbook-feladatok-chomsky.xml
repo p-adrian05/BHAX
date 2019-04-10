@@ -43,8 +43,81 @@
             Megoldás forrása:                
         </para>
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
+            A generatív grammatika Noam Chomsky nevéhez fűződik.
+             A generatív nyelvelmélet célja a beszédtevékenység 
+             mechanizmusának modellálása, vagyis olyan modell létrehozása, 
+             amelynek a segítségével végtelen számú mondatot alkothatunk, generálhatunk.
         </para>
+        <para>
+            A generatív grammatika négy alkotóeleme:
+        </para>
+        <para>
+            Terminális szimbólumok: a definiálandó nyelv ábécéje.
+        </para>
+        <para>
+            Nem terminális jelek: egy másik ábécé, melynek jeleit csak segédeszközként használjuk a generálás során.
+        </para>
+        <para>
+            Kezdőszimbólum: egy kitüntetett szimbólum.
+        </para>
+        <para>
+            Helyettesítési szabályok, amelyekkel a szavak származtathatóak.
+        </para>
+
+        <para>
+            A generálás során adott egy szó, amit meghatározott helyettesítési szabály alapján
+            cserélünk egy másik szóra, mindaddig, míg szavunk csak terminális jelekből fog állni.
+        </para>
+         <screen>
+        <![CDATA[
+S, X, Y „változók”
+a, b, c „konstansok”
+S → abc, S → aXbc, Xb → bX, Xc → Ybcc, bY → Yb, aY -> aaX, aY → aa
+
+S (S → aXbc)
+aXbc (Xb → bX)
+abXc (Xc → Ybcc)
+abYbcc (bY → Yb)
+aYbbcc (aY → aa)
+aabbcc
+
+S (S → aXbc)
+aXbc (Xb → bX)
+abXc (Xc → Ybcc)
+abYbcc (bY → Yb)
+aYbbcc (aY -> aaX)
+aaXbbcc (Xb → bX)
+aabXbcc (Xb → bX)
+aabbXcc (Xc → Ybcc)
+aabbYbccc (bY → Yb)
+aabYbbccc (bY → Yb)
+aaYbbbccc (aY → aa)
+aaabbbccc 
+
+A, B, C „változók”
+a, b, c „konstansok”
+A → aAB, A → aC, CB → bCc, cB → Bc, C → bc
+
+A (A → aAB)
+aAB ( A → aC)
+aaCB (CB → bCc)
+aabCc (C → bc)
+aabbcc
+
+A (A → aAB)
+aAB ( A → aAB)
+aaABB ( A → aAB)
+aaaABBB ( A → aC)
+aaaaCBBB (CB → bCc)
+aaaabCcBB (cB → Bc)
+aaaabCBcB (cB → Bc)
+aaaabCBBc (CB → bCc)
+aaaabbCcBc (cB → Bc)
+aaaabbCBcc (CB → bCc)
+aaaabbbCccc (C → bc)
+aaaabbbbcccc
+        ]]>
+    </screen>
     </section>        
                 
     <section>
