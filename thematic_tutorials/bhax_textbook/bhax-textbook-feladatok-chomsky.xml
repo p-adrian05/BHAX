@@ -279,8 +279,126 @@ adrian@adrian-MS-7817:~/Desktop/programs$ gcc realnumber.c -o realnumber -lfl
             Megoldás forrása:  
         </para>
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
+            Az l377dlc7 struktúrában fogalmazzuk meg a saját szótárunkat. Egy karakterhez négy féle őt ábrázolni
+            próbáló karektert lehet helyettesíteni. Az inputként megadott karaktereken megyünk végig és ha a karekter megtalálható a 
+            a szótárban, akkor egy random egész számot kap 1 és 100 között, ami alapján eldől, hogy a 4 karakter közül melyikkel lesz 
+            helyettesítve.
+            90%-ban a szótárunkban megfogalmazott első karakterrel lesz helyettesítve. 4%, hogy a második és 3-3%, hogy a harmadik vagy negyedik 
+            karakterrel.A found változóba tároljuk, hogy volt-e speciális karakterrel kiirva. A 0 hamist jelent, az 1 pedig igazat. Ha 0 marad, akkor a bevitt 
+            karektert írjuk ki.
+
         </para>
+        <screen>
+        <![CDATA[
+%{
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <time.h>
+  #include <ctype.h>
+
+  #define L337SIZE (sizeof l337d1c7 / sizeof (struct cipher))
+    
+  struct cipher {
+    char c;
+    char *leet[4];
+  } l337d1c7 [] = {
+
+  {'a', {"4", "4", "@", "/-\\"}},
+  {'b', {"b", "8", "|3", "|}"}},
+  {'c', {"c", "(", "<", "{"}},
+  {'d', {"d", "|)", "|]", "|}"}},
+  {'e', {"3", "3", "3", "3"}},
+  {'f', {"f", "|=", "ph", "|#"}},
+  {'g', {"g", "6", "[", "[+"}},
+  {'h', {"h", "4", "|-|", "[-]"}},
+  {'i', {"1", "1", "|", "!"}},
+  {'j', {"j", "7", "_|", "_/"}},
+  {'k', {"k", "|<", "1<", "|{"}},
+  {'l', {"l", "1", "|", "|_"}},
+  {'m', {"m", "44", "(V)", "|\\/|"}},
+  {'n', {"n", "|\\|", "/\\/", "/V"}},
+  {'o', {"0", "0", "()", "[]"}},
+  {'p', {"p", "/o", "|D", "|o"}},
+  {'q', {"q", "9", "O_", "(,)"}},
+  {'r', {"r", "12", "12", "|2"}},
+  {'s', {"s", "5", "$", "$"}},
+  {'t', {"t", "7", "7", "'|'"}},
+  {'u', {"u", "|_|", "(_)", "[_]"}},
+  {'v', {"v", "\\/", "\\/", "\\/"}},
+  {'w', {"w", "VV", "\\/\\/", "(/\\)"}},
+  {'x', {"x", "%", ")(", ")("}},
+  {'y', {"y", "", "", ""}},
+  {'z', {"z", "2", "7_", ">_"}},
+  
+  {'0', {"D", "0", "D", "0"}},
+  {'1', {"I", "I", "L", "L"}},
+  {'2', {"Z", "Z", "Z", "e"}},
+  {'3', {"E", "E", "E", "E"}},
+  {'4', {"h", "h", "A", "A"}},
+  {'5', {"S", "S", "S", "S"}},
+  {'6', {"b", "b", "G", "G"}},
+  {'7', {"T", "T", "j", "j"}},
+  {'8', {"X", "X", "X", "X"}},
+  {'9', {"g", "g", "j", "j"}}
+  
+  };
+  
+%}
+%%
+.	{
+	  
+	  int found = 0;
+	  for(int i=0; i<L337SIZE; ++i)
+	  {
+	  
+	    if(l337d1c7[i].c == tolower(*yytext))
+	    {
+	    
+	      int r = 1+(int) (100.0*rand()/(RAND_MAX+1.0));
+	    
+          if(r<91)
+	        printf("%s", l337d1c7[i].leet[0]);
+          else if(r<95)
+	        printf("%s", l337d1c7[i].leet[1]);
+	      else if(r<98)
+	        printf("%s", l337d1c7[i].leet[2]);
+	      else 
+	        printf("%s", l337d1c7[i].leet[3]);
+
+	      found = 1;
+	      break;
+	    }
+	    
+	  }
+	  
+	  if(!found)
+	     printf("%c", *yytext);	  
+	  
+	}
+%%
+int 
+main()
+{
+  srand(time(NULL)+getpid());
+  yylex();
+  return 0;
+}
+        ]]>
+    </screen>
+     <screen>
+        <![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Chomsky$ lex -o l33t.c l33t.l
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Chomsky$ gcc l33t.c -o l33t -lfl
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Chomsky$ ./l33t
+Az l377dlc7 struktúrában fogalmazzuk meg a saját szótárunkat. Egy karakterhez négy féle őt ábrázolni
+próbáló karektert lehet helyettesíteni. Az inputként megadott karaktereken megyünk végig és ha a karekter
+megtalálható a a szótárban, akkor egy random egész számot kap 1 és 100 között, ami alapján eldől, hogy a 4
+karakter közül melyikkel lesz helyettesítve.4z lETT|}lcj struktúráb4n f0g4lm4zzuk 4436 4 54ját szótárunk4t. 3gy k4|24kt3r43z négy fé|_3 őt ábráz0ln1
+próbáló |{4|23|{t3r'|' l3h3t h3ly3tt3sít3/V1. 4z 1nputként |\/|3g4d()tt k@r4kt3r3k3n m3gyünk vég1g és h4 4 |{4r3kt3r
+m3gt4lálh4tó 4 4 s>_ótárb4n, 4kk0r 3gy r4nd0m 3gész szám0t k4p I és IDD között, 4m1 4l4pján 3|_dől, h0g 4 h
+
+        ]]>
+    </screen>
     </section>                     
 
 
