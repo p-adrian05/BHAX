@@ -276,7 +276,7 @@ adrian@adrian-MS-7817:~/Desktop/programs$ gcc realnumber.c -o realnumber -lfl
             Megoldás videó: 
         </para>
         <para>
-            Megoldás forrása:  
+            Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Chomsky/l33t">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Chomsky/l33t</link>
         </para>
         <para>
             Az l377dlc7 struktúrában fogalmazzuk meg a saját szótárunkat. Egy karakterhez négy féle őt ábrázolni
