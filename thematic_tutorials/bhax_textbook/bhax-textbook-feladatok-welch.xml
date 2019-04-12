@@ -20,8 +20,11 @@
             Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Welch/polargen">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Welch/polargen</link>                
         </para>
         <para>
-            Tanulságok, tapasztalatok, magyarázat... térj ki arra is, hogy a JDK forrásaiban a Sun programozói
-            pont úgy csinálták meg ahogyan te is, azaz az OO nemhogy nem nehéz, hanem éppen természetes neked!
+            A Java és a C++ objektumorientált nyelvek. Objektumok használata egyszerűsíti a programozást, ugyanis a az objektum 
+            a valódi világ elemének a rá jellemző tulajdonságai és viselkedések által modelezett eleme. Erre jó példa a polártranszformációs 
+            algoritmus. Az algoritmus matematikai háttere most számunkra lényegtelen, fontos viszont az eljárás azon jellemzője, hogy egy számítási lépés két normális eloszlású számot állít elő, 
+            tehát minden páratlanadik meghíváskor nem kell számolnunk, csupán az előző lépés másik számát visszaadnunk. Hogy páros vagy páratlan lépésben hívtuk-e meg a megfelelő számítást elvégző következő() függvényt, 
+            a nincsTárolt logikai változóval jelöljük. Igaz értéke azt jelenti, hogy tárolt lebegőpontos változóban el van tárolva a visszaadandó szám.
         </para> 
         <para>Java-ban:</para>
         <programlisting language="java">
@@ -79,7 +82,14 @@ public class PolárGenerátor {
 }
 
 ]]>
-        </programlisting>  
+        </programlisting> 
+    <para>A JDK(Java Development Kit) Random.java osztályban a
+         Sun programozói is lett megoldva a random szám generálás.</para>
+          <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/jdk.png" scale="50" />
+            </imageobject>
+        </mediaobject>
 <para>C++-ban:</para>
  <programlisting language="c++">
 <![CDATA[ 
@@ -709,35 +719,11 @@ adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch$ ./fa adat.txt -o t
         <para>
             Megoldás forrása:<link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a8.cpp">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a8.cpp</link>  
         </para>
+         <para>Tutoriált: Loós Tamás</para>  
 
 <para>
   Az előző forrásban a gyökéret mint objektumot kezeltük. A fa mutatót egyszerűen ráállítjuk a gyökérre a konstruktorban, amit alul hozunk létre.
 </para>
-<programlisting language="c">
-    <![CDATA[ 
-class LZWBinFa
-{
-public:
-    
-   LZWBinFa ():fa (&gyoker)
-    {
-    }
-    ~LZWBinFa ()
-    {
-        szabadit (gyoker.egyesGyermek ());
-        szabadit (gyoker.nullasGyermek ());
-    }
-
-]]> 
-</programlisting> 
-<programlisting language="c">
-    <![CDATA[ 
-protected:			
-    Csomopont gyoker;
-
-]]> 
-</programlisting> 
-
 <para>
   Azonban most a gyökér is mutató lesz, ezért az előző forrásban mindenhol ahol referenciaként adtuk át a gyökeret a fa mutatónak, 
   ott csak simán referencia nélkül tesszük. Továbbá a konstruktorban a gyökeret példányosítjuk, helyet foglalul a memóriában és erre állítjuk a fát rá.
