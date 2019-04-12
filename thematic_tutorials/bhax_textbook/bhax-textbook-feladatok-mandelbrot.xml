@@ -215,7 +215,8 @@ t.png mentve
         </para>
         <para>
             Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/attention_raising/Mandelbrot/3.1.2.cpp">https://github.com/p-adrian05/BHAX/blob/master/attention_raising/Mandelbrot/3.1.2.cpp</link>               
-        </para>       
+        </para>    
+        <para>Tutoriált: <link xlink:href="https://gitlab.com/whoisZORZ/bhax">Országh Levente</link></para>   
             <programlisting >
 <![CDATA[#include <iostream>
 #include "png++/png.hpp"
