@@ -83,6 +83,23 @@ public class PolárGenerátor {
 
 ]]>
         </programlisting> 
+         <screen>
+<![CDATA[
+adrian@adrian-MS-7817:~/Desktop$ javac PolárGenerátor.java
+adrian@adrian-MS-7817:~/Desktop$ java PolárGenerátor
+-0.9977909475608935
+1.2436431306621076
+-1.0241389099503682
+0.9924334466411862
+0.36416475700814943
+0.9602245062934003
+-0.5074463598559636
+0.7797384696972893
+-0.11174392973220601
+0.8032167627641318
+
+ ]]>
+        </screen>
     <para>A JDK(Java Development Kit) Random.java osztályban a
          Sun programozói is lett megoldva a random szám generálás.</para>
           <mediaobject>
@@ -768,91 +785,70 @@ protected:
             Megoldás videó: 
         </para>
         <para>
-            Megoldás forrása:<link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a9.cpp">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a9.cpp</link>   
+            Megoldás forrása:<link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a11.cpp">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a11.cpp</link>   
         </para>
-<programlisting language="c++">
+            <para>
+                Az előző feladatot továbbfejlesztve, megalkotjuk a mozgató konstruktort. 
+                Paraméterként átadjuk a régi fát, az új fa gyökerét null-ra állítjuk, majd a move függvénnyt meghívjuk, amivel 
+                mozgatjuk az elemeket. A mozgató értékadásban pedig megcseréljük az új és a régi fa gyökerét swap függvény segítségével, ezzel 
+                kinullázva a régit.
+            </para>
+
+  <programlisting language="c++">
     <![CDATA[ 
-
-LZWBinFa ( const LZWBinFa & regi ) {
-          std::cout << "LZWBinFa copy ctor" << std::endl;
-
-          gyoker.ujEgyesGyermek ( masol ( regi.gyoker.egyesGyermek (), regi.fa ) );
-          gyoker.ujNullasGyermek ( masol ( regi.gyoker.nullasGyermek (), regi.fa ) );
-
-          if ( regi.fa == & ( regi.gyoker ) )
-               fa = &gyoker;
-
-     }
-    
 LZWBinFa ( LZWBinFa && regi ) {
           std::cout << "LZWBinFa move ctor" << std::endl;
 
-          gyoker.ujEgyesGyermek ( regi.gyoker.egyesGyermek() );
-          gyoker.ujNullasGyermek ( regi.gyoker.nullasGyermek() );
-
-          regi.gyoker.ujEgyesGyermek ( nullptr );
-          regi.gyoker.ujNullasGyermek ( nullptr );
+          gyoker = nullptr;
+          *this = std::move (regi);
 
      }
-
-]]>
+LZWBinFa & operator= ( LZWBinFa && regi) 
+     {			
+			
+          std::swap(gyoker,regi.gyoker);
+          return *this;
+			
+	    }
+]]> 
 </programlisting> 
-<programlisting language="c++">
+<para>Alább láthatunk három példát, hogy ahol a mozgató konstruktort használjuk.
+  Másoló konstruktorral lemásoljuk az eredeti fát kétszer és azokat megcseréljük. Egy vektorba rakjuk rakjuk a fát, illetve egy 
+  új fát hozunk létre mozgató konstruktor segítségével.
+</para>
+  <programlisting language="c">
     <![CDATA[ 
- Csomopont *  masol ( Csomopont * elem, Csomopont * regifa ) {
+	LZWBinFa binFa2 =  binFa;
+	LZWBinFa binFa4=  binFa;
 
-          Csomopont * ujelem = NULL;
+	std::cout <<"Swap" << std::endl;
+	std::swap(binFa2,binFa4);
 
-          if ( elem != NULL ) {
-               ujelem = new Csomopont ( elem->getBetu() );
+	
+	std::vector<LZWBinFa> v;
+     std::cout <<"Vector" << std::endl;
+	v.push_back(std::move (binFa ));
 
-               ujelem->ujEgyesGyermek ( masol ( elem->egyesGyermek (), regifa ) );
-               ujelem->ujNullasGyermek ( masol ( elem->nullasGyermek (), regifa ) );
-
-               if ( regifa == elem )
-                    fa = ujelem;
-
-          }
-
-          return ujelem;
-     }
-
-]]>
+	std::cout <<"Új fa" << std::endl;
+     LZWBinFa binFa3 = std::move (binFa2);
+]]> 
 </programlisting> 
-<programlisting language="c++">
-    <![CDATA[ 
-LZWBinFa binFa3 = std::move ( binFa );
-
-     kiFile << "depth = " << binFa3.getMelyseg () << std::endl;
-     kiFile << "mean = " << binFa3.getAtlag () << std::endl;
-     kiFile << "var = " << binFa3.getSzoras () << std::endl;
-
-]]>
-</programlisting> 
-
-<screen>
+<para>Futtatáskor láthatjuk, mikor melyik konstruktor lép működésbe és hányszor.</para>
+          <screen>
 <![CDATA[
-adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch$ g++ z3a9.cpp -o fa
-adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch$ ./fa adat.txt -o test.txt
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch$ g++ z3a11.cpp -o fa
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch$ ./fa adat.txt -o output
 LZWBinFa copy ctor
-------------1(3)
----------1(2)
-------1(1)
----/(0)
----------1(2)
-------0(1)
-depth = 3
-mean = 2.5
-var = 0.707107
-LZWBinFa dtor
+LZWBinFa copy ctor
+Swap
 LZWBinFa move ctor
-LZWBinFa dtor
-LZWBinFa dtor
+Vector
+LZWBinFa move ctor
+Új fa
+LZWBinFa move ctor
 
  ]]>
  </screen>
-
-
     </section>                     
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 </chapter>                

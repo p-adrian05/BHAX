@@ -376,8 +376,12 @@ adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Conway/sejtautomata_c++$ 
             Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Conway/brainB">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Conway/brainB</link>               
         </para>
         <para>
-            A program célja az esportolók tesztelése. Az egérgombot lenyomva tartva kell egy mozgó négyzetben lévő körben tartani az egérmutatót, miközben újabb dobozok jelennek meg. Ha eleveszítjük, akkor lassul a mozgás.
+            A program célja az esportolók tesztelése, mennyire tudják követni a karakter mozgását. A Samu Entropy 
+            dobozt kell figyelni, a bal egérgombot lenyomva tartva kell a mozgó négyzetben lévő körben tartani az egérmutatót, 
+            miközben újabb dobozok jelennek meg. A folyamat során egyre több doboz jelenik meg a képernyőn, nehezítve a pötty követését. 
+            Ha 1 másodpercnél több ideig nincs találat, akkor a játékos elvesztette a dobozt, ebben az esetben lassul a mozgása a dobozoknak.
         </para> 
+        <para>Fordításkor az OpenCv könyvtárat, illetve a Qt keretrendszert használjuk.</para>
             <screen><![CDATA[
 adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Conway/brainB$ /home/adrian/Qt/5.12.2/gcc_64/bin/qmake brainB.pro 
 adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Conway/brainB$ make
@@ -394,6 +398,7 @@ adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Conway/brainB$ ./BrainB
             <imagedata fileref="img/brainb.png" scale="20" />
             </imageobject>
      </mediaobject> 
+     <para>A mérés 10 percig tart és statisztika is készül a teljesítményről, amit a program könyvtárában egy txt fájlban találunk.</para>
      <para>Statisztika:</para> 
           <mediaobject>
     <imageobject>
