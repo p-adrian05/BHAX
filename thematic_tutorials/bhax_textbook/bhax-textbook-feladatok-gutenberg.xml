@@ -166,6 +166,20 @@
             helyezkedik el.Statikus hatáskörkezelés esetén a programban szereplı összes név hatásköre a forrásszöveg alapján egyértelműen megállapítható. Dinamikus hatáskörkezelésnél viszont a hatáskör futási 
             időben változhat.
         </para>
+        <para>Input/Output</para>
+        <para>
+            Az I/O platform, operációs rendszer és implementációfüggő. A perifériákkal való kommunikációért felelős, amely az operatív tárból 
+            odaküld vagy onnan vár adatot. Középpontában az állomány áll. Van fizikai állomány és logikai állomány. Funkciói szerint input állomány, amelyből csak olvasni 
+            lehet. Output állomány amelybe csak írni lehet. Input-output állomány amelybe írni és olvasni is lehet, ezért tartalma változik.
+            Létezik formátumos modú, szerkesztett és listázott módú adatátvitel. Bináris adatátvitelkor az adatok a tárban és a periférián
+            ugyanúgy jelennek meg.  Programban állománnyal való munkához a következőket kell végrejtani:
+            Deklaráció, összerendelés, állomány megnyitás, feldolgozás és lezárás. Összerendeléskor a logika állományt egy fizikai állománnyal feleltetjük meg.
+            Lezáráskor pedig ez kapcsolat megszűnik. Implicit állománynak hívjuk azt, amikor a programozó az írás olvasást úgy kezeli, hogy az közveltenül valamelyik perifériával 
+            történik. Ebben az esetben az állományt nem kell deklarálni, összerendelni, megnyitni és lezárni, mindezt futtató rendszer automatikusan kezeli.
+            C nyelvben az I/O eszközrendszer nem része a nyelvnek, hanem könyvtári függvények állnak rendelkezésre. Ezek a függvények minimum egy karakter illetve egy bájt írását, olvasását 
+            teszik lehetővé.
+        </para>
+
     </section>        
     <section>
         <title>Programozás bevezetés</title>
