@@ -357,7 +357,12 @@ delete p;
     </para>
     <para>Állománykezelés</para>
     <para>
-        
+        A C++ az állománykezeléshez is adatfolyamokat használ. Az ifstream (input file stream), illetve az ofstream (output file stream) osztályok.
+        A kétirányú adatfolyamot peddig az fstream osztály végzi. Az állomány megnyitását a konstruktor végzi, lezárását pedig a destruktor.
+        A megynitandó állomány nevét a konstruktornak adjuk át, továbbá opcionálisan második paraméterként megadhatók jelzőbitek, amelyekkel formázási beállításokat adhatunk meg.
+        Ezeket ios:: előtaggal kell ellátni. konstruktor és destruktoron kívűl létezik külön open és close függvény is. Bizonyos adatfolyamok esetén 
+        pozícionálásra is van lehetőség, amelyre különféle tagfüggvény létezik (tell, seek), ezek nem használhatóak cin, cout, cerr és clog esetén.
+        Az istream és ostream adatfolyamok megnyitható írásra és olvasásra, az értelmezett műveletek azonban az adatfolyamok mögött lévő buffer típusától függenek.
     </para>
     </section>        
 </chapter>                
