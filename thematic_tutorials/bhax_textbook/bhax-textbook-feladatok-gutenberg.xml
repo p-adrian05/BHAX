@@ -364,5 +364,44 @@ delete p;
         pozícionálásra is van lehetőség, amelyre különféle tagfüggvény létezik (tell, seek), ezek nem használhatóak cin, cout, cerr és clog esetén.
         Az istream és ostream adatfolyamok megnyitható írásra és olvasásra, az értelmezett műveletek azonban az adatfolyamok mögött lévő buffer típusától függenek.
     </para>
+    <para>
+        Típuskonverziók
+    </para>
+    <para>
+        A C nyelvben az enum és az int típus között oda-vissza létezik Implicit konverzió. C++-ban azonban, ha enum típusra konvertáluk ki kell írnunk 
+        a típuskonverziót, ez viszont elhagyható. Az int és a double között automatikus típuskonverzió van. Ha egy másik típusról szeretnénk konvertálni a mi osztályunk típusára, akkor a 
+        konverziós konstruktor jelent megoldást. Ha az osztályunktól szeretnénk, akkor a konverziós operátorra van szükségünk.
+         A konverziót a string típusra a konverziós konstruktor végzi. Ez egy olyan egyparaméterű konstruktor, amelynek paramétere olyan 
+         típusú, amilyen típusról konvertálni szeretnénk.
+    </para>
+    <para>
+        C++ sablonok
+    </para>
+    <para>
+        C++ sablonok olyan osztálysablonok, függvénysablonok, amelyek esetében az adott osztály, illetve függvény 
+        definiálásakor bizonyos elemeket nem adunk meg, hanem paraméterként kezelünk. Ezek a függvénysablon felhasználásakor történnek.
+        A C++ sablonok a generitikus típusok C++ nyelvbeli megfelelői. Jellemzően olyan tárolóosztályok létrehozáása használatosak, amelyek tetszőleges 
+        típusú elem tárolására használhatók, pl vector.
+        A függvénysablon fejlécét template kulcsszóval kell kezdeni. Ezt követően két reláció jel közé kell felsorolni a paramétereket. 
+        A max függvénysablon implenetációja:
+           <programlisting language="c++"><![CDATA[
+                template <class T> inline T max(T a, b)
+                {
+                    return a > b ? a : b;
+                }
+        ]]></programlisting>
+        A sablon használatának legegyszerűbb módja, a függvénysablon implicit példányosítása.
+        <programlisting language="c++"><![CDATA[
+               int n = max(3,5);
+               double d = max(2.3,4.2);
+        ]]></programlisting>
+        Az első sor int, a második sor double típussal példányosítja a függvénysablont. A T paramáter helyébe int, a második esetben 
+        double típus helyettesítődik.
+        Explicit példányosítás esetén, a T helyére a double-t helyettesíti és az int értéke is double-re konvertálódik.
+         <programlisting language="c++"><![CDATA[
+               double d = max<double>(3,3.5);
+        ]]></programlisting>
+
+    </para>
     </section>        
 </chapter>                
