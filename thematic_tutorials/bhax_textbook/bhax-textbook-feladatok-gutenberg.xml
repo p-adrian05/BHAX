@@ -223,7 +223,7 @@
              definiálására. Minden olyan helyen állhat változódeklaráció, ahol utasítás is állhat. A függvénynevek túlterhelése is megjelent, 
              így lehetőség van azonos függvények létrehozására, amennyiben az argumentumlistájuk különöző. Lehetőség lett arra, hogy a függvények argumentumainak
              alapértelmezett értéket adjunk meg, amennyiben a függvényhíváskor nem adunk meg értéket az argumentumoknak. A C-ben pointerek segítségével 
-             kell megoldanunk a függvényparaméterek cí szerinti átadását. Ezt a problémát oldja meg a C++ referenciatípus bevezetése, ami feleslegessé 
+             kell megoldanunk a függvényparaméterek cím szerinti átadását. Ezt a problémát oldja meg a C++ referenciatípus bevezetése, ami feleslegessé 
              teszi a pointereknek a cím szerinti paraméterátadásban betöltött szerepét. Ekkor csak egy és jelet kell írnunk a paraméter deklalárciójában a név elé.
              Továbbá kihasználva ekkor cím szerint adjuk át az argumentumot, nagyméretű argumentumok esetén teljesítménynövekedés érhető el, ha csak az argumentumok címét adjuk át, és 
              nem másoljuk le őket.
@@ -236,6 +236,48 @@
             Az operator kulcsszóval adjuk meg, hogy egy speciális függvényről van szó. Mivel a függvénynevek különböző argumentumok esetén túlterhelhetőek, 
             ezért az operátorok neveit is túlterhelhetjük. Ezzel nem az a cél, hogy már bevált operátorok működését megváltoztassuk, hanem hogy az általunk 
             deifinált típusokra is megadhassuk.
+        </para>
+
+        <para>
+            Az objektumorientáltság alapelvei
+        </para>
+        <para>
+            Az egyik alapelve az egységbe zárás, ahol az adatstruktúra neve osztály, egyfajta kategóriát definiál.
+            Az osztálynak lehetnek egyedei, példányai, amit objektumnak nevezünk. Fontos, hogy az objektum vigyázzon a tulajdonságaira, ne tehesse hozzáférhetővé 
+            a program többi részéhez. Ezt hívjuk adatrejtésnek. Egy speciális osztály rendelkezik egy általánosabb osztály tulajdonságaival, mivel örökli azokat.
+            Továbbá egy speciális osztály objektuma bárhol felhasználható, ahol az általánosé, ezt hívjuk behelyettesíthetőségnek. Létezik a típustámogatás, amely azt jelenti, 
+            hogy a definiált típusok, osztályok úgy viselkedhetnek mint a beépített típusok, támogatnak operátorokat és típuskonverziót. Az objektumnak lehetnek nemcsak  
+            tagváltozói, hanem tagfüggvényei is, amit metódusoknak is hívunk. Ezeket megadhatjuk osztálydefinícióban, vagy a függvény törzsét osztályon kívül is. Ebben az 
+            esetben névütközés fordulhat elő, mivel két különböző osztálynak is lehet ugyanolyan függvénye, ezért ekkor használjuk a hatókör (scope) operátort, ami egy dupla kettőspont
+            amit a függvény neve elé írunk és elé a osztály nevét.
+        <programlisting language="c"><![CDATA[
+int Point::setx(int value)
+{
+        fuggvenytorzs
+}   
+        ]]></programlisting>
+            A tagfüggvények csak egyetlen példányban jönnek létre a memóriában, ezért hogy tudja a függvény melyik változó adattagjait kell módosítani, van egy láthatatlan 
+            első paraméterük a függvényeknek, amely megkapja a módosítandó struktúrát. Az átadás pointeren keresztül működik.
+            Az adatrejtéskor a private szó után felsorolt tagváltozók és függvények csak az osztályon belül láthatóak. Ennek ellentéte a public kulcsszó. Ha nincs kiírva egyik sem 
+            akkor alapértelmezetten public struktúra esetén, osztály esetén viszont private.
+        </para>
+        <para>
+            A konstruktor egy olyan sepciális tagfüggvény, amelynek neve megegyezik az osztály nevével és automatikusan meghívódik az osztály példányosításakor. 
+            A konstruktor építi fel az objektumot, abban az értelemben, hogy a törzsében megadott változókat inicializálja egy alapértelmezett értékre, vagy a paraméterként átadott értékekre.
+            A függvénynév túlterhelés műküdik a kontruktornál is, így egyszerre több, különböző paraméterlistájú konstruktort is megadhatunk. Ha nem írunk konstruktort, az osztály automatikusan 
+            tartalmaz egy üres konstruktort, amely nem csinál semmit példányosításkor. Viszont ha már írtunk egy konstruktort, akkor csak az általunk megírt konstruktorral lehet példányosítani az osztályt, 
+            ebben az esetben nincs üres apalértelmezett konstruktor, hacsak mi nem hozunk létre egy üreset. A destruktor végzi az erőforrások felszabadítását, amely az objektum által van birtokolva.
+            A desktruktor egy tagfüggvény, amely egy ~ jellel kezdődik és az osztály neve követi. Ez akkor hívódik meg, ha az objektum megszűnik. C++ ban dinamuks memóriakezelés értehő el , amiért egy operátor 
+            a felelős, ez a new. Ez annyit foglal le a memóriában amennyi a változó vagy objektum mérete. A delete operátorral pedig fel tudjuk szabadítani.
+             <programlisting language="c"><![CDATA[
+int *p;
+p = new int;
+*p = 10;
+delete p;
+        ]]></programlisting>
+        Létezik másolókonstruktor, amely egy referenciát vár, amelynek típusa megegyezik az osztály típusával. A másolókonstruktor esetében is inicializáljuk vele az objektumainkat, 
+        azonban van egy másik funkciója, a másolás. Ekkor a fordító autmatikusan lemásolja az objektumot bitenként. A fordító tudja az adattagok méretét, memóriacímét és átmásolja.
+        A bitenkénti másolást sekély másolásnak nevezzük, amikor pedig dinamikus adattagokat is lemásolunk, az a mély másolás.
         </para>
 
 
