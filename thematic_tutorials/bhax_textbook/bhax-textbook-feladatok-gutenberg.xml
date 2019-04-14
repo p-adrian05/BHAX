@@ -269,7 +269,7 @@ int Point::setx(int value)
             ebben az esetben nincs üres apalértelmezett konstruktor, hacsak mi nem hozunk létre egy üreset. A destruktor végzi az erőforrások felszabadítását, amely az objektum által van birtokolva.
             A desktruktor egy tagfüggvény, amely egy ~ jellel kezdődik és az osztály neve követi. Ez akkor hívódik meg, ha az objektum megszűnik. C++ ban dinamuks memóriakezelés értehő el , amiért egy operátor 
             a felelős, ez a new. Ez annyit foglal le a memóriában amennyi a változó vagy objektum mérete. A delete operátorral pedig fel tudjuk szabadítani.
-             <programlisting language="c"><![CDATA[
+             <programlisting language="c++"><![CDATA[
 int *p;
 p = new int;
 *p = 10;
@@ -279,8 +279,85 @@ delete p;
         azonban van egy másik funkciója, a másolás. Ekkor a fordító autmatikusan lemásolja az objektumot bitenként. A fordító tudja az adattagok méretét, memóriacímét és átmásolja.
         A bitenkénti másolást sekély másolásnak nevezzük, amikor pedig dinamikus adattagokat is lemásolunk, az a mély másolás.
         </para>
+        <para>
+            A tagváltozókat a konstruktorok az inicializálási listájában tudjuk inicializálni. Az argumentumlista zárójelét követően 
+            : -t írunk, majd felsoroljuk az inicializálni kívánt tagváltozókat, zárójelben megadva a kezdőértékeket.
+        </para>
+    <programlisting language="c++"><![CDATA[
+    public:
+     Point(int nx = 0, int my = 0): x(nx), y(ny)
+     {
 
+     }
+        ]]></programlisting>
+        <para>
+            A private és public jelölésen kívül létezik a friend, illetve protected jelölések is.
+            Az osztályok a friend kulcsszóval feljogosíthatnak globális függvényeket a védett tagjaikhoz való hozzáférésre. Ezek a friend függvények,így olyan 
+            hozzáférési jogaik vannak az osztály tagfüggvényeihez, tagváltozóihoz, mintha az adott osztály tagfüggvényei lennének.
+            Léteznek friend osztályok is, ebben az esetben az előzőhez hasonlóan, az osztály egy másik osztályt jogosít fel a védett tagjaihoz való hozzáféréshez.
+        </para>
+        <para>Statikus tagok</para>
+        <para>
+             A statikus tagok a adott osztályhoz tartoznak és nem az objektumaihoz.
+             Minden objektumra vonatkozóan közös értéket vesznek fel és anélkül is használhatóak, hogy egyetlen objektuma is lenne az osztálynak.
+             A statikus változókat nevezhetjük osztályváltozóknak is. Deklarálásához a static kulcsszót kell használni. Azonban ahhoz, hogy
+             helyet foglaljunk neki, a változót az osztálydefiníción kívül definiálni kell. Használjuk a hatókör operátort. Továbbá az osztály tagfüggvényein 
+             kívül is szükség van a hatókör operátorra.
+              <programlisting language="c++"><![CDATA[
+                class A{
+                    static int a;
+                      ...
+                };
+                
+                int A::a = 1;
 
+                printf("%d\n", A::a);
+        ]]></programlisting>
+        A statikus tagok mellett léteznek a statikus tagfüggvények is. Hasonlóan az előzőhöz, itt is szükség van a hatóköroperátorra.
+        Viszont a statikus függvényekből a nem statikus tagváltozók és tagfüggvények nem érhetőek el.
+        </para>
+    <para>
+        Szabványos adatfolyamok
+    </para>
+    <para>
+        Az adatfolyamok bájtok sorozatát jelenti. Két típusa van: input stream és output stream, benemeti, kimeneti adatfolyam.
+        <screen>
+            <![CDATA[
+                input stream jelölése >> operátor
+                output stream jelölése << operátor 
+        ]]>
+        </screen>
+        Az istream típusú objektum csak olvasható, míg az ostream osztály példányai csak írható adatfolyamként használható. 
+        Beolvasáskor cin, kiíráskor cout szavakat használjuk. Ahhoz, hogy az std:: előtagot elhagyjuk, iostream állomány kell beépíteni.
+        <screen>
+            <![CDATA[
+                int i;
+                cout << "Enter az integer" << endl;
+                cin >> i;
+        ]]>
+        </screen>
+        Az adatfolyamokat egy bufferrel látják el, mivel ezek összegyűjtik a karaktersorozatokat és több cout kiíratás csak egy rendszerhívással fogja kiírni 
+        a képernyőre. Kiürítésére a cout.flush() szolgál. Létezik a cerr objektum is, ami a hibák kiírására szolgál, és nem bufferel.
+        Mivel az adatfolyamok objektumok, ezért rendelkeznek állapottal, ezt egy isotate típusú tagváltozó jelzi.
+        Ha az állapot failbit jelzésű, akkor ez hibát jelent, pl formátummal kapcsolatos hibák. A badbit fatális hibát jelent, pl adatvesztés. 
+        Eofbit esetén az adatfolyam elérte az állomány végét. A goodbit pedig azt jelzi, hogy nem volt hiba. A C++ tartalma string osztályt, amely változtatja a méretét, 
+        ha karaktereket fűzűnk hozzá. Ha stringet olvasunk be, akkor használhatjuk az input operátort, azonban ekkor a egy szóköz megállítja az olvasást, ekkor lehet használni az std::getline függvényt.
+    </para>
 
+    <para>
+        Manipulátorok és formázása
+    </para>
+    <para>
+        Az adatfolyam objektumoknak vannak tagfüggvényeik, amelyekkel beállíthatjuk az állapotát, adatokat olvashatunk, írhatunk stb. Az I/O manipulátor egy adatfolyam-módosító speciális objektum, 
+        amelyet a kiviteli és beviteli operátorok argumentumaként alkalmazunk az adatfolyamra.
+        Az előre definiált manipulátorok a iomanip állományban találhatóak. Az endl is egy manipulátor, amely egy sor vége karaktert helyez az adatfolyamba és kiüríti a buffert.
+        Vannak olyan manipulátorok, amelyeknek van paramétere pl setprecesion és van amelyiknek nincs, az endl.
+        Ha több tulajdonságot kell beállítani vagy törölnio, akkor ezeket egy egész típus bitjeinek érdemes megfeleltetni. A jelzőbitek olyan bitek, amelyeket 
+        beállíthatunk vagy törölhetünk. Pl az ios::fixed jelzőbit beállítása esetén tizedes tört alakban írhatjuk ki a számokat. Stringek formázására is számos manipulátor áll rendekezésre.
+    </para>
+    <para>Állománykezelés</para>
+    <para>
+        
+    </para>
     </section>        
 </chapter>                
