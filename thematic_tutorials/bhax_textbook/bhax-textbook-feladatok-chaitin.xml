@@ -42,10 +42,29 @@
         </para>
         <para>
             Megoldás forrása: <link xlink:href="https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/GIMP_Lisp/Chrome">https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/GIMP_Lisp/Chrome</link>               
-        </para>
-        <para>
-            Tanulságok, tapasztalatok, magyarázat...
-        </para>    
+        </para>  
+         <para>A programot a Script-fu termináljából is futtathatjuk, bemásolva a program forrását és megadva a paramétereket: szöveg, betűtípus, szövegméret, képméret, szín, színátmenet.</para>
+        <screen>
+<![CDATA[
+  (script-fu-bhax-chrome "Mintaszöveg" "Sans" 120 1000 1000 '(255 0 0) "Crown molding")
+ ]]>
+         </screen>   
+              <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/krom3.png" scale="130" />
+                </imageobject>
+            </mediaobject>  
+           <para>Ezt továbbfejlesztve kerettel. Paraméterei kiegészülnek annyival, hogy megadjuk a border méretét és a kép sklálázási méretét.</para> 
+            <screen>
+<![CDATA[
+  (script-fu-bhax-chrome-border "Programozás" "Sans" 110 768 576 300 '(255 0 0) "Crown molding" 6)
+ ]]>
+         </screen>  
+         <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/borderkrom.png" scale="330" />
+                </imageobject>
+            </mediaobject>  
     </section>        
 
     <section>
@@ -61,10 +80,48 @@
             Megoldás forrása: <link xlink:href="https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/GIMP_Lisp/Mandala">https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/GIMP_Lisp/Mandala</link>               
         </para>
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
-        </para>            
+            A lisben történő mandala rajzolása a megadott szöveg forgatásával jön létre.
+            A gimb menüjébe úgy tudjuk elérhetővé tenni a programunkat, hogy a gimp program script 
+            mappájába másoljuk a lisp forrásunkat és a create menu opciónál lesz látható. A programnak meg kell adni a szöveget, középre igazított szöveget,
+            a betűtípust, annak méretét, a kép méreteit, tovább a szöveg színét és a színek átmenetét.
+        </para>    
+             <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/program.jpg" scale="40" />
+                </imageobject>
+            </mediaobject>   
+        <para>A programot a Script-fu termináljából is futtathatjuk, bemásolva a program forrását és megadva a fent felsorolt paramétereket. </para>
+        <screen>
+<![CDATA[
+  (script-fu-bhax-mandala "Bátfai Norbert" "BHAX" "Montez" 120 1920 1080 '(255 0 0) "Shadows 3")
+ ]]>
+         </screen> 
+        <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/program2.jpg" scale="40" />
+                </imageobject>
+            </mediaobject>
+        <para>Különböző betütípusokat is letölthetünk a gimphez, amiket egyszerűen csak bemásolunk a gimp fonts mappájába és azokat használva fel 
+            a mandalához. Az alábbi példákhoz felhasznált betűtípusok: Montez, Sacramanto, AlexBrush. Érdemes kézírásos betűtípusokat választani az eredmény 
+            látványossá tételéhez.
+        </para>   
+        <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/montez.png" scale="90" />
+                </imageobject>
+            </mediaobject>   
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/sacramento.png" scale="90" />
+                </imageobject>
+            </mediaobject>   
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/alexBrush.png" scale="90" />
+                </imageobject>
+            </mediaobject>   
     </section>        
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
     <section>
         <title>Lambda</title>
         <para>
