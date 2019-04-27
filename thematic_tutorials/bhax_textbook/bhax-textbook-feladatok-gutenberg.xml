@@ -179,8 +179,34 @@
             C nyelvben az I/O eszközrendszer nem része a nyelvnek, hanem könyvtári függvények állnak rendelkezésre. Ezek a függvények minimum egy karakter illetve egy bájt írását, olvasását 
             teszik lehetővé.
         </para>
+        <para>Kivételkezelés</para>
+        <para>
+            A Kivételkezelés azt teszi lehetővé, hogy a program kezelje a megszakításokat és nem az op. rendszer. Ez a programrész akkor lép működésbe, amikor egy kivétel következik be és reagál az eseményre.
+            Lehetőség van program szinten is a kivételek maszkolására. Egyes kivételek figyelése letiltható vagy engedélyezhető. Letiltás esetén a program 
+            nem vesz tudomást a kivételről, fut tovább. A kivételnek van neve és kódja.
+            A nyelveknek a következő kérdéskre kell válaszolni:
+             </para>
+<para>1. Milyen beépített kivételek vannak a nyelvben?</para> 
+<para>2. Definiálhat-e a programozó saját kivételt?</para>
+<para>3. Milyenek a kivételkezelő hatásköri szabályai?</para> 
+<para>4. A kivételkezelés köthető-e programelemekhez (kifejezés, utasítás, programegység)?</para> 
+<para>5. Hogyan folytatódik a program a kivételkezelés után?</para> 
+<para>6. Mi történik, ha kivételkezelőben következik be kivétel?</para> 
+<para>7. Van-e a nyelvben beépített kivételkezelő?</para> 
+<para>8. Van-e lehetőség arra, hogy bármely kivételt kezelő (általános) kivételkezelőt írjunk?</para>
+<para>9. Lehet-e parametrizálni a kivételkezelőt?</para>   
 
-    </section>        
+<para>Kivételkezelés Javaban</para>
+<para>
+   A Java program működésekor módszerek hívódnak meg. Egy sepciális esemény bekövetkeztekor egy kivétel-objektum jön létre, ekkor a módszer ezt eldobja és a 
+   JVM hatáskörébe kerül a kivétel, aminek feladata, hogy adott objektumhoz megfelelő kivételkezelőt találjon. Ez megfelelő típusú ha a kivételkezelő típusa megegyezik a kivétel 
+   típusával vagy ha a kivételkezelő típusa őse a kivétel típusának. A kivételeknek két csoportja van: ellenőrzött és nem ellenőrzött kivételek. 
+   Az ellenőrzötthöz tartoznak azok a kivételek, amely felléphet egy metódus láthatósági körében. Nem ellenőrzötthöz pedig olyan események, ahol bárhol bekövetkezhetnek és ellenőrzése lehetetlen.
+   Egy módszer fejében meg kell adni azokat, az ellenőrzött kivételeket, amelyet a módszer nem kezel. Ez a THROWS kivételnév_lista utasítással történik.
+   A Throwable ojbektumnak két alosztálya van: Error (rendszerhibák, nem ellenőrzött kivételek), Exception (ellenőrzött kivételek osztálya).
+</para>
+    </section>  
+          
     <section>
         <title>Programozás bevezetés</title>
         <para>                
@@ -402,6 +428,10 @@ delete p;
                double d = max<double>(3,3.5);
         ]]></programlisting>
 
+    </para>
+    <para>Kivételkezelés</para>
+    <para> 
+        
     </para>
     </section>        
 </chapter>                
