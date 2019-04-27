@@ -8,14 +8,39 @@
     <section>
         <title>Iteratív és rekurzív faktoriális Lisp-ben</title>
         <para>
-                
-        </para>
-        <para>
             Megoldás videó:<link xlink:href="https://youtu.be/z6NJE2a1zIA">https://youtu.be/z6NJE2a1zIA</link>      
         </para>
         <para>
             Megoldás forrása:                
         </para>
+        <para>A Lisp nyelv teljesen más gondolkodásmódot igényel. A matematikai műveleteket infix írása helyett fordított lengyel jelöléssel 
+            írjuk, ami azt jelenti, hogy műveleteket előre írjuk és utána a függvény operandusait. A Gimp program TinyScheme interpreterjét használjuk, 
+            ami a bejövő parancsokat értelmezi zárójelek használatával.
+        </para>
+        <para>
+            A függvényeket define kulcsszóval definiáljuk, utána írjuk a függvény nevét és a paramétereket amit utána feldogoz.
+            A faktoriálist úgy számoljuk ki iteratív módon, hogy egy do ciklussal i-t 1-től növeljük és a num értéket szorozzuk i-vel, mindaddig amíg i nem lesz nagyobb mint n.
+        </para>
+                <screen>
+<![CDATA[
+> (define (fact n) (do (( i 1 (+ 1 i)) (num 1 (* i num))) ((> i n) num)))
+fact
+> (fakt 5)
+120
+ ]]>
+         </screen>  
+        <para>
+            Ennél elegánsabb rekurzívan megoldani a számolást. Itt is definiáljuk a függvényt először, majd egy if -el megnézzük, hogy n kisebb-e mint 1, ugyanis ezzel szakad meg a 
+            rekurzív hívás. Ha e feltétel igaz, akkor egyet ad vissza, ha hamis, akkor n-t szorozzuk n-1-el és ez újból meghívja magát, amíg n egynél kisebb lesz.
+        </para>
+                <screen>
+<![CDATA[
+> (define (fakt n) (if (< n 1) 1 (* n(fakt(- n 1)))))
+fakt
+> (fakt 5)
+120
+ ]]>
+         </screen>  
     </section>        
         
     <!--        
@@ -44,7 +69,7 @@
             Megoldás videó: <link xlink:href="https://youtu.be/OKdAkI_c7Sc">https://youtu.be/OKdAkI_c7Sc</link>      
         </para>
         <para>
-            Megoldás forrása: <link xlink:href="https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/GIMP_Lisp/Chrome">https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/GIMP_Lisp/Chrome</link>               
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/attention_raising/GIMP_Lisp/Chrome">https://github.com/p-adrian05/BHAX/tree/master/attention_raising/GIMP_Lisp/Chrome</link>               
         </para>  
          <para>A programot a Script-fu termináljából is futtathatjuk, bemásolva a program forrását és megadva a paramétereket: szöveg, betűtípus, szövegméret, képméret, szín, színátmenet.</para>
         <screen>
@@ -80,7 +105,7 @@
             Megoldás videó: <link xlink:href="https://bhaxor.blog.hu/2019/01/10/a_gimp_lisp_hackelese_a_scheme_programozasi_nyelv">https://bhaxor.blog.hu/2019/01/10/a_gimp_lisp_hackelese_a_scheme_programozasi_nyelv</link>      
         </para>
         <para>
-            Megoldás forrása: <link xlink:href="https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/GIMP_Lisp/Mandala">https://gitlab.com/nbatfai/bhax/tree/master/attention_raising/GIMP_Lisp/Mandala</link>               
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/attention_raising/GIMP_Lisp/Mandala/bhax_mandala9.scm">https://github.com/p-adrian05/BHAX/blob/master/attention_raising/GIMP_Lisp/Mandala/bhax_mandala9.scm</link>               
         </para>
         <para>
             A lisben történő mandala rajzolása a megadott szöveg forgatásával jön létre.
