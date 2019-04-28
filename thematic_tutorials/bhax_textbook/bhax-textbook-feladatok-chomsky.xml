@@ -48,22 +48,22 @@
              mechanizmusának modellálása, vagyis olyan modell létrehozása, 
              amelynek a segítségével végtelen számú mondatot alkothatunk, generálhatunk.
         </para>
+        
         <para>
             A generatív grammatika négy alkotóeleme:
         </para>
         <para>
-            Terminális szimbólumok: a definiálandó nyelv ábécéje.
+            Kezdőszimbólum
+        </para>
+        <para>
+            Terminális szimbólumok: a nyelv ábécéje.
         </para>
         <para>
             Nem terminális jelek: egy másik ábécé, melynek jeleit csak segédeszközként használjuk a generálás során.
         </para>
         <para>
-            Kezdőszimbólum: egy kitüntetett szimbólum.
-        </para>
-        <para>
             Helyettesítési szabályok, amelyekkel a szavak származtathatóak.
         </para>
-
         <para>
             A generálás során adott egy szó, amit meghatározott helyettesítési szabály alapján
             cserélünk egy másik szóra, mindaddig, míg szavunk csak terminális jelekből fog állni.
@@ -756,7 +756,7 @@ int main()
             </listitem>
             <listitem>
                 <programlisting><![CDATA[int (&tr)[5] = c;]]></programlisting>  
-                <para>Öt elemű egészekből álló tombre mutató mutató, ami a c tömbre mutat.</para>           
+                <para> c tömbre mutató öt elemű egészekből álló tömbre mutató mutató. </para>          
             </listitem>
             <listitem>
                 <programlisting><![CDATA[int *d[5];]]></programlisting> 

@@ -431,7 +431,103 @@ delete p;
     </para>
     <para>Kivételkezelés</para>
     <para> 
-        
+        A hibák kezelése C nyelvben a függvények által visszaadott hibakódok alapján történik, azonban a C++-ban a kivételek kezelése
+        sokkal átláthatóbb, fejlettebb megoldást kínál. A kivételkezelés biztosítja hogy ha hibát találunk, akkor a program futása 
+        a hibakezelő ágon folytatódjon, illetve kivételes helyzetek esetén is használandó, nem csak hibák kezelésére.
     </para>
+     <programlisting language="c++"><![CDATA[
+int main() 
+{
+    try{
+        double d;
+
+        cout << "Enter a nonzero number:";
+        cin >> d;
+        if(d==0)
+            throw "The number can not be zero.";
+        cout << "The reciprocal is:" << 1/d << endl;
+
+    }
+    catch(const char* exc)
+    {
+        cout << "Error! The error text is:" << exc << endl;
+    }
+    cout << "Done." << endl;
+{
+        ]]></programlisting>
+        <para>
+            0 megadása esetén a catch ágra ugrunk és a hibaüzenet throw által dobott kivétel lesz. Ez azért történik meg, mert a 
+            throw kulcsszó hatására a vezérlés egy olyan catch ágra kerül, aminek a paramétere kompatibilis a dobott kivétellel és beíródik a catch paraméterébe és lefut a törzse. Miután ez megtörtént a catch után 
+            folytatódik a futás. Helyes szám megadásakor a catch ág nem fut le, a program átugorja. Ha egy kivételt nem kapunk el, akkor kezeletlen kivételnek 
+            számít, ekkor a meghívódik a terminate függvény, ami pedig az abort függvényt hívja meg, ami pedig kilép az alkalmazásból.
+            Lehetséges a try-catch blokkokot egymásba is ágyazni, ekkor a dobott kivételhez közel, alacsony szinten tudjuk kezelni a kivételt. A paraméter nélküli throw kulcsszó az elkapott kivétel 
+            újradobását jelenti.
+        </para>
+             <programlisting language="c++"><![CDATA[
+int main() 
+{
+    try
+    {
+       f1();
+    }
+    catch(const char* errorText)
+    {
+        cerr << errorText << endl;
+    }
+    
+    void f1()
+    {
+
+        Fifo fifo; 
+        f2();
+        ...
+    }
+
+    void f2()
+    {
+        int i = 1;
+        throw "error1";
+    }
+{
+        ]]></programlisting>
+    <para>
+        Hívási verem visszacsévélésének nevezzük azt a folyamatot, amikor egy kivétel elkapásáig haladva a függvények hívási láncába 
+        a függvények lokális változói felszabadulnak. A példában, az f2 kivételt dob és felszabadul az i lokális változója. f1-ben felszabadul a Fifo objektum és lefut a main függvényben a catch ág.
+        Ekkor ugyanis meghívódnak az objektumok desktruktorai. Fontos szabály, hogy a kivétel dobása és elkapása között ne dobjunk újabb kivételt, mert kezelése nem lehetséges és meghívódik a terminate függvény.
+    </para>
+    <programlisting language="c++"><![CDATA[
+class MessageHandler
+{
+public: 
+    void ProcessMessages(istream& is)
+    {
+        Message *pMessage;
+        // Kovetkezo uzenet beolvasasa
+        while((pMessage = readNextMessage(is)) != NULL)
+        {
+            try
+            {
+                //Kivetelt dobhat
+                pMessage->Process();
+                ...
+                delete pMessage;
+            }
+            catch(...)
+            {
+                delete pMessage;
+                throw;
+            }
+        }
+    }
+    private:
+        Message* readNextMessage(istream& is)
+        {...}
+    };
+        ]]></programlisting>
+        <para>Ebben a példában a MessageHandler a bemeneti folyamból üzetenet olvas be és dolgozza fel.
+            A pMessage objektum olyan függvényt hív ami kivételt dobhat és ha ez bekövetkezik, akkor az objektum felszabadítása elmarad ami 
+            memóriaszivárgáshoz vezet. Ennek megoldására a catch(...)-csel elkapjuk az üzenet során keletkezett kivételt, felszabadítjuk a foglalt memóriát és újradobjuk 
+            a kivételt. Ez azért fontos, mert ha nem dobjuk a hiba nem derül ki, elnyelődik.
+        </para>
     </section>        
 </chapter>                
