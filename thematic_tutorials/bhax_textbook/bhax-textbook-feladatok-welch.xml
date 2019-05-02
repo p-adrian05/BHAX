@@ -787,6 +787,7 @@ protected:
         <para>
             Megoldás forrása:<link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a11.cpp">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a11.cpp</link>   
         </para>
+          <para>Tutoriált: Nagy Lajos</para>  
             <para>
                 Az előző feladatot továbbfejlesztve, megalkotjuk a mozgató konstruktort. 
                 Paraméterként átadjuk a régi fát, az új fa gyökerét null-ra állítjuk, majd a move függvénnyt meghívjuk, amivel 

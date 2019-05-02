@@ -184,17 +184,11 @@
             A Kivételkezelés azt teszi lehetővé, hogy a program kezelje a megszakításokat és nem az op. rendszer. Ez a programrész akkor lép működésbe, amikor egy kivétel következik be és reagál az eseményre.
             Lehetőség van program szinten is a kivételek maszkolására. Egyes kivételek figyelése letiltható vagy engedélyezhető. Letiltás esetén a program 
             nem vesz tudomást a kivételről, fut tovább. A kivételnek van neve és kódja.
-            A nyelveknek a következő kérdéskre kell válaszolni:
+            A nyelveknek számos kérdés feltehető a kivételkezeléssel kapcsolatosan. Pl: Vannak-e beépített kivételek a nyelvben? 0-val való 
+            osztás, indextúllépés. Lehet-e saját kivételeket írni? A legtöbb nyelvben igen. Hogyan folytatódik a program kivételkezelés után? 
+            Leáll vagy fut tovább hibától függően.
              </para>
-<para>1. Milyen beépített kivételek vannak a nyelvben?</para> 
-<para>2. Definiálhat-e a programozó saját kivételt?</para>
-<para>3. Milyenek a kivételkezelő hatásköri szabályai?</para> 
-<para>4. A kivételkezelés köthető-e programelemekhez (kifejezés, utasítás, programegység)?</para> 
-<para>5. Hogyan folytatódik a program a kivételkezelés után?</para> 
-<para>6. Mi történik, ha kivételkezelőben következik be kivétel?</para> 
-<para>7. Van-e a nyelvben beépített kivételkezelő?</para> 
-<para>8. Van-e lehetőség arra, hogy bármely kivételt kezelő (általános) kivételkezelőt írjunk?</para>
-<para>9. Lehet-e parametrizálni a kivételkezelőt?</para>   
+
 
 <para>Kivételkezelés Javaban</para>
 <para>
