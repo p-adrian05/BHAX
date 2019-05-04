@@ -535,7 +535,7 @@ adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch/test$ ./z <adat.txt
         <para>
             Megoldás forrása:<link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a7.cpp">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a7.cpp</link>               
         </para>
-
+         <para>Tutoriált: Országh Levente</para>  
 <programlisting language="c++">
     <![CDATA[ 
 
@@ -736,7 +736,7 @@ adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Welch$ ./fa adat.txt -o t
         <para>
             Megoldás forrása:<link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a8.cpp">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a8.cpp</link>  
         </para>
-         <para>Tutoriált: Loós Tamás</para>  
+         <para>Tutoriált: Loós Tamás, Országh Levente</para>  
 
 <para>
   Az előző forrásban a gyökéret mint objektumot kezeltük. A fa mutatót egyszerűen ráállítjuk a gyökérre a konstruktorban, amit alul hozunk létre.

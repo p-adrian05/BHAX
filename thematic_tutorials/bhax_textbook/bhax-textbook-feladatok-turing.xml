@@ -519,6 +519,7 @@ ok - 918.00 BogoMIPS
         <para>
             Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Turing/pagerank.c">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Turing/pagerank.c</link>
         </para>
+         <para>Tutoriált: Országh Levente</para>  
         <para>
             A Page Rank az interneten található oldalakat rangsorolja. Kezdetben minden oldalnak van egy szavazati pontja és ha
             az egyik linkeli a másikat, akkor a linkelt oldal megkapja a linkelő pontját. Tehát egy oldal akkor lesz előkelőbb helyen egy google
