@@ -7,11 +7,14 @@ main ()
     int nr = 5;
     double **tm;
     
+    printf("%p\n", &tm);
     
     if ((tm = (double **) malloc (nr * sizeof (double *))) == NULL)
     {
         return -1;
     }
+
+    printf("%p\n", tm);
     
     for (int i = 0; i < nr; ++i)
     {
@@ -21,7 +24,8 @@ main ()
         }
 
     }
-    
+
+    printf("%p\n", tm[0]);    
     
     for (int i = 0; i < nr; ++i)
         for (int j = 0; j < i + 1; ++j)
@@ -34,7 +38,11 @@ main ()
         printf ("\n");
     }
 
-   
+    tm[3][0] = 42.0;
+    (*(tm + 3))[1] = 43.0;	// mi van, ha itt hiányzik a külső ()
+    *(tm[3] + 2) = 44.0;
+    *(*(tm + 3) + 3) = 45.0;
+
     for (int i = 0; i < nr; ++i)
     {
         for (int j = 0; j < i + 1; ++j)
@@ -49,3 +57,4 @@ main ()
 
     return 0;
 }
+
