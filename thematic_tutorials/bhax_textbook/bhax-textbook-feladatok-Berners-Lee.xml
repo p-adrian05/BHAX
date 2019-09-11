@@ -1,0 +1,17 @@
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:lang="hu">
+    <info>
+        <title>Helló, Berners-Lee!</title>
+          </info>
+    <section>
+        <title>C++: Benedek Zoltán, Levendovszky Tihamér Szoftverfejlesztés C++ nyelven</title>     
+        <para></para>   
+    </section>  
+       <section>
+        <title>Java: Nyékyné Dr. Gaizler Judit et al. Java 2 útikalauz programozóknak 5.0 I-II.</title>     
+        <para></para>   
+    </section>  
+       <section>
+        <title>Python: Forstner Bertalan, Ekler Péter, Kelényi Imre: Bevezetés a mobilprogramozásba. Gyors prototípus-fejlesztés Python és Java nyelven (35-51 oldal)</title>     
+        <para></para>   
+    </section>  
+</chapter>                

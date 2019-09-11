@@ -14,7 +14,8 @@
             </tip>    
         
     </partintro>
-    
+
+
     <xi:include href="bhax-textbook-feladatok2-arroway.xml">
         <xi:fallback>
             <para>
@@ -24,5 +25,12 @@
     </xi:include>     
     
     
+    <xi:include href="bhax-textbook-feladatok-Berners-Lee.xml">
+        <xi:fallback>
+            <para>
+                <emphasis>XInclude: bhax-textbook-motto.xml file not found</emphasis>
+            </para>
+        </xi:fallback>
+    </xi:include>  
             
 </part>  

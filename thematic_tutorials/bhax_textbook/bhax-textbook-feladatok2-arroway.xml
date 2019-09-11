@@ -5,13 +5,34 @@
             <keyword/>
         </keywordset>
     </info>
-
-    <section>
-        <title>A BPP algoritmus Java megvalósítása</title>
+<section>
+        <title>OO szemlélet</title>
         <para>
+        A módosított polártranszformációs normális generátor beprogramozása Java nyelven. 
+        Mutassunk rá, hogy a mi természetes saját megoldásunk (az algoritmus egyszerre két normálist állít elő, kell egy példánytag,
+         amely a nem visszaadottat tárolja és egy logikai tag, hogy van-e tárolt vagy futtatni kell az algot.) és az OpenJDK, 
+         Oracle JDK-ban a Sun által adott OO szervezés ua.! 
+        </para>
+        <para>https://arato.inf.unideb.hu/batfai.norbert/UDPROG/deprecated/Prog1_5.pdf (16-22 fólia)</para>
+        <para>Ugyanezt írjuk meg C++ nyelven is! (lásd még UDPROG repó: source/labor/polargen)</para>
+        <para>
+            Megoldás forrása:                
         </para>
         <para>
-            Megoldás videó:
+            Tanulságok, tapasztalatok, magyarázat...
+        </para>
+    </section>    
+     <section>
+        <title>Homokózó</title>
+        <para>
+        Írjuk át az első védési programot (LZW binfa) C++ nyelvről Java nyelvre, ugyanúgy működjön! 
+        Mutassunk rá, hogy gyakorlatilag a pointereket és referenciákat kell kiirtani és minden máris működik 
+        (erre utal a feladat neve, hogy Java-ban minden referencia, nincs választás, hogy mondjuk egy attribútum pointer, referencia vagy tagként tartalmazott legyen). 
+        </para>
+  <para>
+           Miután már áttettük Java nyelvre,
+            tegyük be egy Java Servletbe és a böngészőből GET-es kéréssel (például a böngésző címsorából) kapja meg azt a mintát, 
+            amelynek kiszámolja az LZW binfáját!1                
         </para>
         <para>
             Megoldás forrása:                
@@ -19,15 +40,15 @@
         <para>
             Tanulságok, tapasztalatok, magyarázat...
         </para>
-    </section>        
+    </section>   
 
-    <section>
-        <title>Java osztályok a Pi-ben</title>
+     <section>
+        <title>„Gagyi”</title>
         <para>
-            Az előző feladat kódját fejleszd tovább: vizsgáld, hogy Vannak-e Java osztályok a Pi hexadecimális kifejtésében!
-        </para>
-        <para>
-            Megoldás videó:
+            Az ismert formális <screen><![CDATA[„while (x <= t && x >= t && t != x);”]]></screen> tesztkérdéstípusra adj a szokásosnál 
+            (miszerint x, t az egyik esetben az objektum által hordozott érték, a másikban meg az objektum referenciája) 
+            „mélyebb” választ, írj Java példaprogramot mely egyszer végtelen ciklus, más x, t értékekkel meg nem! 
+            A példát építsd a JDK Integer.java forrására3, hogy a 128-nál inkluzív objektum példányokat poolozza! 
         </para>
         <para>
             Megoldás forrása:                
@@ -35,7 +56,35 @@
         <para>
             Tanulságok, tapasztalatok, magyarázat...
         </para>
-    </section>        
-        
+    </section>       
+
+     <section>
+        <title>Yoda</title>
+        <para>
+          Írjunk olyan Java programot, ami java.lang.NullPointerEx-el leáll, ha nem követjük a Yoda conditions-t! https://en.wikipedia.org/wiki/Yoda_conditions 
+          </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+        </para>
+    </section> 
+
+    <section>
+        <title>Kódolás from scratch</title>
+        <para>
+          Induljunk ki ebből a tudományos közleményből: http://crd-legacy.lbl.gov/~dhbailey/dhbpapers/bbp-alg.pdf és csak ezt tanulmányozva írjuk meg Java nyelven a BBP algoritmus megvalósítását!  
+</para>
+ <para>
+         https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/apbs02.html#pi_jegyei 
+        </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+        <para>
+            Tanulságok, tapasztalatok, magyarázat...
+        </para>
+    </section>                
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 </chapter>                
