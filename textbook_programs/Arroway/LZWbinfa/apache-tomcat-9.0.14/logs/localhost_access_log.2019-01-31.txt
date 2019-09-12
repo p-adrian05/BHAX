@@ -1,0 +1,11 @@
+0:0:0:0:0:0:0:1 - - [31/Jan/2019:12:19:28 +0100] "GET /TestServlet/tests/as HTTP/1.1" 200 379
+0:0:0:0:0:0:0:1 - - [31/Jan/2019:12:19:30 +0100] "GET /TestServlet HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [31/Jan/2019:12:19:31 +0100] "GET /TestServlet/ HTTP/1.1" 200 146
+0:0:0:0:0:0:0:1 - - [31/Jan/2019:12:28:24 +0100] "GET /TestServlet/tests/as HTTP/1.1" 200 379
+0:0:0:0:0:0:0:1 - - [31/Jan/2019:12:28:28 +0100] "GET /TestServlet/tests/ HTTP/1.1" 200 375
+0:0:0:0:0:0:0:1 - - [31/Jan/2019:12:28:33 +0100] "GET /TestServlet/tests/ HTTP/1.1" 200 376
+0:0:0:0:0:0:0:1 - - [31/Jan/2019:13:10:37 +0100] "GET /TestServlet/tests/ HTTP/1.1" 200 375
+0:0:0:0:0:0:0:1 - - [31/Jan/2019:13:36:07 +0100] "GET /TestServlet/tests/as HTTP/1.1" 401 1034
+0:0:0:0:0:0:0:1 - - [31/Jan/2019:13:36:13 +0100] "GET /TestServlet/tests/ HTTP/1.1" 200 376
+0:0:0:0:0:0:0:1 - - [31/Jan/2019:13:36:20 +0100] "GET /TestServlet/tests/ HTTP/1.1" 401 1034
+0:0:0:0:0:0:0:1 - - [31/Jan/2019:13:36:24 +0100] "GET /TestServlet/tests/ HTTP/1.1" 200 375

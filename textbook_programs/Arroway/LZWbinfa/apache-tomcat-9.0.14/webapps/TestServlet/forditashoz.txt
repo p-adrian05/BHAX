@@ -1,0 +1,7 @@
+C:\Program Files\Java\apache-tomcat-9.0.14\webapps\TestServlet\WEB-INF>javac -d classes -cp ../../../lib/* src/test/*
+C:\Program Files\Java\apache-tomcat-9.0.14\webapps\TestServlet\WEB-INF>javac -d classes src/test/*
+javac -d classes -cp ../../../lib/servlet-api.jar src/test/*
+
+javac -d classes -cp ../../../lib/servlet-api.jar src/Binfa/com/company/*
+
+C:\Users\adria\Desktop\repok\Java\apache-tomcat-9.0.14\webapps\Binfa\WEB-INF>
