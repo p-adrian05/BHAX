@@ -203,7 +203,7 @@ adrian@adrian-MS-7817:~/Desktop$ ./p
             amelynek kiszámolja az LZW binfáját!                
         </para>
         <para>
-            Megoldás forrása:                
+            <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Arroway/LZWbinfa">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Arroway/LZWbinfa</link>
         </para>
         <para>
             A program fő részei Javaban:
@@ -451,7 +451,12 @@ public class Main extends HttpServlet {
         </screen>
         <para>
            Ezután bögészőbe http://localhost:8080/Binfa/get?data=11010100101010111010101010101010   
+        </para>
+        <para>
            A 8080 portszám eltérhet, a szerver indulásakor a terminálba kiírja a használt portszámot.
+        </para>
+        <para>
+         A kapott válasz:
         </para>
 
         <screen>
