@@ -16,11 +16,177 @@
         <para>https://arato.inf.unideb.hu/batfai.norbert/UDPROG/deprecated/Prog1_5.pdf (16-22 fólia)</para>
         <para>Ugyanezt írjuk meg C++ nyelven is! (lásd még UDPROG repó: source/labor/polargen)</para>
         <para>
-            Megoldás forrása:                
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Arroway/polargen">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Arroway/polargen</link>               
         </para>
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
+            A Java és a C++ objektumorientált nyelvek. Objektumok használata egyszerűsíti a programozást, ugyanis a az objektum 
+            a valódi világ elemének a rá jellemző tulajdonságai és viselkedések által modelezett eleme. Erre jó példa a polártranszformációs 
+            algoritmus. Az algoritmus matematikai háttere most számunkra lényegtelen, fontos viszont az eljárás azon jellemzője, hogy egy számítási lépés két normális eloszlású számot állít elő, 
+            tehát minden páratlanadik meghíváskor nem kell számolnunk, csupán az előző lépés másik számát visszaadnunk. Hogy páros vagy páratlan lépésben hívtuk-e meg a megfelelő számítást elvégző következő() függvényt, 
+            a nincsTárolt logikai változóval jelöljük. Igaz értéke azt jelenti, hogy tárolt lebegőpontos változóban el van tárolva a visszaadandó szám.
         </para>
+         <para>Java-ban:</para>
+           <programlisting language="java">
+<![CDATA[ 
+
+public class PolárGenerátor {
+    
+    boolean nincsTárolt = true;
+    double tárolt;
+    
+    public PolárGenerátor() {
+        
+        nincsTárolt = true;
+        
+    }
+    
+    public double következő() {
+        
+        if(nincsTárolt) {
+            
+            double u1, u2, v1, v2, w;
+            do {
+                u1 = Math.random();
+                u2 = Math.random();
+                
+                v1 = 2*u1 - 1;
+                v2 = 2*u2 - 1;
+                
+                w = v1*v1 + v2*v2;
+                
+            } while(w > 1);
+            
+            double r = Math.sqrt((-2*Math.log(w))/w);
+            
+            tárolt = r*v2;
+            nincsTárolt = !nincsTárolt;
+            
+            return r*v1;
+            
+        } else {
+            nincsTárolt = !nincsTárolt;
+            return tárolt;
+        }
+    }
+    
+    public static void main(String[] args) {
+        
+        PolárGenerátor g = new PolárGenerátor();
+        
+        for(int i=0; i<10; ++i)
+            System.out.println(g.következő());
+        
+    }
+    
+}
+
+]]>
+        </programlisting> 
+         <screen>
+<![CDATA[
+adrian@adrian-MS-7817:~/Desktop$ javac PolárGenerátor.java
+adrian@adrian-MS-7817:~/Desktop$ java PolárGenerátor
+-0.9977909475608935
+1.2436431306621076
+-1.0241389099503682
+0.9924334466411862
+0.36416475700814943
+0.9602245062934003
+-0.5074463598559636
+0.7797384696972893
+-0.11174392973220601
+0.8032167627641318
+
+ ]]>
+        </screen>
+    <para>A JDK(Java Development Kit) Random.java osztályban a
+         Sun programozói is lett megoldva a random szám generálás.</para>
+          <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/jdk.png" scale="50" />
+            </imageobject>
+        </mediaobject>
+<para>C++-ban:</para>
+ <programlisting language="c++">
+<![CDATA[ 
+
+#include <cstdlib>
+#include <cmath>
+#include <ctime>
+#include <iostream>
+class PolarGen
+{
+public:
+  PolarGen ()
+  {
+    nincsTarolt = true;
+    std::srand (std::time (NULL));
+  }
+   ~PolarGen ()
+  {
+
+  }
+double kovetkezo ()
+{
+  if (nincsTarolt)
+    {
+      double u1, u2, v1, v2, w;
+      do
+	{
+	  u1 = std::rand () / (RAND_MAX + 1.0);
+	  u2 = std::rand () / (RAND_MAX + 1.0);
+	  v1 = 2 * u1 - 1;
+	  v2 = 2 * u2 - 1;
+	  w = v1 * v1 + v2 * v2;
+	}
+      while (w > 1);
+
+      double r = std::sqrt ((-2 * std::log (w)) / w);
+
+      tarolt = r * v2;
+      nincsTarolt = !nincsTarolt;
+
+      return r * v1;
+    }
+  else
+    {
+      nincsTarolt = !nincsTarolt;
+      return tarolt;
+    }
+}
+private:
+  bool nincsTarolt;
+  double tarolt;
+};
+
+int main (int argc, char **argv)
+{
+  PolarGen pg;
+
+  for (int i = 0; i < 10; ++i)
+    std::cout << pg.kovetkezo () << std::endl;
+
+  return 0;
+}
+]]>
+        </programlisting>
+         <screen>
+<![CDATA[
+adrian@adrian-MS-7817:~/Desktop$ g++ polargen.cpp -o p
+adrian@adrian-MS-7817:~/Desktop$ ./p
+0.33827
+0.159026
+1.07617
+-0.573861
+0.407831
+0.337813
+1.1272
+1.33273
+-1.67664
+0.401283
+
+ ]]>
+        </screen>
     </section>    
      <section>
         <title>Homokózó</title>
