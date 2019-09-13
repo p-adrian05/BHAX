@@ -102,7 +102,8 @@ adrian@adrian-MS-7817:~/Desktop$ java PolárGenerátor
  ]]>
         </screen>
         <para>A JDK(Java Development Kit) Random.java osztályban a
-         Sun programozói is lett megoldva a random szám generálás.</para>
+         Sun programozói is így oldották meg a random szám generálást. A synchronized arra utal, hogy ha több szál hívja meg egyszerre a 
+         metódust ugyanarra az objektumra, akkor egyszerre csak az egyik fér hozzá és be kell várnia a másik szálnak az előzőt.</para>
         <mediaobject>
             <imageobject>
                 <imagedata fileref="img/jdk.png" scale="50" />
@@ -203,7 +204,7 @@ adrian@adrian-MS-7817:~/Desktop$ ./p
             amelynek kiszámolja az LZW binfáját!                
         </para>
         <para>
-            <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Arroway/LZWbinfa">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Arroway/LZWbinfa</link>
+          Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Arroway/LZWbinfa">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Arroway/LZWbinfa</link>
         </para>
         <para>
             A program fő részei Javaban:
@@ -487,11 +488,66 @@ Szoras 0.5773502691896258
             A példát építsd a JDK Integer.java forrására3, hogy a 128-nál inkluzív objektum példányokat poolozza! 
         </para>
         <para>
-            Megoldás forrása:                
+            Nem kapunk végtelen ciklust ha -128 és 127 között adunk meg Integer értéket. Ennek az az oka, hogy az Integer objektum ebben a tartományban cache-sel, tehát 
+            ugyanazt az objektumot használja fel többször csak más értéket hozzárendelve, így amikor összehasonlítjuk akkor mindig hamisat kapunk a while ciklusban t!=x feltételre, mert ugyanazt az objektum címet hasonlítjuk össze.
+            Ennek az oka kevesebb memória használat elérése sok ebbe a tartományba eső érték esetén.
+            
         </para>
+
+        <programlisting language="java">
+            <![CDATA[ 
+public class Main {
+
+    public static void main(String[] args) {
+
+       //nem vegtelen ciklus
+         //Integer x = -128;
+         //Integer t = -128;
+         //Integer x = 127;
+         //Integer t = 127;
+
+        //vegtelen ciklus
+         Integer x = 128;
+         Integer t = 128;
+         //Integer x = -129;
+         //Integer t = -129;
+         // Integer x = new Integer(127);
+         // Integer t = new Integer(127);
+
+
+         while (x <= t && x >= t && t != x) {
+              System.out.println("while");
+         }
+
+
+    }
+}
+]]>
+        </programlisting>
+        <programlisting language="java">
+            <![CDATA[ 
+/**
+ *
+ * This method will always cache values in the range -128 to 127,
+ * inclusive, and may cache other values outside of this range.
+ *
+ * @param  i an {@code int} value.
+ * @return an {@code Integer} instance representing {@code i}.
+ * @since  1.5
+ */
+ public static Integer valueOf(int i) {
+     if (i >= IntegerCache.low && i <= IntegerCache.high)
+         return IntegerCache.cache[i + (-IntegerCache.low)];
+     return new Integer(i);
+ }
+]]>
+        </programlisting>
+
         <para>
-            Tanulságok, tapasztalatok, magyarázat...
+            Az Integer.java forrásában látható, hogy amikor értéket kap az adott Integer objektum, akkor a [-128;127] intervallumon kívűl eső értékeknek egy külön objektumot hoz létre.
+            Ezért t!=x feltétel a while ciklusban igaz lesz, mert két külön címmel rendelkező objektumot hasonlít össze egymással.
         </para>
+
     </section>
 
     <section>
@@ -499,12 +555,38 @@ Szoras 0.5773502691896258
         <para>
           Írjunk olyan Java programot, ami java.lang.NullPointerEx-el leáll, ha nem követjük a Yoda conditions-t! https://en.wikipedia.org/wiki/Yoda_conditions 
         </para>
+
+
+        <programlisting language="java">
+            <![CDATA[ 
+public class Main {
+
+    public static void main(String[] args) {
+         String a = null;
+
+         //NullPointerEx.
+         if(a.equals("alma")){
+         System.out.println("egyenlo");
+         }
+
+         //Yoda condition
+         if("alma".equals(a)){
+            System.out.println("egyenlo");
+         }
+
+
+
+    }
+}
+]]>
+        </programlisting>
+
         <para>
-            Megoldás forrása:                
+            Az első esetben java.lang.NullPointerException kivételt kapunk, ugyanis egy null pointert akarunk hasonlítani egy stringhez. 
+            A második esetben pedig fordítva hasonlítunk, ez a yoda condition, aminek az az előnye, hogy így nem száll el a program, mert biztosan 
+            nem null pointert hasonlítunk össze valamivel, hanem egy tényleges stringet.
         </para>
-        <para>
-            Tanulságok, tapasztalatok, magyarázat...
-        </para>
+
     </section>
 
     <section>
