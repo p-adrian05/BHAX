@@ -1,0 +1,607 @@
+<chapter xmlns="http://docbook.org/ns/docbook" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:lang="hu">
+    <info>
+        <title>Helló, Arroway!</title>
+        <keywordset>
+            <keyword/>
+        </keywordset>
+    </info>
+    <section>
+        <title>OO szemlélet</title>
+        <para>
+        A módosított polártranszformációs normális generátor beprogramozása Java nyelven. 
+        Mutassunk rá, hogy a mi természetes saját megoldásunk (az algoritmus egyszerre két normálist állít elő, kell egy példánytag,
+         amely a nem visszaadottat tárolja és egy logikai tag, hogy van-e tárolt vagy futtatni kell az algot.) és az OpenJDK, 
+         Oracle JDK-ban a Sun által adott OO szervezés ua.! 
+        </para>
+        <para>https://arato.inf.unideb.hu/batfai.norbert/UDPROG/deprecated/Prog1_5.pdf (16-22 fólia)</para>
+        <para>Ugyanezt írjuk meg C++ nyelven is! (lásd még UDPROG repó: source/labor/polargen)</para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Arroway/polargen">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Arroway/polargen</link>
+        </para>
+        <para>
+            A Java és a C++ objektumorientált nyelvek. Objektumok használata egyszerűsíti a programozást, ugyanis a az objektum 
+            a valódi világ elemének a rá jellemző tulajdonságai és viselkedések által modelezett eleme. Erre jó példa a polártranszformációs 
+            algoritmus. Az algoritmus matematikai háttere most számunkra lényegtelen, fontos viszont az eljárás azon jellemzője, hogy egy számítási lépés két normális eloszlású számot állít elő, 
+            tehát minden páratlanadik meghíváskor nem kell számolnunk, csupán az előző lépés másik számát visszaadnunk. Hogy páros vagy páratlan lépésben hívtuk-e meg a megfelelő számítást elvégző következő() függvényt, 
+            a nincsTárolt logikai változóval jelöljük. Igaz értéke azt jelenti, hogy tárolt lebegőpontos változóban el van tárolva a visszaadandó szám.
+        </para>
+        <para>Java-ban:</para>
+        <programlisting language="java">
+            <![CDATA[ 
+
+public class PolárGenerátor {
+    
+    boolean nincsTárolt = true;
+    double tárolt;
+    
+    public PolárGenerátor() {
+        
+        nincsTárolt = true;
+        
+    }
+    
+    public double következő() {
+        
+        if(nincsTárolt) {
+            
+            double u1, u2, v1, v2, w;
+            do {
+                u1 = Math.random();
+                u2 = Math.random();
+                
+                v1 = 2*u1 - 1;
+                v2 = 2*u2 - 1;
+                
+                w = v1*v1 + v2*v2;
+                
+            } while(w > 1);
+            
+            double r = Math.sqrt((-2*Math.log(w))/w);
+            
+            tárolt = r*v2;
+            nincsTárolt = !nincsTárolt;
+            
+            return r*v1;
+            
+        } else {
+            nincsTárolt = !nincsTárolt;
+            return tárolt;
+        }
+    }
+    
+    public static void main(String[] args) {
+        
+        PolárGenerátor g = new PolárGenerátor();
+        
+        for(int i=0; i<10; ++i)
+            System.out.println(g.következő());
+        
+    }
+    
+}
+
+]]>
+        </programlisting>
+        <screen>
+            <![CDATA[
+adrian@adrian-MS-7817:~/Desktop$ javac PolárGenerátor.java
+adrian@adrian-MS-7817:~/Desktop$ java PolárGenerátor
+-0.9977909475608935
+1.2436431306621076
+-1.0241389099503682
+0.9924334466411862
+0.36416475700814943
+0.9602245062934003
+-0.5074463598559636
+0.7797384696972893
+-0.11174392973220601
+0.8032167627641318
+
+ ]]>
+        </screen>
+        <para>A JDK(Java Development Kit) Random.java osztályban a
+         Sun programozói is így oldották meg a random szám generálást. A synchronized arra utal, hogy ha több szál hívja meg egyszerre a 
+         metódust ugyanarra az objektumra, akkor egyszerre csak az egyik fér hozzá és be kell várnia a másik szálnak az előzőt.</para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/jdk.png" scale="50" />
+            </imageobject>
+        </mediaobject>
+        <para>C++-ban:</para>
+        <programlisting language="c++">
+            <![CDATA[ 
+
+#include <cstdlib>
+#include <cmath>
+#include <ctime>
+#include <iostream>
+class PolarGen
+{
+public:
+  PolarGen ()
+  {
+    nincsTarolt = true;
+    std::srand (std::time (NULL));
+  }
+   ~PolarGen ()
+  {
+
+  }
+double kovetkezo ()
+{
+  if (nincsTarolt)
+    {
+      double u1, u2, v1, v2, w;
+      do
+	{
+	  u1 = std::rand () / (RAND_MAX + 1.0);
+	  u2 = std::rand () / (RAND_MAX + 1.0);
+	  v1 = 2 * u1 - 1;
+	  v2 = 2 * u2 - 1;
+	  w = v1 * v1 + v2 * v2;
+	}
+      while (w > 1);
+
+      double r = std::sqrt ((-2 * std::log (w)) / w);
+
+      tarolt = r * v2;
+      nincsTarolt = !nincsTarolt;
+
+      return r * v1;
+    }
+  else
+    {
+      nincsTarolt = !nincsTarolt;
+      return tarolt;
+    }
+}
+private:
+  bool nincsTarolt;
+  double tarolt;
+};
+
+int main (int argc, char **argv)
+{
+  PolarGen pg;
+
+  for (int i = 0; i < 10; ++i)
+    std::cout << pg.kovetkezo () << std::endl;
+
+  return 0;
+}
+]]>
+        </programlisting>
+        <screen>
+            <![CDATA[
+adrian@adrian-MS-7817:~/Desktop$ g++ polargen.cpp -o p
+adrian@adrian-MS-7817:~/Desktop$ ./p
+0.33827
+0.159026
+1.07617
+-0.573861
+0.407831
+0.337813
+1.1272
+1.33273
+-1.67664
+0.401283
+
+ ]]>
+        </screen>
+    </section>
+    <section>
+        <title>Homokózó</title>
+        <para>
+        Írjuk át az első védési programot (LZW binfa) C++ nyelvről Java nyelvre, ugyanúgy működjön! 
+        Mutassunk rá, hogy gyakorlatilag a pointereket és referenciákat kell kiirtani és minden máris működik 
+        (erre utal a feladat neve, hogy Java-ban minden referencia, nincs választás, hogy mondjuk egy attribútum pointer, referencia vagy tagként tartalmazott legyen). 
+        </para>
+        <para>
+           Miután már áttettük Java nyelvre,
+            tegyük be egy Java Servletbe és a böngészőből GET-es kéréssel (például a böngésző címsorából) kapja meg azt a mintát, 
+            amelynek kiszámolja az LZW binfáját!                
+        </para>
+        <para>
+          Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Arroway/LZWbinfa">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Arroway/LZWbinfa</link>
+        </para>
+        <para>
+            A program fő részei Javaban:
+        </para>
+        <programlisting language="java">
+            <![CDATA[ 
+public void addItem(char newItem) {
+        if (newItem == '0') {
+            if (current.left() == null) {
+                current.setLeft(new Node('0'));
+                setCurrent(root);
+            } else {
+                setCurrent(current.left());
+            }
+        }
+
+        if (newItem == '1') {
+            if (current.right() == null) {
+                current.setRight(new Node('1'));
+                setCurrent(root);
+            } else {
+                setCurrent(current.right());
+            }
+        }
+
+    }
+     private class Node {
+
+        Node rightLink = null;
+        Node leftLink = null;
+        char value;
+
+        Node(char value) {
+            this.value = value;
+        }
+
+        char getValue() {
+            return value;
+        }
+
+        Node right() {
+            return this.rightLink;
+        }
+
+        void setRight(Node item) {
+            this.rightLink = item;
+
+        }
+
+        Node left() {
+            return this.leftLink;
+        }
+
+        void setLeft(Node item) {
+            this.leftLink = item;
+
+        }
+
+    }
+]]>
+        </programlisting>
+
+        <para>
+            Ugyanez C++-ban:
+        </para>
+        <programlisting language="c++">
+            <![CDATA[ 
+void operator<< (char b) 
+    {
+        
+        if (b == '0')
+        {
+           
+            if (!fa->nullasGyermek ())	
+            {
+                Csomopont *uj = new Csomopont ('0');
+                fa->ujNullasGyermek (uj);
+                fa = &gyoker;
+            }
+            else			
+            {
+                
+                fa = fa->nullasGyermek ();
+            }
+        }
+       
+        else
+        {
+            if (!fa->egyesGyermek ())
+            {
+                Csomopont *uj = new Csomopont ('1');
+                fa->ujEgyesGyermek (uj);
+                fa = &gyoker;
+            }
+            else
+            {
+                fa = fa->egyesGyermek ();
+            }
+        }
+        
+    
+        
+        
+    }
+     private:
+    class Csomopont
+    {
+    public:
+        Csomopont (char b = '/'):betu (b), balNulla (0), jobbEgy (0)
+        {
+        };
+        ~Csomopont ()
+        {
+        };
+        
+        Csomopont *nullasGyermek () const
+        {
+            return balNulla;
+        }
+        
+        Csomopont *egyesGyermek () const
+        {
+            return jobbEgy;
+        }
+        
+        void ujNullasGyermek (Csomopont * gy)
+        {
+            balNulla = gy;
+        }
+        
+        void ujEgyesGyermek (Csomopont * gy)
+        {
+            jobbEgy = gy;
+        }
+        char getBetu () const
+        {
+            return betu;
+        }
+
+    private:
+        char betu;
+        Csomopont *balNulla;
+        Csomopont *jobbEgy;
+        Csomopont (const Csomopont &); //másoló konstruktor
+        Csomopont & operator= (const Csomopont &);
+    };
+]]>
+        </programlisting>
+
+        <para>
+            A két programrészlet funkciójában teljesen megegyezik. Javaban nincsenek mutatók, csak referenciák. Az objektumok egymásra hivatkoznak.              
+        </para>
+        <para>
+            Ahhoz, hogy böngészőből egy get lekérdezéssel kapjuk meg a fa információit, egy tomcat szervert kell beállítani, ami implentája a Java 
+            Servletet. Ez kezeli a szerverhez érkezett lekérdezéseket és válaszokat.        
+        </para>
+        <para>
+             Miután letöltöttük a tomcat szervert, a webapps mappába létrehozzuk az alkalmazásunk mappáját. Ebben létrehozunk két mappát:META-INF, WEB-INF. 
+             A WEB-INF mappában létrehozzuk a következő mappákat: classes, src, lib, web.xml. Ez lesz az alkalmazás könyvtár struktúrája.
+             Az src mappába kerül a forráskód vagy package, ami a forráskódokat tartalmazza. A classes mappába kerül majd a lefordított java kód. A web.xml fájlban meg kell adnunk xml formátumban 
+             a servletünk nevét, forráskódot és hogy milyen parancsra figyeljen.  
+        </para>
+        <screen>
+            <![CDATA[
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+<servlet>
+<servlet-name>Binfa</servlet-name>
+<servlet-class>com.company.Main</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>Binfa</servlet-name>
+<url-pattern>/get</url-pattern>
+</servlet-mapping>
+</web-app>
+
+ ]]>
+        </screen>
+
+        <para>
+        Ezután a binfa forráskódjában, jelen esetben Main osztályban megírjuk a servlet működését, kiterjesztve a HttpServlet osztályt és felülírva a doGet metódust.
+        Elsősorban a paraméterként beírt adatot olvassuk és be és dolgozzuk fel a binfa osztállyal, ezután pedig egy html oldalt generálunk amit küldünk válaszként, benne 
+        a szükséges információkkal. A PrintWriter out-nak megadjuk a response íróját, ezzel lesz válaszként küldve az adat.
+        </para>
+
+        <programlisting language="java">
+            <![CDATA[ 
+public class Main extends HttpServlet {
+    BinaryTree tree;
+    String data;
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        data = request.getParameter("data");
+        tree = new BinaryTree();
+        response.setContentType("text/html;charset=UTF-8");
+        for (int i = 0; i < data.length(); i++) {
+            tree.addItem(data.charAt(i));
+        }
+        PrintWriter out = response.getWriter();
+        try {
+            out.println("<!DOCTYPE html>");
+            out.println("<html><head>");
+            out.println("<meta http-eqiuv='Content-Type' content ='text/html; charset= UTF-8'>");
+            out.println("<body>");
+            tree.writeOut(tree.getRoot(), out);
+            out.println("<br></br>");
+            out.println("<p>Elemszam atlaga " + tree.getElemszamAtlag() + "</p>");
+            out.println("<p>Atlag " + tree.getAtlag() + "</p>");
+            out.println("<p>Melyseg " + tree.getMelyseg() + "</p>");
+            out.println("<p>Szoras " + tree.getSzoras() + "</p>");
+            out.println("</body>");
+            out.println("</html>");
+
+        } finally {
+
+            out.close();
+
+        }
+
+    }
+
+}
+]]>
+        </programlisting>
+        <para>
+            A szerver indítása előtt le kell fordítani a java kódunkat az alábbi parancssal, ahol a -d kapcsoló a lefordított fájlokat menti a megadott classes mappába.
+            A -cp pedig felfűzi a tomcat server lib mappájában található servlet-api.jar csomagot, ami a fordításhoz szükséges, ugyanis innen importáljuk a HttpServlet osztályt.
+        </para>
+        <screen>
+            <![CDATA[
+    \apache-tomcat-9.0.14\webapps\Binfa\WEB-INF> javac -d classes -cp ../../../lib/servlet-api.jar src/Binfa/com/company/*
+    
+ ]]>
+        </screen>
+        <para>
+            A szerver indítását a bin mappában lévő startup.bat fájllal tesszük meg windows alatt terminálból. Linux alatt startup.sh.        
+        </para>
+        <screen>
+            <![CDATA[
+    apache-tomcat-9.0.14\bin>startup.bat
+ ]]>
+        </screen>
+        <para>
+           Ezután bögészőbe http://localhost:8080/Binfa/get?data=11010100101010111010101010101010   
+        </para>
+        <para>
+           A 8080 portszám eltérhet, a szerver indulásakor a terminálba kiírja a használt portszámot.
+        </para>
+        <para>
+         A kapott válasz:
+        </para>
+
+        <screen>
+            <![CDATA[
+0 (1) 0 (3) 1 (4) 1 (2) # (0) 0 (2) 0 (4) 1 (5) 1 (3) 1 (4) 1 (1)
+
+Elemszam atlaga 0.6
+
+Atlag 4.333333333333333
+
+Melyseg 5
+
+Szoras 0.5773502691896258
+ ]]>
+        </screen>
+
+
+
+
+    </section>
+
+    <section>
+        <title>„Gagyi”</title>
+        <para>
+            Az ismert formális <screen><![CDATA[„while (x <= t && x >= t && t != x);”]]></screen> tesztkérdéstípusra adj a szokásosnál 
+            (miszerint x, t az egyik esetben az objektum által hordozott érték, a másikban meg az objektum referenciája) 
+            „mélyebb” választ, írj Java példaprogramot mely egyszer végtelen ciklus, más x, t értékekkel meg nem! 
+            A példát építsd a JDK Integer.java forrására3, hogy a 128-nál inkluzív objektum példányokat poolozza! 
+        </para>
+        <para>
+            Nem kapunk végtelen ciklust ha -128 és 127 között adunk meg Integer értéket. Ennek az az oka, hogy az Integer objektum ebben a tartományban cache-sel, tehát 
+            ugyanazt az objektumot használja fel többször csak más értéket hozzárendelve, így amikor összehasonlítjuk akkor mindig hamisat kapunk a while ciklusban t!=x feltételre, mert ugyanazt az objektum címet hasonlítjuk össze.
+            Ennek az oka kevesebb memória használat elérése sok ebbe a tartományba eső érték esetén.
+            
+        </para>
+
+        <programlisting language="java">
+            <![CDATA[ 
+public class Main {
+
+    public static void main(String[] args) {
+
+       //nem vegtelen ciklus
+         //Integer x = -128;
+         //Integer t = -128;
+         //Integer x = 127;
+         //Integer t = 127;
+
+        //vegtelen ciklus
+         Integer x = 128;
+         Integer t = 128;
+         //Integer x = -129;
+         //Integer t = -129;
+         // Integer x = new Integer(127);
+         // Integer t = new Integer(127);
+
+
+         while (x <= t && x >= t && t != x) {
+              System.out.println("while");
+         }
+
+
+    }
+}
+]]>
+        </programlisting>
+        <programlisting language="java">
+            <![CDATA[ 
+/**
+ *
+ * This method will always cache values in the range -128 to 127,
+ * inclusive, and may cache other values outside of this range.
+ *
+ * @param  i an {@code int} value.
+ * @return an {@code Integer} instance representing {@code i}.
+ * @since  1.5
+ */
+ public static Integer valueOf(int i) {
+     if (i >= IntegerCache.low && i <= IntegerCache.high)
+         return IntegerCache.cache[i + (-IntegerCache.low)];
+     return new Integer(i);
+ }
+]]>
+        </programlisting>
+
+        <para>
+            Az Integer.java forrásában látható, hogy amikor értéket kap az adott Integer objektum, akkor a [-128;127] intervallumon kívűl eső értékeknek egy külön objektumot hoz létre.
+            Ezért t!=x feltétel a while ciklusban igaz lesz, mert két külön címmel rendelkező objektumot hasonlít össze egymással.
+        </para>
+
+    </section>
+
+    <section>
+        <title>Yoda</title>
+        <para>
+          Írjunk olyan Java programot, ami java.lang.NullPointerEx-el leáll, ha nem követjük a Yoda conditions-t! https://en.wikipedia.org/wiki/Yoda_conditions 
+        </para>
+
+
+        <programlisting language="java">
+            <![CDATA[ 
+public class Main {
+
+    public static void main(String[] args) {
+         String a = null;
+
+         //NullPointerEx.
+         if(a.equals("alma")){
+         System.out.println("egyenlo");
+         }
+
+         //Yoda condition
+         if("alma".equals(a)){
+            System.out.println("egyenlo");
+         }
+
+
+
+    }
+}
+]]>
+        </programlisting>
+
+        <para>
+            Az első esetben java.lang.NullPointerException kivételt kapunk, ugyanis egy null pointert akarunk hasonlítani egy stringhez. 
+            A második esetben pedig fordítva hasonlítunk, ez a yoda condition, aminek az az előnye, hogy így nem száll el a program, mert biztosan 
+            nem null pointert hasonlítunk össze valamivel, hanem egy tényleges stringet.
+        </para>
+
+    </section>
+
+    <section>
+        <title>Kódolás from scratch</title>
+        <para>
+          Induljunk ki ebből a tudományos közleményből: http://crd-legacy.lbl.gov/~dhbailey/dhbpapers/bbp-alg.pdf és csak ezt tanulmányozva írjuk meg Java nyelven a BBP algoritmus megvalósítását!  
+        </para>
+        <para>
+         https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/apbs02.html#pi_jegyei 
+        </para>
+        <para>
+            Megoldás forrása:                
+        </para>
+        <para>
+        </para>
+    </section>
+
+</chapter>                
