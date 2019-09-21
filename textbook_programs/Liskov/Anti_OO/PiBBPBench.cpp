@@ -47,7 +47,7 @@ int main()
     double d16S6t = 0.0;
     int jegy = 0;
     clock_t delta = clock();
-    for (int d = 1000000; d < 1000001; ++d)
+    for (int d = 100000000; d < 100000001; ++d)
     {
         d16Pi = 0.0;
         d16S1t = d16Sj(d, 1);

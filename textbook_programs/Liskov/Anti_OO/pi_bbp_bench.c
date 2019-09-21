@@ -1,22 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
-/*
- * pi_bbp_bench.c
- *
- * DIGIT 2005, Javat tanítok
- * Bátfai Norbert, nbatfai@inf.unideb.hu
- *
- * A PiBBP.java-ból kivettük az "objektumorientáltságot", így kaptuk
- * a PiBBPBench osztályt, amit pedig átírtuk C nyelvre.
- *
- */
 
-/*
- * 16^n mod k
- * [BBP ALGORITMUS] David H. Bailey: The
- * BBP Algorithm for Pi. alapján.
- */
 long
 n16modk (int n, int k)
 {
@@ -47,10 +32,7 @@ n16modk (int n, int k)
   return r;
 }
 
-/* {16^d Sj}
- * [BBP ALGORITMUS] David H. Bailey: The
- * BBP Algorithm for Pi. alapján.
- */
+
 double
 d16Sj (int d, int j)
 {
@@ -61,19 +43,11 @@ d16Sj (int d, int j)
   for (k = 0; k <= d; ++k)
     d16Sj += (double) n16modk (d - k, 8 * k + j) / (double) (8 * k + j);
 
-  /*
-     for(k=d+1; k<=2*d; ++k)
-     d16Sj += pow(16.0, d-k) / (double)(8*k + j);
-   */
 
   return d16Sj - floor (d16Sj);
 }
 
-/*
- * {16^d Pi} = {4*{16^d S1} - 2*{16^d S4} - {16^d S5} - {16^d S6}}
- * [BBP ALGORITMUS] David H. Bailey: The
- * BBP Algorithm for Pi. alapján.
- */
+
 main ()
 {
 
@@ -89,7 +63,7 @@ main ()
 
   clock_t delta = clock ();
 
-  for (d = 1000000; d < 1000001; ++d)
+  for (d = 10000000; d < 10000001; ++d)
     {
 
       d16Pi = 0.0;
