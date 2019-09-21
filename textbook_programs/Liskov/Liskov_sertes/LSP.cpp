@@ -52,7 +52,7 @@ public:
 int main()
 {
     Rectangle *r = new Square();
-    r->setWidth(2);
+    r->setWidth(10);
     r->setHeight(5);
     std::cout << r->getArea();
 }

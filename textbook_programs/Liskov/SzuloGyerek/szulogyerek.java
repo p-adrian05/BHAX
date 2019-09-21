@@ -11,8 +11,12 @@ class Person {
         this.age = age;
     }
 
+    public int getAge() {
+        return this.age;
+    }
+
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -21,22 +25,25 @@ class Person {
 }
 
 class Person2 extends Person {
-    public Person2(String name, int age) {
+    private String email;
+
+    public Person2(String name, int age, String email) {
         super(name, age);
+        this.email = email;
     }
 
-    public int getAge() {
-        return age;
+    public String getEmail() {
+        return this.email;
     }
+
 }
 
-public class szuloGyerek {
+class szuloGyerek {
 
     public static void main(String args[]) {
-        Person person = new Person2("Pisti", 37);
-        Person2 person2 = new Person2("Jani", 27);
+        Person person = new Person2("Pisti", 37, "email@email.com");
 
-        System.out.println(person.getAge() + " " + person2.getAge());
-        // System.out.println(((Person2) person).getAge()+" "+person2.getAge());
+        System.out.println(person.getEmail());
+        // System.out.println(((Person2) person).getEmail());
     }
 }

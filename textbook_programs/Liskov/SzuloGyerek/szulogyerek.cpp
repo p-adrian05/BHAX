@@ -1,12 +1,13 @@
 #include <iostream>
+#include <string>
 class Person
 {
 protected:
     int ageP;
-    string nameP;
+    std::string nameP;
 
 public:
-    Person(string name, int age)
+    Person(std::string name, int age)
     {
         nameP = name;
         ageP = age;
@@ -17,37 +18,39 @@ public:
         ageP = age;
     }
 
-    string getName()
+    std::string getName()
     {
         return nameP;
     }
-
-    void setName(string name)
-    {
-        nameP = name;
-    }
-}
-
-class Person2 : public Person
-{
-public:
-    Person2(string name, int age)
-    {
-        ageP = age;
-        nameP = name;
-    }
-
     int getAge()
     {
         return ageP;
     }
-}
 
-int
-main()
+    void setName(std::string name)
+    {
+        nameP = name;
+    }
+};
+
+class Person2 : public Person
 {
+private:
+    std::string emailP;
 
-    Person person = new Person2("Pisti", 37);
-    Person2 person2 = new Person2("Jani", 27);
-    std::cout << person2.getName();
+public:
+    Person2(std::string name, int age, std::string email) : Person(name, age)
+    {
+        emailP = email;
+    }
+    std::string getEmail()
+    {
+        return emailP;
+    }
+};
+
+int main()
+{
+    Person *person = new Person2("Pisti", 37, "email");
+    td::cout << person->getEmail();
 }

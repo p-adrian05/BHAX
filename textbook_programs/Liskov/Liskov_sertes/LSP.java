@@ -37,10 +37,10 @@ class Square extends Rectangle {
     }
 }
 
-class LSP {
+public class LSP {
     public static void main(String args[]) {
         Rectangle rec = new Square();
-        rec.setWidth(2);
+        rec.setWidth(10);
         rec.setHeight(5);
         System.out.println(rec.getArea());
     }
