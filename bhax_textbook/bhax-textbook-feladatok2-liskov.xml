@@ -442,13 +442,24 @@ https://gitlab.com/nbatfai/smnist/tree/master/forHumans/SMNISTforHumansExp3/app/
         <para>
         Számoljuk ki valamelyik programunk függvényeinek ciklomatikus komplexitását! Lásd a fogalom tekintetében a https://arato.inf.unideb.hu/batfai.norbert/UDPROG/deprecated/Prog2_2.pdf (77-79 fóliát)! 
         </para>
-        <para>
-            Megoldás forrása:  
-        </para>
-        <para>
 
+        <para>
+            A ciklomatikus komplexitás egy mérték ami a programok komplexitását adja meg. Ez a mérték a kódban lévő független utak száma alapján kerül kiszámításra a vezérlési gráfban.
+            Független egy út ha legalább egy olyan éle van, ami nem része egy másik útnak. Ez alapján lehet mérni egy program, illetve azon belül függvények, metódusok bonyolultságát. Az alacsonyabb érték a jobb.
+            Matematikai képlete: M = E − N + 2, ahol E az élek száma a gráfban, N a csomópontok száma.
         </para>
-
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/ciklo.png" scale="60" />
+            </imageobject>
+        </mediaobject>
+        <para>
+            Példaként használva az LZWBinfa kódot: 
+        </para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/ciklomatik.jpg" scale="80" />
+            </imageobject>
+        </mediaobject>
     </section>
-
 </chapter>                

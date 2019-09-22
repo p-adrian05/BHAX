@@ -34,7 +34,7 @@
     </section>
     <section>
         <title>2.hét Öröklődés, osztályhierarchia.</title>
-        <para>Polimorfizmus,metódustúlterhelés, hatáskörkezelés, a bezárási eszközrendszer, láthatósági szintek, absztrakt osztályok és interfészek. </para>
+        <para>Polimorfizmus, metódustúlterhelés, hatáskörkezelés, a bezárási eszközrendszer, láthatósági szintek, absztrakt osztályok és interfészek. </para>
 
         <para>
             Az öröklődés legegyszerűbb esete, amikor egy osztályt egy már létező osztály kiterjesztésével definiálunk.
@@ -58,10 +58,30 @@
                 Változók, függvények esetén pedig alapértelmezetten az osztály módosítóját veszik figyelembe. A konstruktor minden esetben public, ha privatera állítjuk akkor nem lehet példányosítani az osztályt.
         </para>
         <para>
-            Az absztrakt osztályok abban különböznek a nem absztrakt osztályoktól, hogy tartalmazhatnak absztrakt metódusokat. Az osztályhierarchia tetejét alkotó osztályok nagy részének 
+            Az absztrakt osztályok abban különböznek a nem absztrakt osztályoktól, hogy tartalmazhatnak absztrakt metódusokat, de lehetnek hagyományos metódusok is mint egy normális osztálynak. Az osztályhierarchia tetejét alkotó osztályok nagy részének 
             az a szerepe, hogy a leszármazottak interfészének közös metszetét definiálja, mintsem, hogy kész megvalósítást adjon. Ezeket absztrakt osztályoknak hívjuk.
         </para>
+        <para>
+            Az interfész egy új referencia típus. Az osztályokhoz képest itt hiányoznak metódusok definiálása, implementációi, csak deklarálva vannak. C++ estén nincs konkrétan interface, de ugyanazt az eredményt lehet 
+            létrehozni egy absztrakt osztály létrehozásával, amiben minden metódust virtual jelzővel látunk el. Java esetén külön létezik az interface és absztrakt osztály fogalma. 
+            Bármennyi interfészt lehet implementálni, de mindig csak 1 osztályt lehet kiterjeszteni. Amikor az osztály implementál egy interfészt, akkor kötelező minden az interfészben megfogalmazott metódust felülírni, implementálni.
+            Ezáltal az adott osztály minden olyan helyen használható lesz, ahol az interfész típusa van megadva, ez érvényes az intefészt implementáló osztályt kiterjesztő osztályokra is.
+            Az interfész gyakorlatilag egy tulajdonságot biztosít az osztálynak és ez alapján biztosak lehetünk benne az olyan helyeken, ahol csak egy bizonyos tulajdonságú (adott iterface-t implementáló) osztályt kaphatunk.
+            Java interfésznél minden metódus automatikusan public és abstract.
+        </para>
 
+
+
+
+    </section>
+    <section>
+        <title>3.hét Modellező eszközök és nyelvek. AZ UML és az UML osztálydiagramja.</title>
+
+        <para>
+            Az UML szabványos modellező nyelv. Nagyméretű programrendszerek modelljeinek vizuális dokumentálására alkalmas, ennek segítségével különböző szöveges és grafikus modellek készíthetőek.
+            Programok esetén az UML az objektumorientált programozás szabványos specifikációs nyelve. Az UML modellek UML diagramokból állnak. Az osztálydiagram 
+            egy statikus modell. A programban használt osztályokat, interfészeket attrubútumaival együtt, ezeknek a kapcsolatait mutatja be.
+        </para>
 
     </section>
 
