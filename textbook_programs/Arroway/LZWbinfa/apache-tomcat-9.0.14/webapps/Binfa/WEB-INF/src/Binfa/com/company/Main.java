@@ -22,6 +22,7 @@ public class Main extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         response.setContentType("text/html;charset=UTF-8");
         data = request.getParameter("data");
+        tree = new BinaryTree();
         for (int i = 0; i < data.length(); i++) {
             tree.addItem(data.charAt(i));
         }
@@ -46,11 +47,6 @@ public class Main extends HttpServlet {
 
         }
 
-    }
-
-    @Override
-    public void init() {
-        tree = new BinaryTree();
     }
 
 }

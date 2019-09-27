@@ -1,0 +1,99 @@
+25-Sep-2019 16:57:25.213 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.14
+25-Sep-2019 16:57:25.216 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Dec 6 2018 21:13:53 UTC
+25-Sep-2019 16:57:25.216 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.14.0
+25-Sep-2019 16:57:25.217 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 10
+25-Sep-2019 16:57:25.217 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+25-Sep-2019 16:57:25.217 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+25-Sep-2019 16:57:25.217 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk-13
+25-Sep-2019 16:57:25.217 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           13+33
+25-Sep-2019 16:57:25.217 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+25-Sep-2019 16:57:25.218 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14
+25-Sep-2019 16:57:25.218 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14
+25-Sep-2019 16:57:25.220 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+25-Sep-2019 16:57:25.220 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+25-Sep-2019 16:57:25.221 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+25-Sep-2019 16:57:25.221 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\conf\logging.properties
+25-Sep-2019 16:57:25.221 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+25-Sep-2019 16:57:25.222 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+25-Sep-2019 16:57:25.222 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+25-Sep-2019 16:57:25.223 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+25-Sep-2019 16:57:25.223 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14
+25-Sep-2019 16:57:25.223 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14
+25-Sep-2019 16:57:25.224 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\temp
+25-Sep-2019 16:57:25.224 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded APR based Apache Tomcat Native library [1.2.19] using APR version [1.6.5].
+25-Sep-2019 16:57:25.225 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+25-Sep-2019 16:57:25.227 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+25-Sep-2019 16:57:25.286 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
+25-Sep-2019 16:57:25.352 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+25-Sep-2019 16:57:25.627 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
+25-Sep-2019 16:57:25.630 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [1,311] milliseconds
+25-Sep-2019 16:57:25.713 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+25-Sep-2019 16:57:25.714 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.14]
+25-Sep-2019 16:57:25.729 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\Binfa]
+25-Sep-2019 16:57:26.418 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\Binfa] has finished in [689] ms
+25-Sep-2019 16:57:26.419 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\docs]
+25-Sep-2019 16:57:26.461 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\docs] has finished in [41] ms
+25-Sep-2019 16:57:26.464 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\examples]
+25-Sep-2019 16:57:28.121 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\examples] has finished in [1,657] ms
+25-Sep-2019 16:57:28.122 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\host-manager]
+25-Sep-2019 16:57:28.178 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\host-manager] has finished in [55] ms
+25-Sep-2019 16:57:28.180 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\manager]
+25-Sep-2019 16:57:28.247 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\manager] has finished in [66] ms
+25-Sep-2019 16:57:28.249 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\ROOT]
+25-Sep-2019 16:57:28.308 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\ROOT] has finished in [59] ms
+25-Sep-2019 16:57:28.314 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+25-Sep-2019 16:57:28.325 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-8009"]
+25-Sep-2019 16:57:28.332 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [2,701] milliseconds
+25-Sep-2019 17:05:56.188 INFO [Thread-4] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["http-nio-8080"]
+25-Sep-2019 17:05:56.230 INFO [Thread-4] org.apache.coyote.AbstractProtocol.pause Pausing ProtocolHandler ["ajp-nio-8009"]
+25-Sep-2019 17:05:56.291 INFO [Thread-4] org.apache.catalina.core.StandardService.stopInternal Stopping service [Catalina]
+25-Sep-2019 17:05:56.353 INFO [Thread-4] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["http-nio-8080"]
+25-Sep-2019 17:05:56.356 INFO [Thread-4] org.apache.coyote.AbstractProtocol.stop Stopping ProtocolHandler ["ajp-nio-8009"]
+25-Sep-2019 17:05:56.359 INFO [Thread-4] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["http-nio-8080"]
+25-Sep-2019 17:05:56.361 INFO [Thread-4] org.apache.coyote.AbstractProtocol.destroy Destroying ProtocolHandler ["ajp-nio-8009"]
+25-Sep-2019 17:06:01.560 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version name:   Apache Tomcat/9.0.14
+25-Sep-2019 17:06:01.563 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server built:          Dec 6 2018 21:13:53 UTC
+25-Sep-2019 17:06:01.563 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Server version number: 9.0.14.0
+25-Sep-2019 17:06:01.563 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Name:               Windows 10
+25-Sep-2019 17:06:01.563 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log OS Version:            10.0
+25-Sep-2019 17:06:01.563 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Architecture:          amd64
+25-Sep-2019 17:06:01.563 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Java Home:             C:\Program Files\Java\jdk-13
+25-Sep-2019 17:06:01.564 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Version:           13+33
+25-Sep-2019 17:06:01.564 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log JVM Vendor:            Oracle Corporation
+25-Sep-2019 17:06:01.564 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_BASE:         C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14
+25-Sep-2019 17:06:01.564 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log CATALINA_HOME:         C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14
+25-Sep-2019 17:06:01.565 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.lang=ALL-UNNAMED
+25-Sep-2019 17:06:01.565 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.base/java.io=ALL-UNNAMED
+25-Sep-2019 17:06:01.565 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: --add-opens=java.rmi/sun.rmi.transport=ALL-UNNAMED
+25-Sep-2019 17:06:01.566 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.config.file=C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\conf\logging.properties
+25-Sep-2019 17:06:01.566 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+25-Sep-2019 17:06:01.566 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djdk.tls.ephemeralDHKeySize=2048
+25-Sep-2019 17:06:01.567 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.protocol.handler.pkgs=org.apache.catalina.webresources
+25-Sep-2019 17:06:01.567 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dignore.endorsed.dirs=
+25-Sep-2019 17:06:01.567 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.base=C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14
+25-Sep-2019 17:06:01.568 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Dcatalina.home=C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14
+25-Sep-2019 17:06:01.568 INFO [main] org.apache.catalina.startup.VersionLoggerListener.log Command line argument: -Djava.io.tmpdir=C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\temp
+25-Sep-2019 17:06:01.568 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent Loaded APR based Apache Tomcat Native library [1.2.19] using APR version [1.6.5].
+25-Sep-2019 17:06:01.569 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR capabilities: IPv6 [true], sendfile [true], accept filters [false], random [true].
+25-Sep-2019 17:06:01.569 INFO [main] org.apache.catalina.core.AprLifecycleListener.lifecycleEvent APR/OpenSSL configuration: useAprConnector [false], useOpenSSL [true]
+25-Sep-2019 17:06:01.573 INFO [main] org.apache.catalina.core.AprLifecycleListener.initializeSSL OpenSSL successfully initialized [OpenSSL 1.1.1a  20 Nov 2018]
+25-Sep-2019 17:06:01.621 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["http-nio-8080"]
+25-Sep-2019 17:06:01.758 INFO [main] org.apache.coyote.AbstractProtocol.init Initializing ProtocolHandler ["ajp-nio-8009"]
+25-Sep-2019 17:06:01.761 INFO [main] org.apache.catalina.startup.Catalina.load Server initialization in [578] milliseconds
+25-Sep-2019 17:06:01.800 INFO [main] org.apache.catalina.core.StandardService.startInternal Starting service [Catalina]
+25-Sep-2019 17:06:01.801 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet engine: [Apache Tomcat/9.0.14]
+25-Sep-2019 17:06:01.811 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\Binfa]
+25-Sep-2019 17:06:02.284 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\Binfa] has finished in [473] ms
+25-Sep-2019 17:06:02.284 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\docs]
+25-Sep-2019 17:06:02.315 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\docs] has finished in [31] ms
+25-Sep-2019 17:06:02.318 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\examples]
+25-Sep-2019 17:06:02.821 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\examples] has finished in [503] ms
+25-Sep-2019 17:06:02.822 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\host-manager]
+25-Sep-2019 17:06:02.872 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\host-manager] has finished in [51] ms
+25-Sep-2019 17:06:02.873 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\manager]
+25-Sep-2019 17:06:02.919 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\manager] has finished in [46] ms
+25-Sep-2019 17:06:02.919 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deploying web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\ROOT]
+25-Sep-2019 17:06:02.968 INFO [main] org.apache.catalina.startup.HostConfig.deployDirectory Deployment of web application directory [C:\Users\adria\Desktop\repok\BHAX\textbook_programs\Arroway\LZWbinfa\apache-tomcat-9.0.14\webapps\ROOT] has finished in [49] ms
+25-Sep-2019 17:06:02.972 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["http-nio-8080"]
+25-Sep-2019 17:06:02.982 INFO [main] org.apache.coyote.AbstractProtocol.start Starting ProtocolHandler ["ajp-nio-8009"]
+25-Sep-2019 17:06:02.987 INFO [main] org.apache.catalina.startup.Catalina.start Server startup in [1,224] milliseconds

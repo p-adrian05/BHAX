@@ -21,11 +21,11 @@
             Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Arroway/polargen">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Arroway/polargen</link>
         </para>
         <para>
-            A Java és a C++ objektumorientált nyelvek. Objektumok használata egyszerűsíti a programozást, ugyanis a az objektum 
+             Objektumok használata egyszerűsíti a programozást, ugyanis a az objektum 
             a valódi világ elemének a rá jellemző tulajdonságai és viselkedések által modelezett eleme. Erre jó példa a polártranszformációs 
             algoritmus. Az algoritmus matematikai háttere most számunkra lényegtelen, fontos viszont az eljárás azon jellemzője, hogy egy számítási lépés két normális eloszlású számot állít elő, 
-            tehát minden páratlanadik meghíváskor nem kell számolnunk, csupán az előző lépés másik számát visszaadnunk. Hogy páros vagy páratlan lépésben hívtuk-e meg a megfelelő számítást elvégző következő() függvényt, 
-            a nincsTárolt logikai változóval jelöljük. Igaz értéke azt jelenti, hogy tárolt lebegőpontos változóban el van tárolva a visszaadandó szám.
+            tehát minden páratlanadik meghíváskor nem kell számolnunk, csupán az előző lépés másik számát visszaadnunk. E miatt igen nagy a hatékonysága az algoritmusnak. Hogy páros vagy páratlan lépésben hívtuk-e meg a megfelelő számítást elvégző következő() függvényt, 
+            a nincsTárolt logikai boolean változóval jelöljük. Igaz értéke azt jelenti, hogy tárolt lebegőpontos változóban el van tárolva a visszaadandó szám.
         </para>
         <para>Java-ban:</para>
         <programlisting language="java">
@@ -70,7 +70,12 @@ public class PolárGenerátor {
             return tárolt;
         }
     }
-    
+    ]]>
+        </programlisting>
+        <para> A main metódusban 10 számot generálunk le, ami az algoritmus számára 5 lefutást eredményez.</para>
+
+        <programlisting language="java">
+            <![CDATA[ 
     public static void main(String[] args) {
         
         PolárGenerátor g = new PolárGenerátor();
@@ -103,7 +108,8 @@ adrian@adrian-MS-7817:~/Desktop$ java PolárGenerátor
         </screen>
         <para>A JDK(Java Development Kit) Random.java osztályban a
          Sun programozói is így oldották meg a random szám generálást. A synchronized arra utal, hogy ha több szál hívja meg egyszerre a 
-         metódust ugyanarra az objektumra, akkor egyszerre csak az egyik fér hozzá és be kell várnia a másik szálnak az előzőt.</para>
+         metódust ugyanarra az objektumra, akkor egyszerre csak az egyik fér hozzá és be kell várnia a másik szálnak az előzőt. Még annyi a különbség, hogy a StrictMath osztály 
+         függvényei vannak használva, ami miatt nem teljesen lesz egyenlő az eredmény a Math osztály függvényeivel számított eredményhez képest.</para>
         <mediaobject>
             <imageobject>
                 <imagedata fileref="img/jdk.png" scale="50" />
@@ -355,7 +361,9 @@ void operator<< (char b)
         </programlisting>
 
         <para>
-            A két programrészlet funkciójában teljesen megegyezik. Javaban nincsenek mutatók, csak referenciák. Az objektumok egymásra hivatkoznak.              
+            A két programrészlet funkciójában teljesen megegyezik. Javaban nincsenek mutatók, ezért a * jelölések eltűnnek, csak referenciák. 
+            Az objektum példányosításakor egy referenciát kapunk az objektum helyére, ami a heap-ben él. A változók, konstansok, primitívek pedig a stackben.
+
         </para>
         <para>
             Ahhoz, hogy böngészőből egy get lekérdezéssel kapjuk meg a fa információit, egy tomcat szervert kell beállítani, ami implentája a Java 
@@ -459,20 +467,11 @@ public class Main extends HttpServlet {
         <para>
          A kapott válasz:
         </para>
-
-        <screen>
-            <![CDATA[
-0 (1) 0 (3) 1 (4) 1 (2) # (0) 0 (2) 0 (4) 1 (5) 1 (3) 1 (4) 1 (1)
-
-Elemszam atlaga 0.6
-
-Atlag 4.333333333333333
-
-Melyseg 5
-
-Szoras 0.5773502691896258
- ]]>
-        </screen>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/servletbinfa.jpg" scale="70" />
+            </imageobject>
+        </mediaobject>
 
 
 
@@ -488,9 +487,8 @@ Szoras 0.5773502691896258
             A példát építsd a JDK Integer.java forrására3, hogy a 128-nál inkluzív objektum példányokat poolozza! 
         </para>
         <para>
-            Nem kapunk végtelen ciklust ha -128 és 127 között adunk meg Integer értéket. Ennek az az oka, hogy az Integer objektum ebben a tartományban cache-sel, tehát 
-            ugyanazt az objektumot használja fel többször csak más értéket hozzárendelve, így amikor összehasonlítjuk akkor mindig hamisat kapunk a while ciklusban t!=x feltételre, mert ugyanazt az objektum címet hasonlítjuk össze.
-            Ennek az oka kevesebb memória használat elérése sok ebbe a tartományba eső érték esetén.
+            Nem kapunk végtelen ciklust ha -128 és 127 között adunk meg Integer értéket. Ennek az az oka, hogy az Integer objektum ebben a tartományban gyorsítótáraz.
+            Amikor ebből a tartományból választunk literált, akkor egy olyan objektumra kapunk referenciát ami létezik, ezért az t != x feltétel hamis lesz.
             
         </para>
 
@@ -544,8 +542,9 @@ public class Main {
         </programlisting>
 
         <para>
-            Az Integer.java forrásában látható, hogy amikor értéket kap az adott Integer objektum, akkor a [-128;127] intervallumon kívűl eső értékeknek egy külön objektumot hoz létre.
-            Ezért t!=x feltétel a while ciklusban igaz lesz, mert két külön címmel rendelkező objektumot hasonlít össze egymással.
+            Az Integer.java forrásában látható, hogy amikor értéket kap az adott Integer objektum, akkor a [-128;127] intervallumon kívűl eső értékeknek egy külön objektumot hoz létre. 
+            Amelyek pedig benne vannak az adott intervallumban, azoknak a gyorsítótárból ad referenciát.
+            Ezért t!=x feltétel a while ciklusban igaz lesz.
         </para>
 
     </section>
@@ -555,8 +554,10 @@ public class Main {
         <para>
           Írjunk olyan Java programot, ami java.lang.NullPointerEx-el leáll, ha nem követjük a Yoda conditions-t! https://en.wikipedia.org/wiki/Yoda_conditions 
         </para>
-
-
+        <para>   A Yoda conditions a programozásban, arról szól, hogy a feltételben megcseréljük a vizsgált dolog sorrendjét. Ennek a neve Star Wars-ból származik, aki nem a szokványos emberi nyelv szintaxisa szerint 
+         kommunikált. Javaban NullPointerException kivétel léphet fel futási időben, akkor ha nullhoz akarunk valamit hasonlítani. Pl amikor null tömbnek a hosszát akarunk hozzáférni vagy az elemeihez vagy 
+         bármilyen null objektum nem létező attribútumaihoz.
+        </para>
         <programlisting language="java">
             <![CDATA[ 
 public class Main {
@@ -600,8 +601,13 @@ public class Main {
         <para>
             Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Arroway/PiBBP.java">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Arroway/PiBBP.java</link>
         </para>
-
-
+        <para>
+            A BPP algoritmust Bailey-Borwein-Plouffe találta 1995-ben a PI hexa jegyeinek meghatározására.
+        </para>
+        <para>
+            Az algoritmus alapján a {16^d Pi} = {4*{16^d S1} -
+             2*{16^d S4} - {16^d S5} - {16^d S6}} kiszámítása történik a PiBBP osztály konstruktorában. A d a Pi hexa kifejtésében a d+1. hexa jegytől számoljuk a hexa jegyeket.
+        </para>
         <programlisting language="java">
             <![CDATA[ 
 public class PiBBP {
@@ -640,7 +646,14 @@ public class PiBBP {
         d16PiHexaJegyek = sb.toString();
     }
 
-    public double d16Sj(int d, int j) {
+]]>
+        </programlisting>
+        <para>
+            A d16Sj függvény a {16^d Sj} részlet kiszámítása szerint működik. A d a d+1. hexa jegytől számoljuk a hexa jegyeket j Sj indexe.
+        </para>
+        <programlisting language="java">
+            <![CDATA[ 
+public double d16Sj(int d, int j) {
 
         double d16Sj = 0.0d;
 
@@ -649,6 +662,16 @@ public class PiBBP {
 
         return d16Sj - StrictMath.floor(d16Sj);
     }
+            ]]>
+        </programlisting>
+        <para>
+            Az n16modk függvény pedig bináris hatványozás mod k, a 16^n mod k kiszámítása. n a kitevő k a modulus.
+            A main függvényben példányosítjuk a PiBBP osztályt, paraméterként átadva a d=1000000, ezért PI hexadecimális kifejtése a 1000001. jegytől kezdődik.  
+            A toString függvény visszaadja az objektum String értékét, ami kiiratáskor hajtódik végre.
+        </para>
+        <programlisting language="java">
+            <![CDATA[ 
+    
 
     public long n16modk(int n, int k) {
 
@@ -688,22 +711,6 @@ public class PiBBP {
 }
 ]]>
         </programlisting>
-        <para>
-            A BPP algoritmust Bailey-Borwein-Plouffe találta 1995-ben a PI hexa jegyeinek meghatározására.
-        </para>
-        <para>
-            A [BBP ALGORITMUS] David H. Bailey: The BBP Algorithm for Pi. alapján a {16^d Pi} = {4*{16^d S1} -
-             2*{16^d S4} - {16^d S5} - {16^d S6}} kiszámítása történik a PiBBP osztály konstruktorában. A d a Pi hexa kifejtésében a d+1. hexa jegytől számoljuk a hexa jegyeket.
-        </para>
-        <para>
-            A d16Sj függvény a {16^d Sj} részlet kiszámítása szerint működik. A d a d+1. hexa jegytől számoljuk a hexa jegyeket j Sj indexe.
-        </para>
-        <para>
-            Az n16modk függvény pedig bináris hatványozás mod k, a 16^n mod k kiszámítása. n a kitevő k a modulus.
-        </para>
-        <para>
-            A main függvényben példányosítjuk a PiBBP osztályt, paraméterként átadva a d=1000000, ezért PI hexadecimális kifejtése a 1000001. jegytől kezdődik.       
-        </para>
 
         <screen>
             <![CDATA[
