@@ -10,16 +10,53 @@
     <section>
         <title>Reverse engineering UML osztálydiagram</title>
         <para>
-         UML osztálydiagram rajzolása az első védési C++ programhoz. Az osztálydiagramot a forrásokból generáljuk (pl. Argo UML, Umbrello, Eclipse UML) Mutassunk rá a kompozíció és aggregáció kapcsolatára a forráskódban és a diagramon, lásd még: https://youtu.be/Td_nlERlEOs.  
+         UML osztálydiagram rajzolása az első védési C++ programhoz. Az osztálydiagramot a forrásokból generáljuk (pl. Argo UML, Umbrello, Eclipse UML)
+          Mutassunk rá a kompozíció és aggregáció kapcsolatára a forráskódban és a diagramon, lásd még: https://youtu.be/Td_nlERlEOs.  
         </para>
         <para>https://arato.inf.unideb.hu/batfai.norbert/UDPROG/deprecated/Prog1_6.pdf (28-32 fólia) </para>
         <para>
             Megoldás forrása: 
         </para>
         <para>
-
-
+            Az osztálydiagram az objektumok típusait írja le és a közöttük fennálló kapcsolatokat. Az osztályok tulajdonságait és műveleteit is megmutatják, továbbá 
+            megszorításokat amelyek az összekapcsolásra vonatkoznak. Példaként UML osztálydiagram generálva a C++ Binfa kódból:
         </para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/umlbinfa.jpg" scale="90" />
+            </imageobject>
+        </mediaobject>
+        <para>
+            Két osztály van LZWBinfa és Csomópont. Közöttük asszociáció, aggregáció és kompozíció kapcsolatok vannak. 
+        </para>
+        <para>
+            Az asszociáció szemantikus viszonyt jelent. Olyan kapcsolatot jelent, amely megfelel az asszociált típusnak vagy implementálja azt.
+            Ennek jele egy folytonos vonal nyíl az egyik végén pont a másik végén pedig X jelölés. 
+            A pont azt jelenti, hogy a modell tartalmaz egy olyan tulajdonságot, melynek típusa a pont által érintett osztály ábrázolja.
+            A tulajdonság a másik végén lévő osztályhoz tartozik. 
+            Az X asszociációs vég, azt jelenti, hogy a vég navigálható. A képen a fa mutató típusát mutatja ami a csomópont osztály.
+        </para>
+        <para>
+            Aggregáció egy olyan asszociáció amikor egy objektum része egy másiknak és egyidejüleg több aggregációs objektumhoz is tartozhat,de függetlenül is létetezhet egymástól
+            az aggregációs objektum és a rész objektum. Jelölése egy üres rombusz az aggregációs objektum felé. A kompozíció pedig az aggregáció egy erősebb formája, miszerint egy rész objektum csak egy kompozit objektumhoz 
+            tartozhat. Ha töröljük az objektumot akkor a rész objektum is törlődik, együtt élnek. Jele telt rombusz. A diagramon kompozíciós kapcsolat van 
+            a gyökér csomópont és a fa osztály között. 
+        </para>
+        <para>
+            A diagram legtetején található az osztály neve. Alatta az attribútumok találhatók utána : és a típusa. A harmadik része pedig a műveletek, függvények, metódusok, konstruktor, operátorok találhatóak. 
+            A megnevezések előtt a láthatósági megjelölések találhatóak:
+        </para>
+
+        <para>+ nyilványos, public. </para>
+        <para> - privát, private</para>
+        <para> # védett, protected</para>
+        <para> ~ csomagszintű, package private</para>
+
+        <para>
+            Absztrakt osztályok és függvények nevei pedig dőlt stílusúak.
+        </para>
+
+
 
     </section>
     <section>
@@ -33,7 +70,82 @@
         <para>
 
         </para>
+
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/umlpelda.jpg" scale="90" />
+            </imageobject>
+        </mediaobject>
+
+        <programlisting language="java">
+            <![CDATA[ 
+
+public class Order {
+
+	private data data;
+	private String status;
+
+	public void calcTax() {
+		// TODO - implement Order.calcTax
+		throw new UnsupportedOperationException();
+	}
+
+	public void calcTotal() {
+		// TODO - implement Order.calcTotal
+		throw new UnsupportedOperationException();
+	}
+
+}
+
+public class OrderDetail {
+
+	private int quantity;
+	private String taxStatus;
+
+	public void calcWeight() {
+		// TODO - implement OrderDetail.calcWeight
+		throw new UnsupportedOperationException();
+	}
+
+	public void calcTax() {
+		// TODO - implement OrderDetail.calcTax
+		throw new UnsupportedOperationException();
+	}
+
+}
+public class Item {
+
+	private String desciption;
+
+	public void inStock() {
+		// TODO - implement Item.inStock
+		throw new UnsupportedOperationException();
+	}
+
+	public void getPrice() {
+		// TODO - implement Item.getPrice
+		throw new UnsupportedOperationException();
+	}
+
+}
+
+public abstract class Payment {
+
+	private int amount;
+
+}
+
+public class Cash extends Payment {
+
+	private String name;
+
+}
+
+
+]]>
+        </programlisting>
     </section>
+
 
     <section>
         <title>Egy esettan </title>
@@ -59,6 +171,11 @@
         <para>
 
         </para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/bpmn.png" scale="30" />
+            </imageobject>
+        </mediaobject>
 
     </section>
 
