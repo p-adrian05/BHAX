@@ -431,15 +431,32 @@ https://gitlab.com/nbatfai/smnist/tree/master/forHumans/SMNISTforHumansExp3/app/
         <para>
           Megoldás forrása:  
         </para>
+        <para>
+           A projekt Android Studioban lett felélesztve. Egy üres projekt lett létrehozva, amibe a megfelelő fájlokat beillesztettem, felülírtam. 
+           Az AndroidManifest.xml fájlban át kell állítani az SMNISTE3Activity fájlra az alapértelmezett indító fájlt. Továbbá ugyanebben a fájlban az android.support.v7.app.AppCompatActivity helyett az 
+           androidx.appcompat.app.AppCompatActivity csomagból kell importálni a AppCompatActivity osztályt, mivel az app készülése óta már megváltozott a helye az SDK-ban.
+
+        </para>
+        <programlisting language="java">
+            <![CDATA[ 
+     <activity android:name=".SMNISTE3Activity">
+<intent-filter>
+<action android:name="android.intent.action.MAIN" />
+
+<category android:name="android.intent.category.LAUNCHER" />
+</intent-filter>
+</activity>
+]]>
+        </programlisting>
 
         <para>
-            A színvilág, szöveg stílusának beállítása a Paint osztály segítségével történik. A szöveg színét, méretét, elhelyezkedését, stílusát lehet vele beállítani, illetve 
+            A színvilág, szöveg stílusának beállítása, a Paint osztály segítségével történik. A szöveg színét, méretét, elhelyezkedését, stílusát a textPaint objektum metódusaival állítható. 
+            A msgPaint az eredmény, dotPaint a pontok, borderPaint pedig a kör tulajdonságait állítja.
+
         </para>
 
         <programlisting language="java">
             <![CDATA[ 
-
-            
     android.graphics.Paint dotPaint = new android.graphics.Paint();
     android.graphics.Paint textPaint = new android.graphics.Paint();
     android.graphics.Paint msgPaint = new android.graphics.Paint();
@@ -450,40 +467,43 @@ https://gitlab.com/nbatfai/smnist/tree/master/forHumans/SMNISTforHumansExp3/app/
     
   private void cinit(android.content.Context context) {
 
-        textPaint.setColor(android.graphics.Color.GRAY);
+        textPaint.setColor(android.graphics.Color.RED);
         textPaint.setStyle(android.graphics.Paint.Style.FILL_AND_STROKE);
         textPaint.setAntiAlias(true);
         textPaint.setTextAlign(android.graphics.Paint.Align.CENTER);
-        textPaint.setTextSize(50);
+        textPaint.setTextSize(40);
 
-        msgPaint.setColor(android.graphics.Color.GRAY);
+        msgPaint.setColor(android.graphics.Color.GREEN);
         msgPaint.setStyle(android.graphics.Paint.Style.FILL_AND_STROKE);
         msgPaint.setAntiAlias(true);
         msgPaint.setTextAlign(android.graphics.Paint.Align.LEFT);
-        msgPaint.setTextSize(40);
+        msgPaint.setTextSize(45);
 
-        dotPaint.setColor(android.graphics.Color.BLACK);
+        dotPaint.setColor(android.graphics.Color.WHITE);
         dotPaint.setStyle(android.graphics.Paint.Style.FILL_AND_STROKE);
         dotPaint.setAntiAlias(true);
         dotPaint.setTextAlign(android.graphics.Paint.Align.CENTER);
         dotPaint.setTextSize(50);
 
-        borderPaint.setStrokeWidth(2);
-        borderPaint.setColor(android.graphics.Color.GRAY);
+        borderPaint.setStrokeWidth(4);
+        borderPaint.setColor(android.graphics.Color.BLUE);
         fillPaint.setStyle(android.graphics.Paint.Style.FILL);
-        fillPaint.setColor(android.graphics.Color.YELLOW);
-
+        fillPaint.setColor(android.graphics.Color.WHITE);
 
     }
 
 ]]>
         </programlisting>
         <para>
-           Az alkalmazás hátterszínét pedig a Canvas osztállyal történik és drawColor metódusa teszi ezt meg, aminek átadunk egy rgb színkódot, de akár a bepített alapértelmezett színek is megadhatóak. 
+           Az alkalmazás hátterszínének állítása pedig a Canvas osztállyal történik és drawColor metódusa teszi ezt meg, aminek átadunk egy rgb színkódot, de akár a bepített alapértelmezett színek is megadhatóak. 
         </para>
         <programlisting language="java">
             <![CDATA[ 
-
+int[] bgColor =
+            {
+                    android.graphics.Color.rgb(40, 70, 42),
+                    android.graphics.Color.rgb(32, 53, 24)
+            };
             
  @Override
     public void onDraw(android.graphics.Canvas canvas) {
@@ -505,7 +525,7 @@ https://gitlab.com/nbatfai/smnist/tree/master/forHumans/SMNISTforHumansExp3/app/
         </programlisting>
         <mediaobject>
             <imageobject>
-                <imagedata fileref="img/androidcrash.jpg" scale="50" />
+                <imagedata fileref="img/smnist.jpg" scale="50" />
             </imageobject>
         </mediaobject>
 
