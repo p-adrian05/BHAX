@@ -24,10 +24,13 @@
         </para>
         <para>
             Az elvet sértő java kód esetében a négyzet osztály leszármazottja a téglalap osztálynak, azonban a téglalap (szülő) területének megfelelő értéke (50) helyett 
-            25-öt kapunk, mivel a négyzet objektum másképp viselkedik mint a szülő típus, téglalap, mivel egyenlő a négyzet szélessége és hossza, hiába adunk meg különbőző értékeket.
+            25-öt kapunk, mivel a négyzet objektum másképp viselkedik mint a szülő típus. Olyan helyen ahol az objektum csak egyik értéke, szélessége vagy magassága lenne megváltoztatva, a négyzet 
+            objektum esetén mindkettő megváltozna, ezért sérti a Liskov elvet.
+
         </para>
         <para>
-             Ennek elkerülése érdekében alaposabban kell megtervezni az öröklődést. Gondolni kell a viselkedésre is nem csak a struktúrára.
+             Ennek elkerülése érdekében alaposabban kell megtervezni az öröklődést. Gondolni kell a viselkedésre is nem csak a struktúrára. Erre szolgálnak az interfészek, amikkel 
+             egy konkrét tulajdonságot biztosítunk a leszármazott típusnak és csak olyan helyre illeszthető, ahol az adott interfész által definiált tulajdonságot implementáló objektum kerül argumentunként átadásra.
         </para>
 
         <programlisting language="java">
@@ -181,6 +184,7 @@ int main()
           Megoldás forrása:   <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Liskov/SzuloGyerek">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Liskov/SzuloGyerek</link>
         </para>
         <para>
+            A feladat lényege, hogy nem lehet a szülő osztályon keresztül meghívni egy olyan metódust amit csak a gyermeke definiál.
             A kiterjesztett osztályban definiált függvényeket az ősosztály nem éri el, ezért hiába hoztuk létre az ősosztály (Person) típusaként a Person2 objektumot. Ebben az esetben Person2 kasztolással érhető csak el 
             az alosztályban definiált függvény.
         </para>
@@ -336,13 +340,21 @@ https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/apas03.html#id561
           Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Liskov/Anti_OO">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Liskov/Anti_OO</link>
         </para>
 
+
+        <para>
+        A BPP algoritmus a tesztben már nem objektumorientált módon van megírva, ennek oka, hogy a C nyelvvel is el tudjuk végezni a tesztet.
+        </para>
+        <para>
+          Java: JDK 13, C/C++: GCC 7.4.0, C# 4.8.3752.0. A teszt java és C# esetén windows 10 1903-as verzión volt végezve,
+          C/C++ esetén pedig Ubuntu 18.04.1. A CPU egy korosodó i5-4440.  
+        </para>
         <mediaobject>
             <imageobject>
                 <imagedata fileref="img/tablazat.jpg" scale="70" />
             </imageobject>
         </mediaobject>
         <para>
-         CPU: i5-4440 
+         A méréseim alapján a Java került ki győztesnek, nem sokkal lemaradva a C#. A C/C++ meglepő módon jelentősen lassabban teljesített.
         </para>
         <para>
         Java:
@@ -429,7 +441,7 @@ https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/apas03.html#id561
 https://gitlab.com/nbatfai/smnist/tree/master/forHumans/SMNISTforHumansExp3/app/src/main Apró módosításokat eszközölj benne, pl. színvilág. 
         </para>
         <para>
-          Megoldás forrása:  
+          Megoldás forrása:   <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Liskov/SMNIST">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Liskov/SMNIST</link>
         </para>
         <para>
            A projekt Android Studioban lett felélesztve. Egy üres projekt lett létrehozva, amibe a megfelelő fájlokat beillesztettem, felülírtam. 
@@ -495,7 +507,8 @@ https://gitlab.com/nbatfai/smnist/tree/master/forHumans/SMNISTforHumansExp3/app/
 ]]>
         </programlisting>
         <para>
-           Az alkalmazás hátterszínének állítása pedig a Canvas osztállyal történik és drawColor metódusa teszi ezt meg, aminek átadunk egy rgb színkódot, de akár a bepített alapértelmezett színek is megadhatóak. 
+           Az alkalmazás hátterszínének állítása pedig a Canvas osztállyal történik és drawColor metódusa teszi ezt meg, aminek átadunk egy rgb színkódot, de akár a bepített alapértelmezett színek is megadhatóak.
+           Jelen esetben egy tömben van tárolva két rgb kód és ezek váltják egymást. 
         </para>
         <programlisting language="java">
             <![CDATA[ 
@@ -536,19 +549,20 @@ int[] bgColor =
         <para>
         Számoljuk ki valamelyik programunk függvényeinek ciklomatikus komplexitását! Lásd a fogalom tekintetében a https://arato.inf.unideb.hu/batfai.norbert/UDPROG/deprecated/Prog2_2.pdf (77-79 fóliát)! 
         </para>
+        <para>
+          Megoldás forrása:   <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Arroway/LZWbinfa/BinaryTree.java">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Arroway/LZWbinfa/BinaryTree.java</link>
+        </para>
 
         <para>
             A ciklomatikus komplexitás egy mérték ami a programok komplexitását adja meg. Ez a mérték a kódban lévő független utak száma alapján kerül kiszámításra a vezérlési gráfban.
-            Független egy út ha legalább egy olyan éle van, ami nem része egy másik útnak. Ez alapján lehet mérni egy program, illetve azon belül függvények, metódusok bonyolultságát. Az alacsonyabb érték a jobb.
-            Matematikai képlete: M = E − N + 2, ahol E az élek száma a gráfban, N a csomópontok száma. Például az If-then-else ábrázolása gráfként:
+            Független egy út ha legalább egy olyan éle van, ami nem része egy másik útnak. Ez alapján lehet mérni egy program, illetve azon belül függvények, metódusok bonyolultságát.
+            Matematikai képlete: M = E − N + 2, ahol E az élek száma a gráfban, N a csomópontok száma. Vezérlés megváltoztató utasítások lehetnek pl: if-else, case, while, for, do-while, catch.
         </para>
-        <mediaobject>
-            <imageobject>
-                <imagedata fileref="img/ciklo.png" scale="60" />
-            </imageobject>
-        </mediaobject>
+
         <para>
-            Példaként használva az LZWBinfa kódot, megállapítva az egyes függvények komplexitását. Az alacsonyabb érték a jobb. Az addItem került ki a legkomplexebb metódusnak, ami várható volt.
+            Példaként használva az LZWBinfa kódot, megállapítva az egyes függvények komplexitását. 
+            Az alacsonyabb érték a jobb. Az addItem került ki a legkomplexebb metódusnak, ami várható volt, hogy 5 lesz  mivel 2 if és azon belül egy-egy if található. 1-ról indulva a számolást 
+            könnyen megkapjuk program nélkül is a komplexitás számát, növelve 1-el ha vezérlés megváltoztató utasítást találunk.
         </para>
         <programlisting language="java">
             <![CDATA[ 
@@ -576,9 +590,42 @@ public void addItem(char newItem) {
 
 ]]>
         </programlisting>
+        <para>
+             A gyakorlatban program segítségével történik a számolás, manapság már léteznek online webes kalkulátorok is, pl http://www.lizard.ws/.
+        </para>
         <mediaobject>
             <imageobject>
-                <imagedata fileref="img/ciklomatik.jpg" scale="80" />
+                <imagedata fileref="img/ciklomatik.jpg" scale="60" />
+            </imageobject>
+        </mediaobject>
+        <para>
+             Azonban lehetséges pluginokat is használni, Javahoz pl JavaNCSS. Ebben az esetben egy maven projektet kell létrehozni, beállítva a pom.xml fájlban a JavaNCSS dependencyt, a java mappába berakni a saját 
+             java fájlunkat és mvn site paranccsal elkészíteni a mérést.
+        </para>
+        <programlisting language="java">
+            <![CDATA[ 
+<project>
+  ...
+  <reporting>
+<plugins>
+<plugin>
+<groupId>org.codehaus.mojo</groupId>
+<artifactId>javancss-maven-plugin</artifactId>
+<version>2.1</version>
+</plugin>
+</plugins>
+</reporting>
+  ...
+</project>
+
+]]>
+        </programlisting>
+        <para>
+             Ennek eredménye is hasonló lesz: 
+        </para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/ciklomatik2.jpg" scale="80" />
             </imageobject>
         </mediaobject>
     </section>
