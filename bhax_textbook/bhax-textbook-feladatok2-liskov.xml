@@ -185,7 +185,9 @@ int main()
         </para>
         <para>
             A feladat lényege, hogy nem lehet a szülő osztályon keresztül meghívni egy olyan metódust amit csak a gyermeke definiál.
-            A kiterjesztett osztályban definiált függvényeket az ősosztály nem éri el, ezért hiába hoztuk létre az ősosztály (Person) típusaként a Person2 objektumot. Ebben az esetben Person2 kasztolással érhető csak el 
+            A kiterjesztett osztályban definiált függvényeket az ősosztály nem éri el, ezért hiába hoztuk létre az ősosztály (Person) típusaként a Person2 objektumot. A Person2 
+            osztály ki lett egészítve egy email tulajdonsággal és az azt visszaadó függvénnyel, amit megpróbálva a Person objektumon keresztül elérni hibát kapunk.
+            Ebben az esetben Person2 kasztolással érhető csak el 
             az alosztályban definiált függvény.
         </para>
         <programlisting language="java">

@@ -155,6 +155,11 @@ public class Cash extends Payment {
         <para>
           Megoldás forrása:  
         </para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/esettan.jpg" scale="60" />
+            </imageobject>
+        </mediaobject>
 
     </section>
 
