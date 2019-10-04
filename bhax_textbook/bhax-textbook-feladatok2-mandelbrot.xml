@@ -35,6 +35,8 @@
             A pont azt jelenti, hogy a modell tartalmaz egy olyan tulajdonságot, melynek típusa a pont által érintett osztály ábrázolja.
             A tulajdonság a másik végén lévő osztályhoz tartozik. 
             Az X asszociációs vég, azt jelenti, hogy a vég navigálható. A képen a fa mutató típusát mutatja ami a csomópont osztály.
+            A navigálás azt jelenti egy asszociáció esetén alapértelmezetten, hogy mindkét objektum tud egymás létezéséről, azonban ha az egyik végén van egy nyíl, akkor az az objektum 
+            amely a másik objektumra mutat fog tudomást venni a mutatott objektum létezéséről, fordítva nem.
         </para>
         <para>
             Aggregáció egy olyan asszociáció amikor egy objektum része egy másiknak és egyidejüleg több aggregációs objektumhoz is tartozhat,de függetlenül is létetezhet egymástól
@@ -51,7 +53,8 @@
         <para> - privát, private</para>
         <para> # védett, protected</para>
         <para> ~ csomagszintű, package private</para>
-
+        <para> ~ csomagszintű, package private</para>
+        <para> aláhúzott satic változó</para>
         <para>
             Absztrakt osztályok és függvények nevei pedig dőlt stílusúak.
         </para>
@@ -68,6 +71,11 @@
           Megoldás forrása:   
         </para>
         <para>
+            Az OrderDetail és az Order között kompozíciós kapcsolat van megjelölve, tehát szükséges léteznie az Order osztálynak, hogy legyen értelme az OrderDetail-nek. 
+            Az Item asszociációs kapcsolatban áll az OrderDetail-lel, viszont az Item osztály nem tud az OrderDetail osztály létezéséről a nyíl miatt. A Payment egy absztrak osztály, 
+            ezért dőlt stílusú az osztálynév. A Cash osztály pedig kiterjeszti a Payment osztályt, ezt jelezve a kiterjesztendő osztály felé mutató üres nyíl.
+            Ezután az UML diagramból legenerált programkód következik, ahol automatikusan meglett oldva az abstract osztály jelölése és kiterjesztése, függvények implementáció nélkül 
+            vannak jönnek létre uml generálás esetén.
 
         </para>
 
@@ -155,12 +163,56 @@ public class Cash extends Payment {
         <para>
           Megoldás forrása:  
         </para>
+        <para>
+          Az esettan egy kereskedés alkatrészeinek és konfigurációinak nyilvántartására készült programról szól, ami támogatja a termékek betöltését, listázását, kiírását.
+          A header fájlok segítségével könnyedén generálható az alábbi UML diagram, ami a projekt szerkezetét ábrázolja.
+        </para>
+
         <mediaobject>
             <imageobject>
                 <imagedata fileref="img/esettan.jpg" scale="60" />
             </imageobject>
         </mediaobject>
-
+        <para>
+        A projekt fő lényeges osztálya a Product lesz ami egy absztrak osztály, amely lehetővé teszi valamennyi terkmék egységes kezelését. A # jelölt változók és függvények védettek, a külvilág számára 
+        nem láthatóak, amelyekkel csak getterekel érhetőek el. A product osztály lehetőséget biztosít az aktuális ár kiszámítására (GetCurrentPrice), ami termékfüggő, 
+        ezért virtuálisan van definiálva, amit a leszármazott osztályok felüldefiniálhatnak.
+        </para>
+        <para>
+          A HardDisk osztály egy kiterjesztése a Product osztálynak, ami egy terméktípust jelöl. Minden terméktípushoz, egy sztring név és kód tartozik, amely lekérdezhető a megfelelő getterekkel, amit minden 
+          típusnak felül kell definiálni a Product osztály kiterjesztése után, dőlttel vannak jelölve, mivel absztrakt függvények.
+          A print függvény az adott termék tulajdonságait írja ki.)név, beszerzési ár, aktuális ár, dátum). A név és típust kivéve a további paramétereket a printParams tagfüggvény meghívásával teszi, amely felüldefiniált az adott típusú objektumban, ezáltal virtuális.
+        </para>
+        <para>
+            A Display osztály szintén kiterjeszti a Product ősosztályt, felülírva a szükséges függvényeket. A writeParamsToStream függvény szolgál a termék adatfolyamba 
+            írására. A termékek beolvasására pedig a szintén örökölt majd felülírt loadParamsFromStream virtuális függvény szolgál.
+        </para>
+        <para>
+            A CompositeProduct osztály szintén gyermekosztály lesz a Productból, amely az összetett termékek tárolására van bevezetve. 
+            Fontos része a parts vektor, amiben a pointerek mutatnak a tartalmazott termékekre. Ennek megfelelően van jelölve ponttal a nyíl végén mutatva a Product osztályra, mivel ilyen típusú tulajdonságot tartalmaz a CompositeProduct osztály.
+        </para>
+        <para>
+           A ComputerConfiguration osztály kiterjeszti a CompositeProduct osztályt, amely pedig a Product osztályt, ezzel jelölve, hogy ez egy 
+           összetett termék lesz, így örököl mindent a Product és a CompositeProduct osztálytól.  
+        </para>
+        <para>
+            A ProductInventory osztály a termékek nyilvántartását fogja intézni, termékek listájának 
+            betöltését az adatfolyamról, termékek tárolása a memóriában, termékek formázott kiiratását.
+            Szintén asszociáció fog fennállni a Product osztállyal és egy Product vektorban fogja tárolnia a termékeket, jelzi is a diagram a nyíl után lévő ponttal a kapcsolatot.
+            A printProducts értelemszerűen a formázott kiiratást végzi, a ReadInventory tagfüggvény pedig felelős az adatfolyamból történő beolvasásért, a writeInventory pedig a kiírásért.
+            Az addProduct paraméterben kapott terméket veszi fel a terméklistára, de validálja a paramétert.
+        </para>
+        <para>
+          A ProductFactory osztályt azért kellett létrehozni, hogy biztosítva legyen a keretrendszer általánossága, vagyis úgy kell 
+          létrehozni a termékeket, hogy nevüket nem szerepeltetjük a keretrendszer osztályainak kódjában. A termékkód beolvasását és megfelelő termékobjektum 
+          létrehozását fogja végezni, azon belül is a readAndCreateProduvt függvénye, ami pedig a termékkódnak megfelelő termékosztály példányosítását a CreateProuct nevű absztrakt 
+          metódusra bízza, ami az újonnan létrehozott mutatóval tér vissza. Ennek az implementációja történik a ComputerProductFactory leszármazott osztályban, amiben el van helyezve a termékeket 
+          példányosító switch-case szerkezet. Tehát, amikor a ProductFactory readAndCreateProduct függvénye meghívja a CreateProuct virtuális függvényt, akkor a ComputerProductFactory objektumok esetén a
+          leszármazott osztálybeli CreateProuct hívódik meg, amely létrehozza a megfeleő terméket.
+          A getInstance és init függvények statikusak. Ez azért van, mivel a ProductFactory objektumból csak egy példányban 
+          van szükség, ehhez viszont több helyről is hozzá akarunk férni és globális változóként tároljuk egy statikus tagváltozó formájában. Az ini az inicializálást teszi lehetővé és 
+          a ProductFactory objektum még a keretrendszer használata előtt jön létre.
+        </para>
     </section>
 
     <section>
@@ -174,7 +226,11 @@ public class Cash extends Payment {
         </para>
 
         <para>
-
+        A BPMN (Business Process Model and Notation) rövidítés az üzleti folyamatmodellezés és jelölési rendszer, üzleti folymatok modellezésére vonatkozó szabvány. Grafikai elemekkel diagramokkal dolgozik 
+        hasonlóan az informatikában használt UML-hez. Ez egyfajta közös nyelvet szolgáltat egy biznisz modell kidolgozásában a modellező és az implementáló között.
+        jelölésekkel. Példaként egy egyszerű webshop rendelés utáni folyamat van bemutatva, ahogy általában a csomag megérkezik a rendelőhöz 3 szereplővel ábrázolva: 
+        webshop, futárszolgálat, külső raktár. Röviden leírva a webshop a rendelés fogadása után hogy ha készleten van a rendelt termék, akkor átadja a futárszolgálatnak, akik megkísérlik a kézbesítést a rendelő címére. Ha sikertelen 
+        visszaérkezik a boltba. Ha nincs raktáron a rendelt termék akkor a folyamat várakozik mindaddig amíg nem érkezi ka küldő raktárról a webshopba.
         </para>
         <mediaobject>
             <imageobject>
