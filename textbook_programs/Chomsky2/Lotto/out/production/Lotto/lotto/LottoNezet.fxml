@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="422.0" prefWidth="399.0" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lotto.LottoNezetController">
+    <children>
+        <Pane id="basePane" fx:id="basePane">
+            <children>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#cafaff" height="423.0" stroke="BLACK" strokeType="INSIDE" width="403.0" />
+                <Button fx:id="button" layoutX="153.0" layoutY="243.0" onAction="#handleButtonAction" prefHeight="36.0" prefWidth="86.0" text="Sorsolás!" textFill="#cd5a5a">
+                    <font>
+                        <Font size="15.0" />
+                    </font></Button>
+                <HBox layoutX="66.0" layoutY="164.0" spacing="20.0">
+                    <children>
+                        <Label id="label1" fx:id="label1" alignment="TOP_CENTER" minHeight="16" minWidth="37.0" prefHeight="17.0" prefWidth="39.0" />
+                        <Label id="label2" fx:id="label2" alignment="TOP_CENTER" minHeight="16" minWidth="37.0" prefHeight="17.0" prefWidth="37.0" />
+                        <Label id="label3" fx:id="label3" alignment="TOP_CENTER" minHeight="16" minWidth="37.0" prefHeight="17.0" prefWidth="37.0" />
+                        <Label id="label4" fx:id="label4" alignment="TOP_CENTER" minHeight="16" minWidth="37.0" prefHeight="17.0" prefWidth="37.0" />
+                        <Label id="label5" fx:id="label5" alignment="TOP_CENTER" minHeight="16" minWidth="37.0" prefHeight="17.0" prefWidth="37.0" />
+                    </children>
+                </HBox>
+                <HBox layoutX="63.0" layoutY="87.0" spacing="20.0">
+                    <children>
+                        <TextField id="input1" fx:id="input1" prefHeight="25.0" prefWidth="37.0" />
+                        <TextField id="input2" fx:id="input2" prefHeight="25.0" prefWidth="37.0" />
+                        <TextField id="input3" fx:id="input3" prefHeight="25.0" prefWidth="37.0" />
+                        <TextField id="input4" fx:id="input4" prefHeight="25.0" prefWidth="37.0" />
+                        <TextField id="input5" fx:id="input5" prefHeight="25.0" prefWidth="37.0" />
+                    </children>
+                </HBox>
+                <Label layoutX="118.0" layoutY="59.0" prefHeight="17.0" prefWidth="164.0" text="Írj be 5 számot 1 és 90 között!" />
+                <Label layoutX="150.0" layoutY="14.0" text="LOTTÓ">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </Label>
+                <Label alignment="TOP_CENTER" layoutX="99.0" layoutY="123.0" prefHeight="17.0" prefWidth="186.0" text="Sorsolt számok:">
+                    <font>
+                        <Font size="17.0" />
+                    </font>
+                </Label>
+                <Label id="resultLabel" fx:id="resultLabel" alignment="CENTER" contentDisplay="TOP" layoutX="62.0" layoutY="195.0" prefHeight="25.0" prefWidth="275.0" textFill="#eb4b4b" wrapText="true">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+            </Label>
+            </children>
+        </Pane>
+        <Pane id="alertPane" fx:id="alertPane" layoutX="90.0" layoutY="36.0" prefHeight="300.0" prefWidth="400.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#bccbda" height="156.0" layoutX="79.0" layoutY="72.0" stroke="BLACK" strokeType="INSIDE" width="242.0" />
+                <Label id="alertText" fx:id="alertText" alignment="TOP_CENTER" contentDisplay="RIGHT" layoutX="96.0" layoutY="87.0" prefHeight="127.0" prefWidth="208.0" textAlignment="CENTER" wrapText="true" />
+                <Button id="alertBtn" fx:id="alertBtn" layoutX="184.0" layoutY="189.0" mnemonicParsing="false" onAction="#handleAlertButton" text="OK" />
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

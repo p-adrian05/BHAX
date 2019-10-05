@@ -14,7 +14,7 @@
     </para>
     <para>   https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/adatok.html  </para>
     <para>
-            Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Chomsky2/Mandel">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs//Chomsky2/Mandel</link>
+            Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Chomsky2/Mandel">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Chomsky2/Mandel</link>
     </para>
     <para>
     Általános fordítás esetén hibát dob a fordító, miszerint UTF-8 kódolás számára nem található karakterek vannak a kódban. 
@@ -60,7 +60,7 @@ javac -encoding ISO-8859-2 MandelbrotHalmazNagyító.java
 			Írj olyan OO Java vagy C++ osztályt, amely leet cipherként működik, azaz megvalósítja ezt a betű helyettesítést: https://simple.wikipedia.org/wiki/Leet
     </para>
     <para>
-          Megoldás forrása: Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Chomsky2/Leet">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs//Chomsky2/Leet</link>
+          Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Chomsky2/Leet">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Chomsky2/Leet</link>
     </para>
     <para>
 		  Létrehozzuk a LeetChiper osztályt, amiben végezzük a betűk helyettesítését. Egy Map adatstruktúrát használunk, ahol a kulcs az angol abc egy betűje, az ehhez 
@@ -270,9 +270,60 @@ public class Writer {
 			Készítsünk egy teljes képernyős Java programot!
     </para>
     <para>
-          Megoldás forrása:  
+          Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Chomsky2/Lotto">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Chomsky2/Lotto</link>
     </para>
 
+    <para>
+          Példaként egy egyszerű Lottó program JavaFX-ben. A sorsolás gomb megnyomására mindig kapunk 5 új random különböző számot 1-90 között, amit összehasonlít a megadott 5 különböző számmal, majd kiírja az eredményt.
+          A sorsolás gomb lenyomása előtt a program ellenőrzi, hogy csak számot és különböző számokat kapott-e.
+    </para>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="img/lottokivetel.jpg" scale="55" />
+      </imageobject>
+    </mediaobject>
+    <para>
+         Full Screen módba helyezni az alkalmazást könnyedén lehet a stage objektummal, ami az app kerete, váza. Ezen van a rajta a scene, ami a grafikus elemeket foglalja magába. Az F billentyű lenyomásával teljes képernyős módba 
+         kapcsol. A scene-en beállítunk egy key listenert, ami figyeli ha megnyomunk egy billentyűt és ha a KeyEvent értéke F, akkor történik meg a stage setFullScreen metódus true-ra állítása. Továbbá be lehet állítani a tájékoztató szöveget
+         ami felugrik pár másodpercre a setFullScreenExitHint metódussal.
+    </para>
+    <programlisting language="java">
+      <![CDATA[ 
+  public class Main extends Application {
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("LottoNezet.fxml"));
+
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Lottó");
+        stage.show();
+
+
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                switch (keyEvent.getCode()) {
+                    case F:
+                        stage.setFullScreenExitHint("Nyomd meg az ESC gombot a teljes képernyős módból való kilépéshez!");
+                        stage.setFullScreen(true);
+                }
+            }
+        });
+
+    }
+]]>
+    </programlisting>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="img/lottosmall.jpg" scale="70" />
+      </imageobject>
+    </mediaobject>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="img/lottofull.jpg" scale="30" />
+      </imageobject>
+    </mediaobject>
 
   </section>
 
