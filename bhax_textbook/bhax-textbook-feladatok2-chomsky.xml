@@ -1,94 +1,318 @@
 <chapter xmlns="http://docbook.org/ns/docbook" 
-    xmlns:xlink="http://www.w3.org/1999/xlink" 
-    xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:lang="hu">
-    <info>
-        <title>Helló, Chomsky!</title>
-        <keywordset>
-            <keyword/>
-        </keywordset>
-    </info>
-    <section>
-        <title>Encoding</title>
-        <para>
+  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:lang="hu">
+  <info>
+    <title>Helló, Chomsky!</title>
+    <keywordset>
+      <keyword/>
+    </keywordset>
+  </info>
+  <section>
+    <title>Encoding</title>
+    <para>
        Fordítsuk le és futtassuk a Javat tanítok könyv MandelbrotHalmazNagyító.java forrását úgy, hogy a fájl nevekben és a forrásokban is meghagyjuk az ékezetes betűket!
-        </para>
-        <para>   https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/adatok.html  </para>
-        <para>
-            Megoldás forrása: 
-        </para>
-        <para>
-        </para>
+    </para>
+    <para>   https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/adatok.html  </para>
+    <para>
+            Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Chomsky2/Mandel">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs//Chomsky2/Mandel</link>
+    </para>
+    <para>
+    Általános fordítás esetén hibát dob a fordító, miszerint UTF-8 kódolás számára nem található karakterek vannak a kódban. 
+    </para>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="img/mandelhiba.jpg" scale="60" />
+      </imageobject>
+    </mediaobject>
+    <para>
+          A megoldás az ISO-8859-2 (Latin-2) kódolás használata, 
+    amiben benne vannak a magyar karakterek, ezáltal sikeres fordítást kapunk és indítható a program:
+    </para>
+    <screen>
+      <![CDATA[
+javac -encoding ISO-8859-2 MandelbrotHalmazNagyító.java
+ ]]>
+    </screen>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="img/mandeljo.jpg" scale="60" />
+      </imageobject>
+    </mediaobject>
 
-
-
-    </section>
-    <section>
-        <title>OOCWC lexer</title>
-        <para>
+  </section>
+  <section>
+    <title>OOCWC lexer</title>
+    <para>
             Izzítsuk be az OOCWC-t és vázoljuk a https://github.com/nbatfai/robocaremulator/blob/master/justine/rcemu/src/carlexer.ll lexert és kapcsolását a programunk OO struktúrájába!  
-        </para>
-        <para>
+    </para>
+    <para>
           Megoldás forrása:   
-        </para>
-        <para>
+    </para>
+    <para>
 
-        </para>
+    </para>
 
-    </section>
+  </section>
+
+  <section>
+    <title>l334d1c4</title>
+    <para>
+			Írj olyan OO Java vagy C++ osztályt, amely leet cipherként működik, azaz megvalósítja ezt a betű helyettesítést: https://simple.wikipedia.org/wiki/Leet
+    </para>
+    <para>
+          Megoldás forrása: Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Chomsky2/Leet">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs//Chomsky2/Leet</link>
+    </para>
+    <para>
+		  Létrehozzuk a LeetChiper osztályt, amiben végezzük a betűk helyettesítését. Egy Map adatstruktúrát használunk, ahol a kulcs az angol abc egy betűje, az ehhez 
+      tartozó érték pedig egy string tömb amiben az adott angol betűhöz tartozó lehetséges helyettesítő karakterek vannak reprezentálva. Az adatok feltöltése a 
+      konstruktorban történik meg, ahol paraméterként a feldolgozandó szöveg is eltárolódik.
+    </para>
+    <programlisting language="java">
+      <![CDATA[ 
+public class LeetChipher {
+
+    private Map<String, String[]> leetAlphabet;
+    private String input;
+
+    public LeetChipher(String input) {
+        this.input = input;
+        leetAlphabet = new HashMap<String, String[]>();
+
+       
+        leetAlphabet.put("A", new String[] { "4", "/-\\", "/_\\", "@", "/\\" });
+        leetAlphabet.put("B", new String[] { "8", "13", "|}", "|:", "|8", "|3", "18", "6", "|B", "|8", "lo", "|o" });
+        leetAlphabet.put("C", new String[] { "<", "{", "[", "(" });
+        leetAlphabet.put("D", new String[] { "|)", "|}", "|]" });
+        leetAlphabet.put("E", new String[] { "3" });
+        leetAlphabet.put("F", new String[] { "|=", "ph", "|#", "|\"" });
+        leetAlphabet.put("G", new String[] { "[", "-", "[+", "6", "C" });
+        leetAlphabet.put("H", new String[] { "4", "|-|", "[-]", "{-}", "|=|", "[=]", "{=}", "|+|", "/-/" });
+        leetAlphabet.put("I", new String[] { "1", "|", "!", "9" });
+        leetAlphabet.put("J", new String[] { "_|", "_/", "_7", "_)", "_]", "_}" });
+        leetAlphabet.put("K", new String[] { "|<", "l<", "|{", "l{" });
+        leetAlphabet.put("L", new String[] { "|_", "|", "1", "][" });
+        leetAlphabet.put("M", new String[] { "44", "|\\/|", "^^", "/\\/\\", "/X\\", "[]\\/][", "[]V[]", "(V)", "//.",
+                ".\\\\", "N\\" });
+        leetAlphabet.put("N", new String[] { "|\\|", "/\\/", "/V", "][\\\\][" });
+        leetAlphabet.put("O", new String[] { "0", "()", "[]", "{}", "<>" });
+        leetAlphabet.put("P", new String[] { "|o", "|O", "|>", "|*", "|°", "|D", "/o", "|7", "[]D" });
+        leetAlphabet.put("Q", new String[] { "O_", "9", "(,)", "0" });
+        leetAlphabet.put("R", new String[] { "|2", "12", ".-", "|^", "l2" });
+        leetAlphabet.put("S", new String[] { "5", "$", "§" });
+        leetAlphabet.put("T", new String[] { "7", "+", "~|~", "-|-" });
+        leetAlphabet.put("U", new String[] { "|_|", "\\_\\", "/_/", "\\_/", "(_)", "[_]", "{_}" });
+        leetAlphabet.put("V", new String[] { "\\/" });
+        leetAlphabet.put("W",
+                new String[] { "\\/\\/", "(/\\)", "\\^/", "|/\\|", "\\X/", "\\\\’", "’//", "VV", "\\_|_/" });
+        leetAlphabet.put("X", new String[] { "%", "*", "><", "}{", ")(" });
+        leetAlphabet.put("Y", new String[] { "'/" });
+        leetAlphabet.put("Z", new String[] { "2", "5", "7", ">", "(/)" });
+
+    }
+
+]]>
+    </programlisting>
+    <para>
+		 Ezután létrehozzuk azt a metódust ami az átalakítást végzi. Ezt két for ciklussal tesszük meg. Az egyik megy végig az inputként kapott szöveg betűin egyesével
+     majd a másdik for ciklussal megkeresve a Map-ben a hozzá illeszkedő string tömböt, ezután random kiválasztva egy helyettesítő karaktert a tömbből és hozzáfűzve egy StringBuilderhez. 
+     A StringBuilder osztályt kifejezetten azért írták, hogy segítségével a Stringek módosíthatóak legyenek. Ez egy módosítható karakterlánc. Rendkívül hatékonyan tudjuk bővíteni, módosítani a benne lévő tartalmat, 
+     amelyből bármikor újra statikus Stringet készíthetünk. Mivel az egyszerű String megváltoztathatatlan ezért amikor egy Stringet sokszor kell megváltoztatni, akkor
+     minden változtatáskor új string jön létre, ami rendkívül lassú és pazarló. Ezért használunk jelen esetben StringBuildert.
+     A függvény visszaadja stringként az átalakított szöveget. Gondolni arra is, hogy ha szóköz, szám vagy sortörés található a szövegben ezért azokat változatlanul kell 
+     hagyni az átalakított szövegben is. Megállapítva az adott karakter ascii kódját számmá kasztolva, ezt könnyen megtehetjük. Ha 32 az értéke, ami a szóköz kódja, akkor egy szóközzel bővítjük 
+     a stringet. Ha 48 és 57 közé esik, akkor az biztos, hogy egy szám lesz 0-9-ig, ha pedig 10, akkor egy új sort fűzünk hozzá.
+    </para>
+    <programlisting language="java">
+      <![CDATA[ 
+ public String makeLeetText() {
+        StringBuilder output = new StringBuilder();
+        int ascii;
+
+        for (int i = 0; i < input.length(); i++) {
+            ascii = (int) input.charAt(i);
+
+            if (ascii == 32) {
+                output.append(" ");
+            }
+            if (ascii >= 48 && ascii <= 57) {
+                output.append(input.charAt(i));
+            }
+            if (ascii == 10) {
+                output.append("\n");
+            }
+
+            for (String key : leetAlphabet.keySet()) {
+                if (input.toUpperCase().charAt(i) == key.charAt(0)) {
+                    output.append(leetAlphabet.get(key)[getRandomNum(leetAlphabet.get(key).length)]);
+
+                }
+            }
+        }
+
+        return output.toString();
+    }
+
+    private int getRandomNum(int length) {
+        int min = 0;
+        int max = length - 1;
+        return (int) (Math.random() * (max - min + 1)) + min;
+    }
+
+]]>
+    </programlisting>
+    <para>
+		  A fájl beolvasást és kiiratást a Reader és Writer osztály végzi. A Reader osztály beolvassa a megadott fájlt egy stringbe, ami majd fel lesz dolgozva és a feldogozott szöveget pedig a Writer osztály megkapja és kiírja egy fájlba.
+    </para>
+    <programlisting language="java">
+      <![CDATA[ 
+      public class Reader {
+
+   public class Reader {
+
+    private final String PATH;
+    private StringBuilder input;
+
+    public Reader(String PATH) {
+        this.PATH = PATH;
+        input = new StringBuilder();
+        try {
+            FileInputStream fis = new FileInputStream(this.PATH);
+            BufferedInputStream bis = new BufferedInputStream(fis);
+            int i;
+
+            while ((i = bis.read()) != -1) {
+                input.append((char) i);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getInput() {
+        return input.toString();
+    }
+}
+}
+public class Writer {
+    private final String PATH;
+    private String output;
+
+    public Writer(String PATH, String output) {
+
+        this.PATH = PATH;
+        this.output = output;
+        try {
+
+            FileOutputStream fos = new FileOutputStream(this.PATH);
+            BufferedOutputStream bos = new BufferedOutputStream(fos);
+            bos.write(output.getBytes());
+            bos.flush();
+            bos.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
 
 
-    <section>
-        <title>Full screen </title>
-        <para>
+]]>
+    </programlisting>
+    <para>
+          A Main metódusnak átadásra kerül argumentumként futtatáskor a megadott beolvasandó fájl neve és a kiiratott szöveg fáljának neve. Az input.txt átadásra kerül a reader osztálynak, majd a LeetChiper osztály megkapja a beolvasott stringet. A Writer pedig 
+          megkapja kiiratás útvonalát és a kiirandó feldogozott szöveget. 
+    </para>
+    <programlisting language="java">
+      <![CDATA[ 
+      public class Main {
+
+    public static void main(String[] args) {
+
+        String pathInput;
+        String pathOutput;
+        if (args.length == 2) {
+            pathInput = args[0];
+            pathOutput = args[1];
+            Reader reader = new Reader(pathInput);
+            LeetChipher leetChipher = new LeetChipher(reader.getInput());
+            Writer writer = new Writer(pathOutput, leetChipher.makeLeetText());
+        } else {
+            System.out.println("Invalid path");
+        }
+
+    }
+
+}
+
+
+]]>
+    </programlisting>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="img/leet.jpg" scale="70" />
+      </imageobject>
+    </mediaobject>
+
+
+
+
+
+  </section>
+  <section>
+    <title>Full screen </title>
+    <para>
 			Készítsünk egy teljes képernyős Java programot!
-        </para>
-		  <para>
-			Tipp: https://www.tankonyvtar.hu/en/tartalom/tkt/javat-tanitok-javat/ch03.html#labirintus_jatek 
-        </para>
-        <para>
+    </para>
+    <para>
           Megoldás forrása:  
-        </para>
-  
+    </para>
 
-    </section>
 
-    <section>
-        <title>Paszigráfia Rapszódia OpenGL full screen vizualizáció  </title>
-        <para>
+  </section>
+
+  <section>
+    <title>Paszigráfia Rapszódia OpenGL full screen vizualizáció  </title>
+    <para>
            Lásd vis_prel_para.pdf! Apró módosításokat eszközölj benne, pl. színvilág, textúrázás, a szintek jobb elkülönítése, kézreállóbb irányítás.
-        </para>
-        <para>
+    </para>
+    <para>
           Megoldás forrása:  
-        </para>
+    </para>
 
-        <para>
+    <para>
 
-        </para>
+    </para>
 
-    </section>
+  </section>
 
-    <section>
-        <title>Paszigráfia Rapszódia LuaLaTeX vizualizáció </title>
-        <para>
+  <section>
+    <title>Paszigráfia Rapszódia LuaLaTeX vizualizáció </title>
+    <para>
            Lásd vis_prel_para.pdf! Apró módosításokat eszközölj benne, pl. színvilág, még erősebb 3D-s hatás. 
-        </para>
-        <para>
+    </para>
+    <para>
           Megoldás forrása:  
-        </para>
-        <para>
+    </para>
+    <para>
 
-        </para>
-    </section>
-	<section>
-        <title>Perceptron osztály </title>
-        <para>
+    </para>
+  </section>
+  <section>
+    <title>Perceptron osztály </title>
+    <para>
           Dolgozzuk be egy külön projektbe a projekt Perceptron osztályát! Lásd https://youtu.be/XpBnR31BRJY 
-        </para>
-        <para>
+    </para>
+    <para>
           Megoldás forrása:  
-        </para>
-        <para>
+    </para>
+    <para>
 
-        </para>
-    </section>
+    </para>
+  </section>
 </chapter>       

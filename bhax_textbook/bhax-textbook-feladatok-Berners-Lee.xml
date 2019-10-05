@@ -69,10 +69,6 @@
             Az interfész gyakorlatilag egy tulajdonságot biztosít az osztálynak és ez alapján biztosak lehetünk benne az olyan helyeken, ahol csak egy bizonyos tulajdonságú (adott iterface-t implementáló) osztályt kaphatunk.
             Java interfésznél minden metódus automatikusan public és abstract.
         </para>
-
-
-
-
     </section>
     <section>
         <title>3.hét Modellező eszközök és nyelvek. AZ UML és az UML osztálydiagramja.</title>
@@ -82,8 +78,45 @@
             Programok esetén az UML az objektumorientált programozás szabványos specifikációs nyelve. Az UML modellek UML diagramokból állnak. Az osztálydiagram 
             egy statikus modell. A programban használt osztályokat, interfészeket attrubútumaival együtt, ezeknek a kapcsolatait mutatja be.
         </para>
+    </section>
+    <section>
+        <title>4.hét Karakterkészlet, lexikális egységek, kifejezések, utasítások.</title>
+        <para>
+            A két leggyakoribb karakterkészlet az ASCII, ennek kiterjesztése az ISO-Latin-1, valamint az EBCDIC. Ezek 8 biten tárolják a karaktereket, ezért nem lehet bennük 
+            leírni a sok nemzet speciális karaktereit, pl a magyak karaktereket sem. Az ISO-Latin-1-ben sincs meg az összes szükséges betű, ezért számunkra 
+            csak az ISO-Latin-2 felel meg. Ezektől a kötöttségektől mentesít az Unicode karakterkészlet, ami több biten ábrázolja a karaktereket, ezért több karaktert is tud magába
+            foglalni.
+        </para>
+
+        <para>
+            A lexikális egységek a program azon elemei, melyeket a fordító a lexikális elemzés során felsimer és tokenizál. Az utasítások és kifejezések lexikális 
+            egységekből épülnek fel. Fajtái: 
+            szimbolikus név, kulcsszavak, megjegyzés, literál, operátorok.
+            Szimbolikus nevek közül az azonosító olyan karaktersorozat, ami betűvel kezdődik és betűvel vagy számjeggyel folytatódhat.
+            A kulcsszavak vagy védett szavak olyan szavak amelyeknek a nyelv jelentést tulajdonít. Pl.: if, for, case, break.
+            A megjegyzés olyan programozási eszköz, melynek segítségével a programban olyan karaktersorozatok írása megengedett, amelyek
+            nem a fordítónak szól, hanem a programot olvasónak. Általában a ezek a program működésével kapcsolatos magyarázó szövegek.
+            A literál pedig olyan eszköz aminek segítségével fix értékek építhetők be a program szövegébe, típusok, objektumok inicializálására használatosak.
+            Az operátorok pedig értékeken történő műveletek végézésére használhatóak.
+        </para>
+        <para>
+            Az utasítások segítségével generálja a fordítóprogram a tárgyprogramot. Két nagy csoportja van: deklarációs és végrehajtható utasítások.
+            A deklarációs utasítás a fordítóprogramnak szólnak, valamilyen szolgáltatást kérnek, üzemmódot állítanak be, információt szolgáltatnak a tárgykód generáláshoz.
+            A végrehajtható utasításokból készül a tárgykód, ezeket az alábbiak szerint csoportosítjuk: Értékadó utasítás, üres utasítás, ugró, elágaztató, 
+            ciklusszervező, hívó, vezérlésátadó, I/O utasítások és egyéb utasítások.
+            Az értékadó utasítás feladata beállítani vagy módosítani egy változó értékét. Az üres utasítás hatására a CPU egy üres gépi utasítást hajt végre. Pl continue, null.
+            Az ugró utasítás átadjuk a vezérlést egy adott pontról egy adott cimkével elátott utasításra. Ez a GOTO. Java esetén ilyen utasítás nincs.
+            Elágaztató utasítások közé tartotik a feltéletes utasítás ami kétriányú, ami arra szolgál, hogy a program két tevékenység közül válasszon. If, else.
+            A többirányú elágaztató utasítás a switch(kifejezés) case (feltétel) : (tevékenység). Ez arra szolgál, hogy a program kölcsönösen kizáró akárhány tevékenység közül egyet végrehajtsunk.
+            A ciklusszervező utasítások lehetővé teszik, hogy a program egy bizonyos tevékenységet akárhányszor megismételjen.
+            Két szélsőséges eset amikor egyszerm sem fut le, ami az üres ciklus és a másik, hogy soha nem áll le, ez a végtelen ciklus. A feltételes ciklus egy feltétel teljesülése szerint
+            ismétlődik. A ciklusok fajtái: Kezdőfeltételes(while). Végfeltételes( do utasítás while(feltétel)), előírt lépésszámú(for). A végtelen ciklusból szabályosan a break utasítással tudnunk kilépni.
+            A continue vezérlő utasítás a ciklus magjában alkalmazható. A ciklus hátralevő utasításai nem hajta végre, hanem az ismétlődés feltételeit vizsgálja meg és vagy újabb cikluslépésbe kezd, 
+            vagy befejezi a ciklust. A reuturn[kifejezés] pedig szabályosan befejezteti a függévényt és visszaadja a vezérlést a hívónak.
+        </para>
 
     </section>
+
 
     <section>
         <title>A Python nyelv bemutatása</title>
