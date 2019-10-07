@@ -1,17 +1,20 @@
 #include "display.h"
 
-void Display::printParams(std::ostream& os) const {
+void Display::printParams(std::ostream& os) const 
+{
     Product::printParams(os);
     os << ", " << "InchWidth: " << inchWidth;
     os << ", " << "InchHeight: " << inchHeight;
 }
 
-void Display::writeParamsToStream(std::ostream &os) const {
+void Display::writeParamsToStream(std::ostream &os) const 
+{
     Product::writeParamsToStream(os);
     os << ' ' << inchWidth << ' ' << inchHeight;
 }
 
-void Display::loadParamsFromStream(std::istream &is) {
+void Display::loadParamsFromStream(std::istream &is)
+{
     Product::loadParamsFromStream(is);
     is >> inchWidth >> inchHeight;
 }
@@ -21,7 +24,8 @@ Display::Display() {}
 Display::Display(std::string name, int initialPrice, time_t dateOfAcquisition, int inchWidth, int inchHeight):
     Product(name, initialPrice, dateOfAcquisition), inchWidth(inchWidth), inchHeight(inchHeight) {}
 
-int Display::getCurrentPrice() const {
+int Display::getCurrentPrice() const 
+{
     int ageInDays = getAge();
     if(ageInDays < 30)
         return initialPrice;
@@ -31,10 +35,12 @@ int Display::getCurrentPrice() const {
         return (int)(0.8 * initialPrice);
 }
 
-int Display::getInchWidth() const {
+int Display::getInchWidth() const 
+{
     return inchWidth;
 }
 
-int Display::getInchHeight() const {
+int Display::getInchHeight() const
+{
     return inchHeight;
 }

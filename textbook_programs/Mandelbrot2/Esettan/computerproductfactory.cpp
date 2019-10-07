@@ -3,8 +3,10 @@
 #include "harddisk.h"
 #include "computerconfiguration.h"
 
-Product* ComputerProductFactory::createProduct(char typeCode) const {
-    switch(typeCode) {
+Product* ComputerProductFactory::createProduct(char typeCode) const 
+{
+    switch(typeCode) 
+    {
     case 'd':
         return new Display();
     case 'h':

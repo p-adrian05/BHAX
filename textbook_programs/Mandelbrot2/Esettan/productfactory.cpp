@@ -4,22 +4,26 @@ using namespace std;
 
 ProductFactory* ProductFactory::instance = NULL;
 
-void ProductFactory::Init(ProductFactory* pf) {
+void ProductFactory::Init(ProductFactory* pf) 
+{
     instance = pf;
 }
 
-ProductFactory* ProductFactory::getInstance() {
+ProductFactory* ProductFactory::getInstance()
+{
     return instance;
 }
 
-Product* ProductFactory::readAndCreateProduct(std::istream &is) {
+Product* ProductFactory::readAndCreateProduct(std::istream &is) 
+{
     if (!is.good())
         return NULL;
 
     char typeCode;
     is >> typeCode;
 
-    if (!is.good()){
+    if (!is.good())
+    {
         if(is.eof()) return NULL;
 
         cout << "There was an error reading the product items" << endl;
@@ -28,7 +32,8 @@ Product* ProductFactory::readAndCreateProduct(std::istream &is) {
     }
 
     Product* product = createProduct(typeCode);
-    if(product == NULL) {
+    if(product == NULL) 
+    {
         cout << "Unknown product tpye." << endl;
     }
     return product;

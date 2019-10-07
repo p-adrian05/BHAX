@@ -4,7 +4,8 @@
 #include <iostream>
 #include <ctime>
 
-class Product {
+class Product
+{
 protected:
     int initialPrice;
     time_t dateOfAcquisition;

@@ -6,7 +6,8 @@
 
 #include "product.h"
 
-class CompositeProduct: public Product {
+class CompositeProduct: public Product 
+{
     std::vector<Product*> parts;
 protected:
     void printParams(std::ostream& os) const;

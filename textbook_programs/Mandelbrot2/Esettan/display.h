@@ -2,7 +2,8 @@
 #define DISPLAY_H
 #include "product.h"
 
-class Display: public Product {
+class Display: public Product 
+{
     int inchWidth;
     int inchHeight;
 

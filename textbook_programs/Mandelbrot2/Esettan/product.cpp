@@ -4,42 +4,50 @@
 
 using namespace std;
 
-time_t Product::getDateOfAcquisition() const {
+time_t Product::getDateOfAcquisition() const
+{
     return dateOfAcquisition;
 }
 
-int Product::getInitialPrice() const {
+int Product::getInitialPrice() const 
+{
     return initialPrice;
 }
 
-std::string Product::getName() const {
+std::string Product::getName() const
+{
     return name;
 }
 
 Product::Product() {}
 
 Product::Product(std::string name, int initialPrice, time_t dateOfAcquisition): name(name), initialPrice(initialPrice),
-    dateOfAcquisition(dateOfAcquisition) {
+    dateOfAcquisition(dateOfAcquisition) 
+    {
 }
 
-int Product::getAge() const{
+int Product::getAge() const
+{
     time_t currentTime;
     time(&currentTime);
     double timeDiffInSec = difftime(currentTime, dateOfAcquisition);
     return (int)(timeDiffInSec/(3600*24));
 }
 
-int Product::getCurrentPrice() const {
+int Product::getCurrentPrice() const 
+{
     return initialPrice;
 }
 
-void Product::print(std::ostream &os) const {
+void Product::print(std::ostream &os) const 
+{
     os << "Type: " << getType() << ", ";
     os << "Name: " << getName();
     printParams(os);
 }
 
-void Product::printParams(std::ostream &os) const {
+void Product::printParams(std::ostream &os) const 
+{
     char strDateOfAcquisition[9];
     strftime(strDateOfAcquisition, 9, "%Y%m%d",
              gmtime(&dateOfAcquisition));
@@ -50,14 +58,16 @@ void Product::printParams(std::ostream &os) const {
        << ", " << "Current price: " << getCurrentPrice();
 }
 
-void Product::writeParamsToStream(std::ostream &os) const {
+void Product::writeParamsToStream(std::ostream &os) const 
+{
     char strDateOfAcquisition[9];
     tm* t = localtime(&dateOfAcquisition);
     strftime(strDateOfAcquisition, 9, "%Y%m%d", t);
     os << " " << name << " " << initialPrice << " " <<strDateOfAcquisition;
 }
 
-void Product::loadParamsFromStream(std::istream &is) {
+void Product::loadParamsFromStream(std::istream &is) 
+{
     is >> name;
     is >> initialPrice;
 
@@ -82,16 +92,15 @@ void Product::loadParamsFromStream(std::istream &is) {
     dateOfAcquisition = mktime(&t);
 }
 
-std::istream& operator>>(istream& is, Product& product) {
+std::istream& operator>>(istream& is, Product& product) 
+{
     product.loadParamsFromStream(is);
     return is;
 }
 
-std::ostream& operator<<(ostream& os, Product& product) {
+std::ostream& operator<<(ostream& os, Product& product)
+{
     os <<product.getCharCode();
     product.writeParamsToStream(os);
     return os;
 }
-
-
-

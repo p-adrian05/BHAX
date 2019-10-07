@@ -8,17 +8,17 @@
 
 using namespace std;
 
-void readInvFileTest(ProductInventory &inv);
-void writeInvFileTest(ProductInventory &inv);
+void readInvFileTest(ProductInventory& inv);
+void writeInvFileTest(ProductInventory& inv);
 
-int main()
+int main() 
 {
-    try
+    try 
     {
         ProductFactory::Init(new ComputerProductFactory);
 
-        //Teszt1: készlet létrehozása és kiírása a kimenetre.
-        cout << "Test1: create inventory and printing it to the screen." << endl;
+        //teszt1
+        cout<< "Test1: create inventory and printing it to the screen." << endl;
         time_t currentTime;
         time(&currentTime);
         ProductInventory inv1;
@@ -26,56 +26,55 @@ int main()
         inv1.addProduct(new HardDisk("WD", 25000, currentTime, 7500));
         inv1.printProducts(cout);
 
-        cout << "Press any key to continue...";
+        cout<<"Press any key to continue...";
         cin.get();
         cout << endl;
 
         cout << "Test2: loading inventory from a file (computerproducts.txt), printing it,"
-                " and then writing it to a file (computerproducts_out.txt)."
-             << endl;
+                " and then writing it to a file (computerproducts_out.txt)." << endl;
         ProductInventory inv2;
         readInvFileTest(inv2);
         writeInvFileTest(inv2);
 
         cout << endl;
         cout << "Done.";
-        //várunk billenytű leütésre
+
         cin.get();
 
         return 0;
     }
-    catch (const std::exception &e)
+    catch(const std::exception& e)
     {
         cerr << "There was an error: " << endl;
         cerr << e.what() << endl;
     }
-    catch (...)
+    catch(...)
     {
         cout << "Unexpected error occured." << endl;
     }
 }
-// Termékek betöltése a "computerproducts.txt" állományból és listázásuk a szabványos kimenetre.
-void readInvFromFileTest(ProductInventory &inv)
+
+void readInvFileTest(ProductInventory &inv) 
 {
     ifstream fs("computerproducts.txt");
 
-    if (!fs)
+    if(!fs) 
     {
         cerr << "Error opening file." << endl;
         return;
     }
 
     inv.readInventory(fs);
-    cout << "The content of computerproducts.txt is: " << endl;
+    cout << "The content of the file is: " << endl;
     inv.printProducts(cout);
     cout << endl;
 }
-//Termékek kiírása a "computerproducts_out.txt" állományba.
-void writeInvFileTest(ProductInventory &inv)
+
+void writeInvFileTest(ProductInventory &inv) 
 {
     ofstream fs("computerproducts_out.txt");
 
-    if (!fs)
+    if(!fs)
     {
         cerr << "Error opening file." << endl;
         return;

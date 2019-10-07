@@ -3,7 +3,8 @@
 
 #include "product.h"
 
-class HardDisk: public Product {
+class HardDisk: public Product 
+{
     int speedRPM;
 protected:
     void printParams(std::ostream& os) const;
