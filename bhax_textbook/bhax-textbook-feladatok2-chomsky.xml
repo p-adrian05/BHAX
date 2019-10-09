@@ -40,19 +40,6 @@ javac -encoding ISO-8859-2 MandelbrotHalmazNagyító.java
     </mediaobject>
 
   </section>
-  <section>
-    <title>OOCWC lexer</title>
-    <para>
-            Izzítsuk be az OOCWC-t és vázoljuk a https://github.com/nbatfai/robocaremulator/blob/master/justine/rcemu/src/carlexer.ll lexert és kapcsolását a programunk OO struktúrájába!  
-    </para>
-    <para>
-          Megoldás forrása:   
-    </para>
-    <para>
-
-    </para>
-
-  </section>
 
   <section>
     <title>l334d1c4</title>
@@ -333,7 +320,7 @@ public class Writer {
            Lásd vis_prel_para.pdf! Apró módosításokat eszközölj benne, pl. színvilág, textúrázás, a szintek jobb elkülönítése, kézreállóbb irányítás.
     </para>
     <para>
-          Megoldás forrása:  
+          Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Chomsky2/Kocka">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Chomsky2/Kocka</link>
     </para>
 
     <para>
@@ -342,28 +329,80 @@ public class Writer {
 
   </section>
 
-  <section>
-    <title>Paszigráfia Rapszódia LuaLaTeX vizualizáció </title>
-    <para>
-           Lásd vis_prel_para.pdf! Apró módosításokat eszközölj benne, pl. színvilág, még erősebb 3D-s hatás. 
-    </para>
-    <para>
-          Megoldás forrása:  
-    </para>
-    <para>
-
-    </para>
-  </section>
   <section>
     <title>Perceptron osztály </title>
     <para>
           Dolgozzuk be egy külön projektbe a projekt Perceptron osztályát! Lásd https://youtu.be/XpBnR31BRJY 
     </para>
     <para>
-          Megoldás forrása:  
+          Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Chomsky2/Perceptron">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Chomsky2/Perceptron</link>
     </para>
     <para>
-
+    A Perceptron egy neurális háló, aminek csomópontjai vannak. A csomópontok a mesterséges neuronok. Két fő csomópont a bemeneti és kimeneti csomópontok. Van egy központi csúcs is, ahol a 
+    számolás történik. Az input csúcsokból bejövő kapcsolatok súlyozva vannak, ami alapján történik a számolás a központi csúcsban. A tanulás abból áll, hogy a bejövő kapcsolatok erőssége változik, 
+    a sokat használt kapcsolatokban erősödik, a ritkán használtakban gyengül. Egy neurális hálózat esetén pedig több réteg lehet egymás után, amik a perceptronok és minden perceptron az eggyel korábbi 
+    szinten lévőkből kapja az inputot és az eggyel későbbi szintre továbbítja.
     </para>
+    <programlisting language="java">
+      <![CDATA[ 
+  #include <iostream>
+#include "mlp.hpp"
+#include "png++/png.hpp"
+
+int main (int argc, char **argv)
+{
+    png::image <png::rgb_pixel> png_image (argv[1]);
+    int size = png_image.get_width()*png_image.get_height();
+    
+    Perceptron* p = new Perceptron(3, size, 256, 1);
+
+    double* image = new double[size];
+    
+    for(int i {0}; i<png_image.get_width(); ++i)
+         for(int j {0}; j<png_image.get_height(); ++j)
+            image[i*png_image.get_width()+j] = png_image[i][j].red;
+
+    double value = (*p) (image);
+
+    std::cout << value << std::endl;
+
+    delete p;
+    delete [] image;
+}
+]]>
+    </programlisting>
+    <para>
+         Ebben a projektben használjuk a Perceptron osztályt. A mandel program által előállított kép lesz feldolgozva.
+         Először eltároljuk png::image objektumként a paraméterként kapott képet. A size változóban a kép méretét tároljuk el. Ezután létrehozzuk a 
+         perceptron objektumot, mutatóját megadva a konstruktorának a paramétereket. Az 3 a neurális háló rétegek számát jelenti, a size a kép mérete, a 256 a neuronok száma az egyes 
+         rétegekben, 1 pedig a kimeneti neuron darabszáma, ami az eredményt adja vissza. Ezután lefoglaljuk az új kép méretének, pixeleinek a helyét egy double típusú mutatóval, ami 
+         az eredeti kép méretével egyenlő. Ezután két for ciklussal bejárjuk az eredeti képet, pixeleit és az új helyre tesszük az eredeti kép piros komponenseit. 
+         Miután megvan az új kép, meghívjuk a perceptron osztály () operátorát átadva az új képet, ami egy double típusú értéket ad vissza. Ezután kiírjuk a perceptron osztály által kapott 
+         értéket, ami a kimeneti csomóponton érkezett, a 256 pixel értéke 1 értékre leszűrve, majd felszabadítjuk a memóriát.
+    </para>
+    <para>
+        A feldolgozandó kép:
+    </para>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="img/mandel.png" scale="40" />
+      </imageobject>
+    </mediaobject>
+    <para>
+        Fordításkor az alábbi parancs szükséges. A -lpng szükséges, hogy linkeljük a png könyvtárat. -std=c++11 a megfelelő szabvány szerinti fordításhoz szükséges.
+    </para>
+    <screen>
+      <![CDATA[
+g++ mlp.hpp main.cpp -o p -lpng -std=c++11
+ ]]>
+    </screen>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="img/percep.jpg" scale="80" />
+      </imageobject>
+    </mediaobject>
+
+
+
   </section>
 </chapter>       

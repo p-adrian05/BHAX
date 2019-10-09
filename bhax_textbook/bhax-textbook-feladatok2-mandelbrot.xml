@@ -15,7 +15,7 @@
         </para>
         <para>https://arato.inf.unideb.hu/batfai.norbert/UDPROG/deprecated/Prog1_6.pdf (28-32 fólia) </para>
         <para>
-            Megoldás forrása: 
+            Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a7.cpp">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a7.cpp</link>
         </para>
         <para>
             Az osztálydiagram az objektumok típusait írja le és a közöttük fennálló kapcsolatokat. Az osztályok tulajdonságait és műveleteit is megmutatják, továbbá 
@@ -160,7 +160,7 @@ public class Cash extends Payment {
             A BME-s C++ tankönyv 14. fejezetét (427-444 elmélet, 445-469 az esettan) dolgozzuk fel!
         </para>
         <para>
-          Megoldás forrása:  
+          Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Mandelbrot2/Esettan">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Mandelbrot2/Esettan</link>
         </para>
         <para>
           Az esettan egy kereskedés alkatrészeinek és konfigurációinak nyilvántartására készült programról szól, ami támogatja a termékek betöltését, listázását, kiírását.
