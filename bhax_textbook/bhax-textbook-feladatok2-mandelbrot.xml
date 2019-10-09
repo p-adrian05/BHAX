@@ -53,7 +53,6 @@
         <para> - privát, private</para>
         <para> # védett, protected</para>
         <para> ~ csomagszintű, package private</para>
-        <para> ~ csomagszintű, package private</para>
         <para> aláhúzott satic változó</para>
         <para>
             Absztrakt osztályok és függvények nevei pedig dőlt stílusúak.
