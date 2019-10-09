@@ -38,447 +38,482 @@ public:
         GLfloat rotx = 0.0f;
         GLfloat roty = 0.0f;
         GLfloat rotz = 0.0f;
-        int nn[6]  = {1,2,3,4,8,10};
+        int nn[6] = {1, 2, 3, 4, 8, 10};
         std::vector<int> cc[6];
 };
 
 int index = 0;
-bool transp {false};
+bool transp{false};
 GLdouble fovy = 70;
 int w = 640;
 int h = 480;
 
 std::vector<PaRaCube> cubeLetters;
 
-void drawPaRaCube ( int idx )
+void drawPaRaCube(int idx)
 {
 
         glPushMatrix();
 
-        int d = cubeLetters.size()/2  ;
+        int d = cubeLetters.size() / 2;
 
-        glTranslatef ( ( idx-d ) *3.0f, 1.0f, 0.5f );
+        glTranslatef((idx - d) * 3.0f, 1.0f, 0.5f);
         //glTranslatef ( ( idx-d ) *2.5f, 0.0f, 0.0f );
 
+        glRotatef(cubeLetters[idx].rotx, 1.0f, 0.0f, 0.0f);
+        glRotatef(cubeLetters[idx].rotx, 1.0f, 0.0f, 0.0f);
+        glRotatef(cubeLetters[idx].roty, 0.0f, 1.0f, 0.0f);
+        glRotatef(cubeLetters[idx].rotz, 0.0f, 0.0f, 1.0f);
 
-        glRotatef ( cubeLetters[idx].rotx, 1.0f, 0.0f, 0.0f );
-        glRotatef ( cubeLetters[idx].rotx, 1.0f, 0.0f, 0.0f );
-        glRotatef ( cubeLetters[idx].roty, 0.0f, 1.0f, 0.0f );
-        glRotatef ( cubeLetters[idx].rotz, 0.0f, 0.0f, 1.0f );
+        glBegin(GL_QUADS);
 
-        glBegin ( GL_QUADS );
-
-//kocka kulso szine
-        glColor3f ( 0.723f, .900f, 0.639f );
+        //kocka kulso szine
+        glColor3f(0.723f, .900f, 0.639f);
         //glColor3f ( 0.818f, .900f, 0.224f );
 
-        glVertex3f ( -1.0f, 1.0f, 1.0f );
-        glVertex3f ( 1.0f, 1.0f, 1.0f );
-        glVertex3f ( 1.0f,-1.0f, 1.0f );
-        glVertex3f ( -1.0f,-1.0f, 1.0f );
+        glVertex3f(-1.0f, 1.0f, 1.0f);
+        glVertex3f(1.0f, 1.0f, 1.0f);
+        glVertex3f(1.0f, -1.0f, 1.0f);
+        glVertex3f(-1.0f, -1.0f, 1.0f);
 
-        glVertex3f ( 1.0f, 1.0f, 1.0f );
-        glVertex3f ( 1.0f, 1.0f,-1.0f );
-        glVertex3f ( 1.0f,-1.0f,-1.0f );
-        glVertex3f ( 1.0f,-1.0f, 1.0f );
+        glVertex3f(1.0f, 1.0f, 1.0f);
+        glVertex3f(1.0f, 1.0f, -1.0f);
+        glVertex3f(1.0f, -1.0f, -1.0f);
+        glVertex3f(1.0f, -1.0f, 1.0f);
 
-        glVertex3f ( -1.0f, 1.0f, 1.0f );
-        glVertex3f ( -1.0f, 1.0f,-1.0f );
-        glVertex3f ( 1.0f, 1.0f,-1.0f );
-        glVertex3f ( 1.0f, 1.0f, 1.0f );
+        glVertex3f(-1.0f, 1.0f, 1.0f);
+        glVertex3f(-1.0f, 1.0f, -1.0f);
+        glVertex3f(1.0f, 1.0f, -1.0f);
+        glVertex3f(1.0f, 1.0f, 1.0f);
 
-        glVertex3f ( -1.0f, 1.0f, 1.0f );
-        glVertex3f ( -1.0f, 1.0f,-1.0f );
-        glVertex3f ( -1.0f,-1.0f,-1.0f );
-        glVertex3f ( -1.0f,-1.0f, 1.0f );
+        glVertex3f(-1.0f, 1.0f, 1.0f);
+        glVertex3f(-1.0f, 1.0f, -1.0f);
+        glVertex3f(-1.0f, -1.0f, -1.0f);
+        glVertex3f(-1.0f, -1.0f, 1.0f);
 
-        glVertex3f ( -1.0f, 1.0f,-1.0f );
-        glVertex3f ( 1.0f, 1.0f,-1.0f );
-        glVertex3f ( 1.0f,-1.0f,-1.0f );
-        glVertex3f ( -1.0f,-1.0f,-1.0f );
+        glVertex3f(-1.0f, 1.0f, -1.0f);
+        glVertex3f(1.0f, 1.0f, -1.0f);
+        glVertex3f(1.0f, -1.0f, -1.0f);
+        glVertex3f(-1.0f, -1.0f, -1.0f);
 
-        glVertex3f ( -1.0f,-1.0f, 1.0f );
-        glVertex3f ( 1.0f,-1.0f, 1.0f );
-        glVertex3f ( 1.0f,-1.0f,-1.0f );
-        glVertex3f ( -1.0f,-1.0f,-1.0f );
+        glVertex3f(-1.0f, -1.0f, 1.0f);
+        glVertex3f(1.0f, -1.0f, 1.0f);
+        glVertex3f(1.0f, -1.0f, -1.0f);
+        glVertex3f(-1.0f, -1.0f, -1.0f);
 
         glEnd();
 
-        glBegin ( GL_LINES );
-         glColor3f ( .900f, 0.0f, 0.0f );
+        glBegin(GL_LINES);
         //kocka elulso kerete piros
+        glColor3f(.900f, 0.0f, 0.0f);
         //glColor3f ( .188f, 0.209f, 0.190f );
 
-        for ( int i=0; i<=cubeLetters[idx].nn[0]; i++ ) {
+        for (int i = 0; i <= cubeLetters[idx].nn[0]; i++)
+        {
 
-                glVertex3f ( -1.0f, 1.0f-i* ( 2.0/cubeLetters[idx].nn[0] ), 1.005f );
-                glVertex3f ( 1.0f, 1.0f-i* ( 2.0/cubeLetters[idx].nn[0] ), 1.005f );
+                glVertex3f(-1.0f, 1.0f - i * (2.0 / cubeLetters[idx].nn[0]), 1.005f);
+                glVertex3f(1.0f, 1.0f - i * (2.0 / cubeLetters[idx].nn[0]), 1.005f);
         }
-        for ( int i=0; i<=cubeLetters[idx].nn[0]; i++ ) {
+        for (int i = 0; i <= cubeLetters[idx].nn[0]; i++)
+        {
 
-                glVertex3f ( 1.0f-i* ( 2.0/cubeLetters[idx].nn[0] ), 1.0f , 1.005f );
-                glVertex3f ( 1.0f-i* ( 2.0/cubeLetters[idx].nn[0] ), -1.0f , 1.005f );
-
+                glVertex3f(1.0f - i * (2.0 / cubeLetters[idx].nn[0]), 1.0f, 1.005f);
+                glVertex3f(1.0f - i * (2.0 / cubeLetters[idx].nn[0]), -1.0f, 1.005f);
         }
         glEnd();
 
-
-        for ( int i {0}; i<cubeLetters[idx].cc[0].size() /2; ++i ) {
-                glBegin ( GL_QUADS );
+        for (int i{0}; i < cubeLetters[idx].cc[0].size() / 2; ++i)
+        {
+                glBegin(GL_QUADS);
 
                 //kek kocka
-                glColor3f ( .12f, .346f, .744f );
+                glColor3f(.12f, .346f, .744f);
                 //glColor3f ( .82f, .15f, .15f );
 
-                glVertex3f ( 1.0f- ( cubeLetters[idx].cc[0][2*i]+1 ) * ( 2.0/cubeLetters[idx].nn[0] ),
-                             1.0f- ( cubeLetters[idx].cc[0][2*i+1]+1 ) * ( 2.0/cubeLetters[idx].nn[0] ), 1.002f );
-                glVertex3f ( 1.0f-cubeLetters[idx].cc[0][2*i]* ( 2.0/cubeLetters[idx].nn[0] ),
-                             1.0f- ( cubeLetters[idx].cc[0][2*i+1]+1 ) * ( 2.0/cubeLetters[idx].nn[0] ), 1.002f );
-                glVertex3f ( 1.0f-cubeLetters[idx].cc[0][2*i]* ( 2.0/cubeLetters[idx].nn[0] ),
-                             1.0f-cubeLetters[idx].cc[0][2*i+1]* ( 2.0/cubeLetters[idx].nn[0] ), 1.002f );
-                glVertex3f ( 1.0f- ( cubeLetters[idx].cc[0][2*i]+1 ) * ( 2.0/cubeLetters[idx].nn[0] ),
-                             1.0f-cubeLetters[idx].cc[0][2*i+1]* ( 2.0/cubeLetters[idx].nn[0] ), 1.002f );
+                glVertex3f(1.0f - (cubeLetters[idx].cc[0][2 * i] + 1) * (2.0 / cubeLetters[idx].nn[0]),
+                           1.0f - (cubeLetters[idx].cc[0][2 * i + 1] + 1) * (2.0 / cubeLetters[idx].nn[0]), 1.002f);
+                glVertex3f(1.0f - cubeLetters[idx].cc[0][2 * i] * (2.0 / cubeLetters[idx].nn[0]),
+                           1.0f - (cubeLetters[idx].cc[0][2 * i + 1] + 1) * (2.0 / cubeLetters[idx].nn[0]), 1.002f);
+                glVertex3f(1.0f - cubeLetters[idx].cc[0][2 * i] * (2.0 / cubeLetters[idx].nn[0]),
+                           1.0f - cubeLetters[idx].cc[0][2 * i + 1] * (2.0 / cubeLetters[idx].nn[0]), 1.002f);
+                glVertex3f(1.0f - (cubeLetters[idx].cc[0][2 * i] + 1) * (2.0 / cubeLetters[idx].nn[0]),
+                           1.0f - cubeLetters[idx].cc[0][2 * i + 1] * (2.0 / cubeLetters[idx].nn[0]), 1.002f);
 
                 glEnd();
         }
 
-
-        glBegin ( GL_LINES );
+        glBegin(GL_LINES);
         //kocka jobb kerete piros
         //glColor3f ( .500f, 0.89f, 0.0f );
-          glColor3f ( .900f, 0.0f, 0.0f );
+        glColor3f(.900f, 0.0f, 0.0f);
 
-        for ( int i=0; i<=cubeLetters[idx].nn[1]; i++ ) {
+        for (int i = 0; i <= cubeLetters[idx].nn[1]; i++)
+        {
 
-                glVertex3f ( 1.005f, 1.0f-i* ( 2.0/cubeLetters[idx].nn[1] ), 1.0f );
-                glVertex3f ( 1.005f, 1.0f-i* ( 2.0/cubeLetters[idx].nn[1] ), -1.0f );
+                glVertex3f(1.005f, 1.0f - i * (2.0 / cubeLetters[idx].nn[1]), 1.0f);
+                glVertex3f(1.005f, 1.0f - i * (2.0 / cubeLetters[idx].nn[1]), -1.0f);
         }
-        for ( int i=0; i<=cubeLetters[idx].nn[1]; i++ ) {
+        for (int i = 0; i <= cubeLetters[idx].nn[1]; i++)
+        {
 
-                glVertex3f ( 1.005f, 1.0f , 1.0f-i* ( 2.0/cubeLetters[idx].nn[1] ) );
-                glVertex3f ( 1.005f, -1.0f , 1.0f-i* ( 2.0/cubeLetters[idx].nn[1] ) );
-
+                glVertex3f(1.005f, 1.0f, 1.0f - i * (2.0 / cubeLetters[idx].nn[1]));
+                glVertex3f(1.005f, -1.0f, 1.0f - i * (2.0 / cubeLetters[idx].nn[1]));
         }
         glEnd();
 
-        for ( int i {0}; i<cubeLetters[idx].cc[1].size() /2; ++i ) {
-                glBegin ( GL_QUADS );
+        for (int i{0}; i < cubeLetters[idx].cc[1].size() / 2; ++i)
+        {
+                glBegin(GL_QUADS);
 
                 //kek jobb kocka
-                glColor3f ( .234f, .75f, .827f );
+                glColor3f(.234f, .75f, .827f);
                 //glColor3f ( 0.15f, .29f, .82f );
 
-                glVertex3f ( 1.002f, 1.0f-cubeLetters[idx].cc[1][2*i]* ( 2.0/cubeLetters[idx].nn[1] ),
-                             1.0f- ( cubeLetters[idx].cc[1][2*i+1]+1 ) * ( 2.0/cubeLetters[idx].nn[1] ) );
-                glVertex3f ( 1.002f, 1.0f-cubeLetters[idx].cc[1][2*i]* ( 2.0/cubeLetters[idx].nn[1] ),
-                             1.0f-cubeLetters[idx].cc[1][2*i+1]* ( 2.0/cubeLetters[idx].nn[1] ) );
-                glVertex3f ( 1.002f, 1.0f- ( cubeLetters[idx].cc[1][2*i]+1 ) * ( 2.0/cubeLetters[idx].nn[1] ),
-                             1.0f-cubeLetters[idx].cc[1][2*i+1]* ( 2.0/cubeLetters[idx].nn[1] ) );
-                glVertex3f ( 1.002f, 1.0f- ( cubeLetters[idx].cc[1][2*i]+1 ) * ( 2.0/cubeLetters[idx].nn[1] ),
-                             1.0f- ( cubeLetters[idx].cc[1][2*i+1]+1 ) * ( 2.0/cubeLetters[idx].nn[1] ) );
-
+                glVertex3f(1.002f, 1.0f - cubeLetters[idx].cc[1][2 * i] * (2.0 / cubeLetters[idx].nn[1]),
+                           1.0f - (cubeLetters[idx].cc[1][2 * i + 1] + 1) * (2.0 / cubeLetters[idx].nn[1]));
+                glVertex3f(1.002f, 1.0f - cubeLetters[idx].cc[1][2 * i] * (2.0 / cubeLetters[idx].nn[1]),
+                           1.0f - cubeLetters[idx].cc[1][2 * i + 1] * (2.0 / cubeLetters[idx].nn[1]));
+                glVertex3f(1.002f, 1.0f - (cubeLetters[idx].cc[1][2 * i] + 1) * (2.0 / cubeLetters[idx].nn[1]),
+                           1.0f - cubeLetters[idx].cc[1][2 * i + 1] * (2.0 / cubeLetters[idx].nn[1]));
+                glVertex3f(1.002f, 1.0f - (cubeLetters[idx].cc[1][2 * i] + 1) * (2.0 / cubeLetters[idx].nn[1]),
+                           1.0f - (cubeLetters[idx].cc[1][2 * i + 1] + 1) * (2.0 / cubeLetters[idx].nn[1]));
 
                 glEnd();
         }
 
-        glBegin ( GL_LINES );
+        glBegin(GL_LINES);
         //kocka felso kerete piros
-        glColor3f ( .900f, 0.0f, 0.0f );
+        glColor3f(.900f, 0.0f, 0.0f);
         //glColor3f ( .188f, 0.209f, 0.190f );
 
-        for ( int i=0; i<=cubeLetters[idx].nn[2]; i++ ) {
+        for (int i = 0; i <= cubeLetters[idx].nn[2]; i++)
+        {
 
-                glVertex3f ( -1.0f, 1.005f , 1.0f-i* ( 2.0/cubeLetters[idx].nn[2] ) );
-                glVertex3f ( 1.0f, 1.005f , 1.0f-i* ( 2.0/cubeLetters[idx].nn[2] ) );
+                glVertex3f(-1.0f, 1.005f, 1.0f - i * (2.0 / cubeLetters[idx].nn[2]));
+                glVertex3f(1.0f, 1.005f, 1.0f - i * (2.0 / cubeLetters[idx].nn[2]));
         }
-        for ( int i=0; i<=cubeLetters[idx].nn[2]; i++ ) {
+        for (int i = 0; i <= cubeLetters[idx].nn[2]; i++)
+        {
 
-                glVertex3f ( 1.0f-i* ( 2.0/cubeLetters[idx].nn[2] ), 1.005f, -1.0f );
-                glVertex3f ( 1.0f-i* ( 2.0/cubeLetters[idx].nn[2] ), 1.005f, 1.0f );
-
+                glVertex3f(1.0f - i * (2.0 / cubeLetters[idx].nn[2]), 1.005f, -1.0f);
+                glVertex3f(1.0f - i * (2.0 / cubeLetters[idx].nn[2]), 1.005f, 1.0f);
         }
         glEnd();
 
-        for ( int i {0}; i<cubeLetters[idx].cc[2].size() /2; ++i ) {
-                glBegin ( GL_QUADS );
+        for (int i{0}; i < cubeLetters[idx].cc[2].size() / 2; ++i)
+        {
+                glBegin(GL_QUADS);
                 //felso kocka lila
-                 glColor3f ( .400f, 0.0f, 0.3f );
+                glColor3f(.400f, 0.0f, 0.3f);
                 //glColor3f ( .309f, .820f, .150f );
 
-                glVertex3f ( 1.0f-cubeLetters[idx].cc[2][2*i]* ( 2.0/cubeLetters[idx].nn[2] ),
-                             1.002f , 1.0f-cubeLetters[idx].cc[2][2*i+1]* ( 2.0/cubeLetters[idx].nn[2] ) );
-                glVertex3f ( 1.0f- ( cubeLetters[idx].cc[2][2*i]+1 ) * ( 2.0/cubeLetters[idx].nn[2] ),
-                             1.002f , 1.0f-cubeLetters[idx].cc[2][2*i+1]* ( 2.0/cubeLetters[idx].nn[2] ) );
-                glVertex3f ( 1.0f- ( cubeLetters[idx].cc[2][2*i]+1 ) * ( 2.0/cubeLetters[idx].nn[2] ),
-                             1.002f , 1.0f- ( cubeLetters[idx].cc[2][2*i+1]+1 ) * ( 2.0/cubeLetters[idx].nn[2] ) );
-                glVertex3f ( 1.0f-cubeLetters[idx].cc[2][2*i]* ( 2.0/cubeLetters[idx].nn[2] ),
-                             1.002f , 1.0f- ( cubeLetters[idx].cc[2][2*i+1]+1 ) * ( 2.0/cubeLetters[idx].nn[2] ) );
+                glVertex3f(1.0f - cubeLetters[idx].cc[2][2 * i] * (2.0 / cubeLetters[idx].nn[2]),
+                           1.002f, 1.0f - cubeLetters[idx].cc[2][2 * i + 1] * (2.0 / cubeLetters[idx].nn[2]));
+                glVertex3f(1.0f - (cubeLetters[idx].cc[2][2 * i] + 1) * (2.0 / cubeLetters[idx].nn[2]),
+                           1.002f, 1.0f - cubeLetters[idx].cc[2][2 * i + 1] * (2.0 / cubeLetters[idx].nn[2]));
+                glVertex3f(1.0f - (cubeLetters[idx].cc[2][2 * i] + 1) * (2.0 / cubeLetters[idx].nn[2]),
+                           1.002f, 1.0f - (cubeLetters[idx].cc[2][2 * i + 1] + 1) * (2.0 / cubeLetters[idx].nn[2]));
+                glVertex3f(1.0f - cubeLetters[idx].cc[2][2 * i] * (2.0 / cubeLetters[idx].nn[2]),
+                           1.002f, 1.0f - (cubeLetters[idx].cc[2][2 * i + 1] + 1) * (2.0 / cubeLetters[idx].nn[2]));
 
                 glEnd();
         }
 
-        glBegin ( GL_LINES );
+        glBegin(GL_LINES);
         //kocka bal kerete piros
-         glColor3f ( .900f, 0.0f, 0.0f );
+        glColor3f(.900f, 0.0f, 0.0f);
         //glColor3f ( .188f, 0.209f, 0.190f );
 
-        for ( int i=0; i<=cubeLetters[idx].nn[3]; i++ ) {
+        for (int i = 0; i <= cubeLetters[idx].nn[3]; i++)
+        {
 
-                glVertex3f ( -1.005f, 1.0f-i* ( 2.0/cubeLetters[idx].nn[3] ), 1.0f );
-                glVertex3f ( -1.005f, 1.0f-i* ( 2.0/cubeLetters[idx].nn[3] ), -1.0f );
+                glVertex3f(-1.005f, 1.0f - i * (2.0 / cubeLetters[idx].nn[3]), 1.0f);
+                glVertex3f(-1.005f, 1.0f - i * (2.0 / cubeLetters[idx].nn[3]), -1.0f);
         }
-        for ( int i=0; i<=cubeLetters[idx].nn[3]; i++ ) {
+        for (int i = 0; i <= cubeLetters[idx].nn[3]; i++)
+        {
 
-                glVertex3f ( -1.005f, 1.0f , 1.0f-i* ( 2.0/cubeLetters[idx].nn[3] ) );
-                glVertex3f ( -1.005f, -1.0f , 1.0f-i* ( 2.0/cubeLetters[idx].nn[3] ) );
-
+                glVertex3f(-1.005f, 1.0f, 1.0f - i * (2.0 / cubeLetters[idx].nn[3]));
+                glVertex3f(-1.005f, -1.0f, 1.0f - i * (2.0 / cubeLetters[idx].nn[3]));
         }
         glEnd();
 
-        for ( int i {0}; i<cubeLetters[idx].cc[3].size() /2; ++i ) {
-                glBegin ( GL_QUADS );
-
+        for (int i{0}; i < cubeLetters[idx].cc[3].size() / 2; ++i)
+        {
+                glBegin(GL_QUADS);
 
                 //jobb kocka zold
-                 glColor3f ( .100f, 0.900f, 0.0f );
-               // glColor3f ( .804f, .820f, .150f );
+                glColor3f(.100f, 0.900f, 0.0f);
+                // glColor3f ( .804f, .820f, .150f );
 
-                glVertex3f ( -1.002f, 1.0f- ( cubeLetters[idx].cc[3][2*i]+1 ) * ( 2.0/cubeLetters[idx].nn[3] ),
-                             1.0f-cubeLetters[idx].cc[3][2*i+1]* ( 2.0/cubeLetters[idx].nn[3] ) );
-                glVertex3f ( -1.002f, 1.0f-cubeLetters[idx].cc[3][2*i]* ( 2.0/cubeLetters[idx].nn[3] ),
-                             1.0f-cubeLetters[idx].cc[3][2*i+1]* ( 2.0/cubeLetters[idx].nn[3] ) );
-                glVertex3f ( -1.002f, 1.0f-cubeLetters[idx].cc[3][2*i]* ( 2.0/cubeLetters[idx].nn[3] ),
-                             1.0f- ( cubeLetters[idx].cc[3][2*i+1]+1 ) * ( 2.0/cubeLetters[idx].nn[3] ) );
-                glVertex3f ( -1.002f, 1.0f- ( cubeLetters[idx].cc[3][2*i]+1 ) * ( 2.0/cubeLetters[idx].nn[3] ),
-                             1.0f- ( cubeLetters[idx].cc[3][2*i+1]+1 ) * ( 2.0/cubeLetters[idx].nn[3] ) );
+                glVertex3f(-1.002f, 1.0f - (cubeLetters[idx].cc[3][2 * i] + 1) * (2.0 / cubeLetters[idx].nn[3]),
+                           1.0f - cubeLetters[idx].cc[3][2 * i + 1] * (2.0 / cubeLetters[idx].nn[3]));
+                glVertex3f(-1.002f, 1.0f - cubeLetters[idx].cc[3][2 * i] * (2.0 / cubeLetters[idx].nn[3]),
+                           1.0f - cubeLetters[idx].cc[3][2 * i + 1] * (2.0 / cubeLetters[idx].nn[3]));
+                glVertex3f(-1.002f, 1.0f - cubeLetters[idx].cc[3][2 * i] * (2.0 / cubeLetters[idx].nn[3]),
+                           1.0f - (cubeLetters[idx].cc[3][2 * i + 1] + 1) * (2.0 / cubeLetters[idx].nn[3]));
+                glVertex3f(-1.002f, 1.0f - (cubeLetters[idx].cc[3][2 * i] + 1) * (2.0 / cubeLetters[idx].nn[3]),
+                           1.0f - (cubeLetters[idx].cc[3][2 * i + 1] + 1) * (2.0 / cubeLetters[idx].nn[3]));
 
                 glEnd();
         }
 
-        glBegin ( GL_LINES );
+        glBegin(GL_LINES);
         //kocka hatso kerete pirso
-        glColor3f ( .900f, 0.0f, 0.0f );
-       //glColor3f ( .188f, 0.209f, 0.190f );
-        for ( int i=0; i<=cubeLetters[idx].nn[4]; i++ ) {
+        glColor3f(.900f, 0.0f, 0.0f);
+        //glColor3f ( .188f, 0.209f, 0.190f );
+        for (int i = 0; i <= cubeLetters[idx].nn[4]; i++)
+        {
 
-                glVertex3f ( -1.0f, 1.0f-i* ( 2.0/cubeLetters[idx].nn[4] ), -1.005f );
-                glVertex3f ( 1.0f, 1.0f-i* ( 2.0/cubeLetters[idx].nn[4] ), -1.005f );
+                glVertex3f(-1.0f, 1.0f - i * (2.0 / cubeLetters[idx].nn[4]), -1.005f);
+                glVertex3f(1.0f, 1.0f - i * (2.0 / cubeLetters[idx].nn[4]), -1.005f);
         }
-        for ( int i=0; i<=cubeLetters[idx].nn[4]; i++ ) {
+        for (int i = 0; i <= cubeLetters[idx].nn[4]; i++)
+        {
 
-                glVertex3f ( 1.0f-i* ( 2.0/cubeLetters[idx].nn[4] ), 1.0f , -1.005f );
-                glVertex3f ( 1.0f-i* ( 2.0/cubeLetters[idx].nn[4] ), -1.0f , -1.005f );
-
+                glVertex3f(1.0f - i * (2.0 / cubeLetters[idx].nn[4]), 1.0f, -1.005f);
+                glVertex3f(1.0f - i * (2.0 / cubeLetters[idx].nn[4]), -1.0f, -1.005f);
         }
         glEnd();
 
-        for ( int i {0}; i<cubeLetters[idx].cc[4].size() /2; ++i ) {
-                glBegin ( GL_QUADS );
+        for (int i{0}; i < cubeLetters[idx].cc[4].size() / 2; ++i)
+        {
+                glBegin(GL_QUADS);
                 //hatso kocka szurke
-                glColor3f ( .1f, 0.1f, 0.1f );
+                glColor3f(.1f, 0.1f, 0.1f);
                 //glColor3f ( .614f, 0.150f, 0.820f );
 
-                glVertex3f ( 1.0f- ( cubeLetters[idx].cc[4][2*i]+1 ) * ( 2.0/cubeLetters[idx].nn[4] ),
-                             1.0f-cubeLetters[idx].cc[4][2*i+1]* ( 2.0/cubeLetters[idx].nn[4] ), -1.002f );
-                glVertex3f ( 1.0f-cubeLetters[idx].cc[4][2*i]* ( 2.0/cubeLetters[idx].nn[4] ),
-                             1.0f-cubeLetters[idx].cc[4][2*i+1]* ( 2.0/cubeLetters[idx].nn[4] ), -1.002f );
-                glVertex3f ( 1.0f-cubeLetters[idx].cc[4][2*i]* ( 2.0/cubeLetters[idx].nn[4] ),
-                             1.0f- ( cubeLetters[idx].cc[4][2*i+1]+1 ) * ( 2.0/cubeLetters[idx].nn[4] ), -1.002f );
-                glVertex3f ( 1.0f- ( cubeLetters[idx].cc[4][2*i]+1 ) * ( 2.0/cubeLetters[idx].nn[4] ),
-                             1.0f- ( cubeLetters[idx].cc[4][2*i+1]+1 ) * ( 2.0/cubeLetters[idx].nn[4] ), -1.002f );
+                glVertex3f(1.0f - (cubeLetters[idx].cc[4][2 * i] + 1) * (2.0 / cubeLetters[idx].nn[4]),
+                           1.0f - cubeLetters[idx].cc[4][2 * i + 1] * (2.0 / cubeLetters[idx].nn[4]), -1.002f);
+                glVertex3f(1.0f - cubeLetters[idx].cc[4][2 * i] * (2.0 / cubeLetters[idx].nn[4]),
+                           1.0f - cubeLetters[idx].cc[4][2 * i + 1] * (2.0 / cubeLetters[idx].nn[4]), -1.002f);
+                glVertex3f(1.0f - cubeLetters[idx].cc[4][2 * i] * (2.0 / cubeLetters[idx].nn[4]),
+                           1.0f - (cubeLetters[idx].cc[4][2 * i + 1] + 1) * (2.0 / cubeLetters[idx].nn[4]), -1.002f);
+                glVertex3f(1.0f - (cubeLetters[idx].cc[4][2 * i] + 1) * (2.0 / cubeLetters[idx].nn[4]),
+                           1.0f - (cubeLetters[idx].cc[4][2 * i + 1] + 1) * (2.0 / cubeLetters[idx].nn[4]), -1.002f);
 
                 glEnd();
         }
 
-        glBegin ( GL_LINES );
+        glBegin(GL_LINES);
         //kokcka also kerete piros
-         glColor3f ( .900f, 0.0f, 0.0f );
+        glColor3f(.900f, 0.0f, 0.0f);
         //glColor3f ( .188f, 0.209f, 0.190f );
 
-        for ( int i=0; i<=cubeLetters[idx].nn[5]; i++ ) {
+        for (int i = 0; i <= cubeLetters[idx].nn[5]; i++)
+        {
 
-                glVertex3f ( -1.0f, -1.005f , 1.0f-i* ( 2.0/cubeLetters[idx].nn[5] ) );
-                glVertex3f ( 1.0f, -1.005f , 1.0f-i* ( 2.0/cubeLetters[idx].nn[5] ) );
+                glVertex3f(-1.0f, -1.005f, 1.0f - i * (2.0 / cubeLetters[idx].nn[5]));
+                glVertex3f(1.0f, -1.005f, 1.0f - i * (2.0 / cubeLetters[idx].nn[5]));
         }
-        for ( int i=0; i<=cubeLetters[idx].nn[5]; i++ ) {
+        for (int i = 0; i <= cubeLetters[idx].nn[5]; i++)
+        {
 
-                glVertex3f ( 1.0f-i* ( 2.0/cubeLetters[idx].nn[5] ), -1.005f , 1.0f );
-                glVertex3f ( 1.0f-i* ( 2.0/cubeLetters[idx].nn[5] ), -1.005f , -1.0f );
-
+                glVertex3f(1.0f - i * (2.0 / cubeLetters[idx].nn[5]), -1.005f, 1.0f);
+                glVertex3f(1.0f - i * (2.0 / cubeLetters[idx].nn[5]), -1.005f, -1.0f);
         }
         glEnd();
 
-        for ( int i {0}; i<cubeLetters[idx].cc[5].size() /2; ++i ) {
-                glBegin ( GL_QUADS );
+        for (int i{0}; i < cubeLetters[idx].cc[5].size() / 2; ++i)
+        {
+                glBegin(GL_QUADS);
                 //sarga also kocka
-                glColor3f ( .83f, .866f, .235f );
+                glColor3f(.83f, .866f, .235f);
                 //glColor3f ( .114f, .108f, .156f );
 
-                glVertex3f ( 1.0f-cubeLetters[idx].cc[5][2*i]* ( 2.0/cubeLetters[idx].nn[5] ),
-                             -1.002f , 1.0f-cubeLetters[idx].cc[5][2*i+1]* ( 2.0/cubeLetters[idx].nn[5] ) );
-                glVertex3f ( 1.0f-cubeLetters[idx].cc[5][2*i]* ( 2.0/cubeLetters[idx].nn[5] ),
-                             -1.002f , 1.0f- ( cubeLetters[idx].cc[5][2*i+1]+1 ) * ( 2.0/cubeLetters[idx].nn[5] ) );
-                glVertex3f ( 1.0f- ( cubeLetters[idx].cc[5][2*i]+1 ) * ( 2.0/cubeLetters[idx].nn[5] ),
-                             -1.002f , 1.0f- ( cubeLetters[idx].cc[5][2*i+1]+1 ) * ( 2.0/cubeLetters[idx].nn[5] ) );
-                glVertex3f ( 1.0f- ( cubeLetters[idx].cc[5][2*i]+1 ) * ( 2.0/cubeLetters[idx].nn[5] ),
-                             -1.002f , 1.0f-cubeLetters[idx].cc[5][2*i+1]* ( 2.0/cubeLetters[idx].nn[5] ) );
+                glVertex3f(1.0f - cubeLetters[idx].cc[5][2 * i] * (2.0 / cubeLetters[idx].nn[5]),
+                           -1.002f, 1.0f - cubeLetters[idx].cc[5][2 * i + 1] * (2.0 / cubeLetters[idx].nn[5]));
+                glVertex3f(1.0f - cubeLetters[idx].cc[5][2 * i] * (2.0 / cubeLetters[idx].nn[5]),
+                           -1.002f, 1.0f - (cubeLetters[idx].cc[5][2 * i + 1] + 1) * (2.0 / cubeLetters[idx].nn[5]));
+                glVertex3f(1.0f - (cubeLetters[idx].cc[5][2 * i] + 1) * (2.0 / cubeLetters[idx].nn[5]),
+                           -1.002f, 1.0f - (cubeLetters[idx].cc[5][2 * i + 1] + 1) * (2.0 / cubeLetters[idx].nn[5]));
+                glVertex3f(1.0f - (cubeLetters[idx].cc[5][2 * i] + 1) * (2.0 / cubeLetters[idx].nn[5]),
+                           -1.002f, 1.0f - cubeLetters[idx].cc[5][2 * i + 1] * (2.0 / cubeLetters[idx].nn[5]));
 
                 glEnd();
         }
 
         glPopMatrix();
-
 }
 
-void draw ( void )
+void draw(void)
 {
         //hatterszin
-        glClearColor ( .04f, .05f, 0.3f, .045f );
+        glClearColor(.04f, .05f, 0.3f, .045f);
         // glClearColor ( 1.0f, .1.0f, 1.0f, 1.0f );
 
-        if ( transp )
-                glDisable ( GL_DEPTH_TEST );
+        if (transp)
+                glDisable(GL_DEPTH_TEST);
         else
-                glEnable ( GL_DEPTH_TEST );
+                glEnable(GL_DEPTH_TEST);
 
-        glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glMatrixMode ( GL_MODELVIEW );
+        glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-          gluLookAt ( 3.0f, 3.0f, 7.0f ,1.0f ,1.0f ,1.0f ,1.0f ,3.0f ,1.0f);
-          //kockak dolese elhelyezkedese
+        gluLookAt(3.0f, 3.0f, 7.0f, 1.0f, 1.0f, 1.0f, 1.0f, 3.0f, 1.0f);
+        //kockak dolese elhelyezkedese
         //gluLookAt ( 0.0f, 3.0f, 6.0f ,0.0f ,0.0f ,0.0f ,0.0f ,1.0f ,0.0f );
 
-        for ( int i {0}; i<cubeLetters.size(); ++i )
-                if ( i == index ) {
-                        drawPaRaCube ( i );
-                } else {
-                        drawPaRaCube ( i );
+        for (int i{0}; i < cubeLetters.size(); ++i)
+                if (i == index)
+                {
+                        drawPaRaCube(i);
+                }
+                else
+                {
+                        drawPaRaCube(i);
                 }
 
         glutSwapBuffers();
 }
 
-void keyboard ( unsigned char key, int x, int y )
+void keyboard(unsigned char key, int x, int y)
 {
-        if ( key == '0' ) {
-                index=0;
-        } else if ( key == '1' ) {
-                index=1;
-        } else if ( key == '2' ) {
-                index=2;
-        } else if ( key == '3' ) {
-                index=3;
-        } else if ( key == '4' ) {
-                index=4;
-        } else if ( key == '5' ) {
-                index=5;
-        } else if ( key == '6' ) {
-                index=6;
-        } else if ( key == 't' ) {
+        if (key == '0')
+        {
+                index = 0;
+        }
+        else if (key == '1')
+        {
+                index = 1;
+        }
+        else if (key == '2')
+        {
+                index = 2;
+        }
+        else if (key == '3')
+        {
+                index = 3;
+        }
+        else if (key == '4')
+        {
+                index = 4;
+        }
+        else if (key == '5')
+        {
+                index = 5;
+        }
+        else if (key == '6')
+        {
+                index = 6;
+        }
+        else if (key == 't')
+        {
                 transp = !transp;
-        } else if ( key == '-' ) {
+        }
+        else if (key == '-')
+        {
                 ++fovy;
 
-                glMatrixMode ( GL_PROJECTION );
+                glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
-                gluPerspective ( fovy, ( float ) w/ ( float ) h, .1f, 1000.0f );
-                glMatrixMode ( GL_MODELVIEW );
-
-        } else if ( key == '+' ) {
+                gluPerspective(fovy, (float)w / (float)h, .1f, 1000.0f);
+                glMatrixMode(GL_MODELVIEW);
+        }
+        else if (key == '+')
+        {
                 --fovy;
 
-                glMatrixMode ( GL_PROJECTION );
+                glMatrixMode(GL_PROJECTION);
                 glLoadIdentity();
-                gluPerspective ( fovy, ( float ) w/ ( float ) h, .1f, 1000.0f );
-                glMatrixMode ( GL_MODELVIEW );
-
+                gluPerspective(fovy, (float)w / (float)h, .1f, 1000.0f);
+                glMatrixMode(GL_MODELVIEW);
         }
 
         glutPostRedisplay();
-
 }
 
-void skeyboard ( int key, int x, int y )
+void skeyboard(int key, int x, int y)
 {
-        if ( key == GLUT_KEY_UP ) {
+        if (key == GLUT_KEY_UP)
+        {
                 cubeLetters[index].rotx += 5.0;
-        } else if ( key == GLUT_KEY_DOWN ) {
+        }
+        else if (key == GLUT_KEY_DOWN)
+        {
                 cubeLetters[index].rotx -= 5.0;
-        } else if ( key == GLUT_KEY_RIGHT ) {
+        }
+        else if (key == GLUT_KEY_RIGHT)
+        {
                 cubeLetters[index].roty -= 5.0;
-        } else if ( key == GLUT_KEY_LEFT ) {
+        }
+        else if (key == GLUT_KEY_LEFT)
+        {
                 cubeLetters[index].roty += 5.0;
-        } else if ( key == GLUT_KEY_PAGE_UP ) {
+        }
+        else if (key == GLUT_KEY_PAGE_UP)
+        {
                 cubeLetters[index].rotz += 5.0;
-        } else if ( key == GLUT_KEY_PAGE_DOWN ) {
+        }
+        else if (key == GLUT_KEY_PAGE_DOWN)
+        {
                 cubeLetters[index].rotz -= 5.0;
         }
 
         glutPostRedisplay();
 }
 
-
-void reshape ( int width, int height )
+void reshape(int width, int height)
 {
         w = width;
         h = height;
 
-        glMatrixMode ( GL_PROJECTION );
+        glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        gluPerspective ( fovy, ( float ) w/ ( float ) h, .1f, 1000.0f );
-        glViewport ( 0, 0, w, h );
-        glMatrixMode ( GL_MODELVIEW );
+        gluPerspective(fovy, (float)w / (float)h, .1f, 1000.0f);
+        glViewport(0, 0, w, h);
+        glMatrixMode(GL_MODELVIEW);
 }
 
-int
-main ( int argc, char *argv[] )
+int main(int argc, char *argv[])
 {
 
-        for ( int i {1}; i<argc; ++i ) {
-                std::string s ( argv[i] );
+        for (int i{1}; i < argc; ++i)
+        {
+                std::string s(argv[i]);
                 std::vector<int> nums;
-                boost::char_separator<char> separator ( ":" );
-                boost::tokenizer<boost::char_separator<char>> items ( s, separator );
+                boost::char_separator<char> separator(":");
+                boost::tokenizer<boost::char_separator<char>> items(s, separator);
 
-                for ( const auto& token : items )
-                        nums.push_back ( atoi ( token.c_str() ) );
+                for (const auto &token : items)
+                        nums.push_back(atoi(token.c_str()));
 
-                int ii=0;
-                for ( int cui {0}; cui<nums[0]; ++cui ) {
+                int ii = 0;
+                for (int cui{0}; cui < nums[0]; ++cui)
+                {
                         PaRaCube prc;
-                        for ( int s {0}; s<6; ++s ) {
+                        for (int s{0}; s < 6; ++s)
+                        {
                                 ++ii;
-                                prc.nn[s]=nums[ii];
+                                prc.nn[s] = nums[ii];
                                 ++ii;
                                 int noc = nums[ii];
-                                for ( int coi {0}; coi<noc; ++coi ) {
+                                for (int coi{0}; coi < noc; ++coi)
+                                {
                                         ++ii;
-                                        prc.cc[s].push_back ( nums[ii] );
+                                        prc.cc[s].push_back(nums[ii]);
                                         ++ii;
-                                        prc.cc[s].push_back ( nums[ii] );
+                                        prc.cc[s].push_back(nums[ii]);
                                 }
                         }
 
-                        cubeLetters.push_back ( prc );
-
+                        cubeLetters.push_back(prc);
                 }
-
         }
 
-        glutInit ( &argc, argv );
-        glutInitWindowSize ( w, h );
-        glutInitWindowPosition (
-                ( glutGet ( GLUT_SCREEN_WIDTH )-w ) /2,
-                ( glutGet ( GLUT_SCREEN_HEIGHT )-h ) /2 );
-        glutInitDisplayMode ( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
-        glutCreateWindow ( "Pasigraphy Rhapsody, para6, exp2" );
-        glutReshapeFunc ( reshape );
-        glutDisplayFunc ( draw );
-        glutKeyboardFunc ( keyboard );
-        glutSpecialFunc ( skeyboard );
+        glutInit(&argc, argv);
+        glutInitWindowSize(w, h);
+        glutInitWindowPosition(
+            (glutGet(GLUT_SCREEN_WIDTH) - w) / 2,
+            (glutGet(GLUT_SCREEN_HEIGHT) - h) / 2);
+        glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+        glutCreateWindow("Pasigraphy Rhapsody, para6, exp2");
+        glutReshapeFunc(reshape);
+        glutDisplayFunc(draw);
+        glutKeyboardFunc(keyboard);
+        glutSpecialFunc(skeyboard);
 
         glutMainLoop();
         return 0;
 }
-

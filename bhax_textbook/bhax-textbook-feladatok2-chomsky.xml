@@ -324,13 +324,97 @@ public class Writer {
     </para>
 
     <para>
-
+      A program fordításához szükséges telepíteni az alábbi két csomagot:
     </para>
+    <screen>
+      <![CDATA[
+sudo apt-get install libboost-all-dev
+sudo apt-get install freeglut3-dev
+ ]]>
+    </screen>
+    <para>
+      Fordítás és futtatás az alábbi parancsokkal:
+    </para>
+    <screen>
+      <![CDATA[
+g++ para6.cpp -o para -lboost_system -lGL -lGLU -lglut
+./para 3:2:1:1:0:3:2:1:0:2:0:2:1:1:0:3:3:0:2:0:1:1:0:1:0:1:0:1:0:2:2:0:1:1:1:3:2:1:0:2:0:2:1:1:1:2:3:0:1:1:1:1:0:3:3:0:1:0:2:1:0:1:0:2:2:0:0:0:1:3:1:0:1:3:2:1:0:2:0:3:3:0:1:0:2:1:0
+ ]]>
+    </screen>
+    <para>
+     A módosítások listázása, alul kommentbe az erdeti kód van.
+    </para>
+    <programlisting language="c++">
+      <![CDATA[ 
+        //Kockak elhelyezkedése
+        glTranslatef ( ( idx-d ) *3.0f, 1.0f, 0.5f );
+        //glTranslatef ( ( idx-d ) *2.5f, 0.0f, 0.0f );
+
+
+        //kockak kulso szine
+        glColor3f ( 0.723f, .900f, 0.639f );
+        //glColor3f ( 0.818f, .900f, 0.224f );
+
+        //kockak elulso kerete piros
+         glColor3f ( .900f, 0.0f, 0.0f );
+        //glColor3f ( .188f, 0.209f, 0.190f );
+
+         //kek kocka
+        glColor3f ( .12f, .346f, .744f );
+        //glColor3f ( .82f, .15f, .15f );
+
+         //kockakjobb kerete piros
+          glColor3f ( .900f, 0.0f, 0.0f );
+        //glColor3f ( .500f, 0.89f, 0.0f );
+
+         //kek jobb kocka
+          glColor3f ( .234f, .75f, .827f );
+          //glColor3f ( 0.15f, .29f, .82f );
+
+          //kocka felso kerete piros
+        glColor3f ( .900f, 0.0f, 0.0f );
+        //glColor3f ( .188f, 0.209f, 0.190f );
+
+        //felso kocka lila
+        glColor3f ( .400f, 0.0f, 0.3f );
+        //glColor3f ( .309f, .820f, .150f );
+
+         //kocka bal kerete piros
+         glColor3f ( .900f, 0.0f, 0.0f );
+        //glColor3f ( .188f, 0.209f, 0.190f );
+
+        
+          //jobb kocka zold
+           glColor3f ( .100f, 0.900f, 0.0f );
+          // glColor3f ( .804f, .820f, .150f );
+
+          //kocka hatso kerete pirso
+        glColor3f ( .900f, 0.0f, 0.0f );
+       //glColor3f ( .188f, 0.209f, 0.190f );
+
+         //hatso kocka szurke
+         glColor3f ( .1f, 0.1f, 0.1f );
+        //glColor3f ( .614f, 0.150f, 0.820f );
+
+         //kokcka also kerete piros
+         glColor3f ( .900f, 0.0f, 0.0f );
+        //glColor3f ( .188f, 0.209f, 0.190f );
+
+          //sarga also kocka
+          glColor3f ( .83f, .866f, .235f );
+           //glColor3f ( .114f, .108f, .156f );
+
+        //hatterszin 
+        glClearColor ( .04f, .05f, 0.3f, .045f );
+        // glClearColor ( 1.0f, .1.0f, 1.0f, 1.0f );
+         
+]]>
+    </programlisting>
 
   </section>
 
   <section>
-    <title>Perceptron osztály </title>
+    <title>Perceptron osztály</title>
     <para>
           Dolgozzuk be egy külön projektbe a projekt Perceptron osztályát! Lásd https://youtu.be/XpBnR31BRJY 
     </para>
@@ -343,7 +427,7 @@ public class Writer {
     a sokat használt kapcsolatokban erősödik, a ritkán használtakban gyengül. Egy neurális hálózat esetén pedig több réteg lehet egymás után, amik a perceptronok és minden perceptron az eggyel korábbi 
     szinten lévőkből kapja az inputot és az eggyel későbbi szintre továbbítja.
     </para>
-    <programlisting language="java">
+    <programlisting language="c++">
       <![CDATA[ 
   #include <iostream>
 #include "mlp.hpp"
