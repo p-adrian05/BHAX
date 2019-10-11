@@ -342,36 +342,35 @@ g++ para6.cpp -o para -lboost_system -lGL -lGLU -lglut
  ]]>
     </screen>
     <para>
-     A módosítások listázása, alul kommentbe az erdeti kód van.
+     A módosítások listázása, színvilág, kockák elhelyezkedésének változtatása.
     </para>
     <programlisting language="c++">
       <![CDATA[ 
-        //Kockak elhelyezkedése
-        glTranslatef ( ( idx-d ) *3.0f, 1.0f, 0.5f );
+        //kockak elhelyezkedése egymáshoz képest
+        glTranslatef((idx - d) * 3.5f, 1.5f, 0.5f);
         //glTranslatef ( ( idx-d ) *2.5f, 0.0f, 0.0f );
-
 
         //kockak kulso szine
         glColor3f ( 0.723f, .900f, 0.639f );
         //glColor3f ( 0.818f, .900f, 0.224f );
 
         //kockak elulso kerete piros
-         glColor3f ( .900f, 0.0f, 0.0f );
+        glColor3f ( .900f, 0.0f, 0.0f );
         //glColor3f ( .188f, 0.209f, 0.190f );
 
-         //kek kocka
+        //kek kocka
         glColor3f ( .12f, .346f, .744f );
         //glColor3f ( .82f, .15f, .15f );
 
-         //kockakjobb kerete piros
-          glColor3f ( .900f, 0.0f, 0.0f );
+        //kockakjobb kerete piros
+        glColor3f ( .900f, 0.0f, 0.0f );
         //glColor3f ( .500f, 0.89f, 0.0f );
 
-         //kek jobb kocka
-          glColor3f ( .234f, .75f, .827f );
-          //glColor3f ( 0.15f, .29f, .82f );
+        //kek jobb kocka
+        glColor3f ( .234f, .75f, .827f );
+        //glColor3f ( 0.15f, .29f, .82f );
 
-          //kocka felso kerete piros
+        //kocka felso kerete piros
         glColor3f ( .900f, 0.0f, 0.0f );
         //glColor3f ( .188f, 0.209f, 0.190f );
 
@@ -379,37 +378,54 @@ g++ para6.cpp -o para -lboost_system -lGL -lGLU -lglut
         glColor3f ( .400f, 0.0f, 0.3f );
         //glColor3f ( .309f, .820f, .150f );
 
-         //kocka bal kerete piros
-         glColor3f ( .900f, 0.0f, 0.0f );
+        //kocka bal kerete piros
+        glColor3f ( .900f, 0.0f, 0.0f );
+        //glColor3f ( .188f, 0.209f, 0.190f );
+        
+        //jobb kocka zold
+        glColor3f ( .100f, 0.900f, 0.0f );
+        // glColor3f ( .804f, .820f, .150f );
+
+        //kocka hatso kerete pirso
+        glColor3f ( .900f, 0.0f, 0.0f );
         //glColor3f ( .188f, 0.209f, 0.190f );
 
-        
-          //jobb kocka zold
-           glColor3f ( .100f, 0.900f, 0.0f );
-          // glColor3f ( .804f, .820f, .150f );
-
-          //kocka hatso kerete pirso
-        glColor3f ( .900f, 0.0f, 0.0f );
-       //glColor3f ( .188f, 0.209f, 0.190f );
-
-         //hatso kocka szurke
-         glColor3f ( .1f, 0.1f, 0.1f );
+        //hatso kocka szurke
+        glColor3f ( .1f, 0.1f, 0.1f );
         //glColor3f ( .614f, 0.150f, 0.820f );
 
-         //kokcka also kerete piros
-         glColor3f ( .900f, 0.0f, 0.0f );
+        //kokcka also kerete piros
+        glColor3f ( .900f, 0.0f, 0.0f );
         //glColor3f ( .188f, 0.209f, 0.190f );
 
-          //sarga also kocka
-          glColor3f ( .83f, .866f, .235f );
-           //glColor3f ( .114f, .108f, .156f );
+        //sarga also kocka
+        glColor3f ( .83f, .866f, .235f );
+        //glColor3f ( .114f, .108f, .156f );
 
         //hatterszin 
         glClearColor ( .04f, .05f, 0.3f, .045f );
         // glClearColor ( 1.0f, .1.0f, 1.0f, 1.0f );
+
+        //kockak dolese, elhelyezkedese
+         gluLookAt(1.0f, 3.0f, 7.0f, 0.0f, 2.0f, 1.0f, 2.0f, 2.0f, 0.0f);
+        //gluLookAt ( 0.0f, 3.0f, 6.0f ,0.0f ,0.0f ,0.0f ,0.0f ,1.0f ,0.0f );
          
 ]]>
     </programlisting>
+
+    <para>
+          Lehetőség van a kockákat forgatni egy helyben. Ez a 0,1,2 gombokkal és nyilakkal lehetséges, továbbá t gombbal a kocka belsejébe láthatunk be.
+    </para>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="img/kocka2.png" scale="70" />
+      </imageobject>
+    </mediaobject>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="img/kocka1.png" scale="70" />
+      </imageobject>
+    </mediaobject>
 
   </section>
 
@@ -459,7 +475,7 @@ int main (int argc, char **argv)
          Ebben a projektben használjuk a Perceptron osztályt. A mandel program által előállított kép lesz feldolgozva.
          Először eltároljuk png::image objektumként a paraméterként kapott képet. A size változóban a kép méretét tároljuk el. Ezután létrehozzuk a 
          perceptron objektumot, mutatóját megadva a konstruktorának a paramétereket. Az 3 a neurális háló rétegek számát jelenti, a size a kép mérete, a 256 a neuronok száma az egyes 
-         rétegekben, 1 pedig a kimeneti neuron darabszáma, ami az eredményt adja vissza. Ezután lefoglaljuk az új kép méretének, pixeleinek a helyét egy double típusú mutatóval, ami 
+         rétegekben, 1 pedig a kimeneti neuron darabszáma, ami az eredményt adja vissza. Ezután lefoglaljuk az új kép méretének, pixeleinek a helyét egy double típusú tömbbe, ami 
          az eredeti kép méretével egyenlő. Ezután két for ciklussal bejárjuk az eredeti képet, pixeleit és az új helyre tesszük az eredeti kép piros komponenseit. 
          Miután megvan az új kép, meghívjuk a perceptron osztály () operátorát átadva az új képet, ami egy double típusú értéket ad vissza. Ezután kiírjuk a perceptron osztály által kapott 
          értéket, ami a kimeneti csomóponton érkezett, a 256 pixel értéke 1 értékre leszűrve, majd felszabadítjuk a memóriát.

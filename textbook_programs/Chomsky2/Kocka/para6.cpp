@@ -57,7 +57,8 @@ void drawPaRaCube(int idx)
 
         int d = cubeLetters.size() / 2;
 
-        glTranslatef((idx - d) * 3.0f, 1.0f, 0.5f);
+        //kockak elhelyezkedése egymáshoz képest
+        glTranslatef((idx - d) * 3.5f, 1.5f, 0.5f);
         //glTranslatef ( ( idx-d ) *2.5f, 0.0f, 0.0f );
 
         glRotatef(cubeLetters[idx].rotx, 1.0f, 0.0f, 0.0f);
@@ -104,8 +105,8 @@ void drawPaRaCube(int idx)
         glEnd();
 
         glBegin(GL_LINES);
-        //kocka elulso kerete piros
         glColor3f(.900f, 0.0f, 0.0f);
+        //kocka elulso kerete piros
         //glColor3f ( .188f, 0.209f, 0.190f );
 
         for (int i = 0; i <= cubeLetters[idx].nn[0]; i++)
@@ -340,7 +341,7 @@ void draw(void)
 {
         //hatterszin
         glClearColor(.04f, .05f, 0.3f, .045f);
-        // glClearColor ( 1.0f, .1.0f, 1.0f, 1.0f );
+        //glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 
         if (transp)
                 glDisable(GL_DEPTH_TEST);
@@ -351,8 +352,8 @@ void draw(void)
 
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-        gluLookAt(3.0f, 3.0f, 7.0f, 1.0f, 1.0f, 1.0f, 1.0f, 3.0f, 1.0f);
-        //kockak dolese elhelyezkedese
+        gluLookAt(1.0f, 3.0f, 7.0f, 0.0f, 2.0f, 1.0f, 2.0f, 2.0f, 0.0f);
+        //kockak dolese, elhelyezkedese
         //gluLookAt ( 0.0f, 3.0f, 6.0f ,0.0f ,0.0f ,0.0f ,0.0f ,1.0f ,0.0f );
 
         for (int i{0}; i < cubeLetters.size(); ++i)

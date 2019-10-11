@@ -108,8 +108,12 @@ hét/Perceptron osztály feladatot is.)
     </para>
 
     <para>
-
+    A Perceptron egy neurális háló, aminek csomópontjai vannak. A csomópontok a mesterséges neuronok. Két fő csomópont a bemeneti és kimeneti csomópontok. Van egy központi csúcs is, ahol a 
+    számolás történik. Az input csúcsokból bejövő kapcsolatok súlyozva vannak, ami alapján történik a számolás a központi csúcsban. A tanulás abból áll, hogy a bejövő kapcsolatok erőssége változik, 
+    a sokat használt kapcsolatokban erősödik, a ritkán használtakban gyengül. Egy neurális hálózat esetén pedig több réteg lehet egymás után, amik a perceptronok és minden perceptron az eggyel korábbi 
+    szinten lévőkből kapja az inputot és az eggyel későbbi szintre továbbítja.
     </para>
+
     <programlisting language="C++">
       <![CDATA[ 
 #include <iostream>
@@ -144,7 +148,17 @@ int main(int argc, char **argv)
 }
 ]]>
     </programlisting>
-
+    <para>
+         Ebben a projektben használjuk a Perceptron osztályt. A mandel program által előállított kép lesz feldolgozva.
+         Először eltároljuk png::image objektumként a paraméterként kapott képet. A size változóban a kép méretét tároljuk el. Ezután létrehozzuk a 
+         perceptron objektumot, mutatóját megadva a konstruktorának a paramétereket, ami változó paraméter számú. A 3 a neurális háló rétegek számát jelenti, a size a kép mérete, a 256 a neuronok száma az egyes 
+         rétegekben, ellentétben az előző perceptron feladatban, most nem 1 hanem 256 kimeneti neuront adunk meg, ezáltal egy ugyanakkora képet kapunk vissza.
+          Lefoglaljuk az új kép méretének, pixeleinek a helyét egy double tömbre mutató mutatóval, ami az eredi kép összes pixelét képes tárolni.
+         Ezután két for ciklussal bejárjuk az eredeti képet, pixeleit és az új helyre tesszük az eredeti kép piros komponenseit.
+         Miután megvan a kép, meghívjuk a perceptron osztály () operátorát átadva azt a tömböt amiben az eredeti kép pixelei vannak, ami most nem egy double típusú értéket ad vissza, hanem egy double értékeket tároló tömböt, aminek értékeivel módosítjuk 
+         az eredeti kép pixeleit. Két for ciklussal szintén végigjárunk a pixeleken és most az eredeti kép piros komponenseit cseréljük ki azokra az értékekre, amit kaptunk perceptron osztálytól.
+         Végül az elkészült képet kimentjük és felszabadítjuk a memóriát.
+    </para>
     <mediaobject>
       <imageobject>
         <imagedata fileref="img/mandel.png" scale="40" />
@@ -152,12 +166,13 @@ int main(int argc, char **argv)
     </mediaobject>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="img/newMandel.png" scale="40" />
+        <imagedata fileref="img/percep2.jpg" scale="80" />
       </imageobject>
     </mediaobject>
+
     <mediaobject>
       <imageobject>
-        <imagedata fileref="img/percep2.jpg" scale="80" />
+        <imagedata fileref="img/newMandel.png" scale="40" />
       </imageobject>
     </mediaobject>
 
