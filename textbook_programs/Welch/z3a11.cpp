@@ -66,9 +66,9 @@
 //              mozgató szemantikáról, ugyancsak állatorvosi ló megközelítéssel
 //
 
-#include <iostream>		// mert olvassuk a std::cin, írjuk a std::cout csatornákat
-#include <cmath>		// mert vonunk gyököt a szóráshoz: std::sqrt
-#include <fstream>		// fájlból olvasunk, írunk majd
+#include <iostream> // mert olvassuk a std::cin, írjuk a std::cout csatornákat
+#include <cmath>    // mert vonunk gyököt a szóráshoz: std::sqrt
+#include <fstream>  // fájlból olvasunk, írunk majd
 #include <vector>
 #include <utility>
 #include <algorithm>
@@ -78,7 +78,8 @@
  beágyazott Csomopont osztály. Miért ágyazzuk be? Mert külön nem szánunk neki szerepet, ezzel
  is jelezzük, hogy csak a fa részeként számiolunk vele.*/
 
-class LZWBinFa {
+class LZWBinFa
+{
 public:
      /* Szemben a bináris keresőfánkkal (BinFa osztály)
         http://progpater.blog.hu/2011/04/12/imadni_fogjak_a_c_t_egy_emberkent_tiszta_szivbol_3
@@ -92,39 +93,44 @@ public:
         konstruktora előbb lefut, mint a tagot tartalmazó LZWBinFa osztály konstruktora, éppen a
         következő, azaz a fa=&gyoker OK.)
       */
-     LZWBinFa (){
-			gyoker = new Csomopont();
-			fa = gyoker;
+     LZWBinFa()
+     {
+          gyoker = new Csomopont();
+          fa = gyoker;
      }
-     ~LZWBinFa () {
-          
-       
-          szabadit( gyoker);
+     ~LZWBinFa()
+     {
+
+          szabadit(gyoker);
      }
-     
-     LZWBinFa ( const LZWBinFa & regi ) {
+
+     LZWBinFa(const LZWBinFa &regi)
+     {
           std::cout << "LZWBinFa copy ctor" << std::endl;
 
-          gyoker = masol(regi.gyoker,regi.fa);
+          gyoker = masol(regi.gyoker, regi.fa);
      }
-  
-     LZWBinFa ( LZWBinFa && regi ) {
-          std::cout << "LZWBinFa move ctor" << std::endl;
-          
-          gyoker = nullptr;
-          *this = std::move (regi);
 
+     LZWBinFa(LZWBinFa &&regi)
+     {
+          std::cout << "LZWBinFa move ctor" << std::endl;
+
+          gyoker = nullptr;
+          *this = std::move(regi);
      }
-     LZWBinFa & operator= ( LZWBinFa && regi) 
-     {			
-			
-			std::swap(gyoker,regi.gyoker);
-			return *this;
-			
-	}
-     
-     
-     
+     LZWBinFa &operator=(LZWBinFa &&regi)
+     {
+
+          std::swap(gyoker, regi.gyoker);
+          return *this;
+     }
+     LZWBinFa &operator=(LZWBinFa &regi)
+     {
+
+          std::cout << "LZWBinFa copy assign" << std::endl;
+
+          return *this;
+     }
 
      /* Tagfüggvényként túlterheljük a << operátort, ezzel a célunk, hogy felkeltsük a
         hallgató érdeklődését, mert ekkor így nyomhatjuk a fába az inputot: binFa << b; ahol a b
@@ -140,33 +146,42 @@ public:
         */
      // 0.0.8, az állatorvosi tesztelésekhez a védéseken, hogy lehessen láncolni a
      // "fába-tolásokat" visszaadja a fa referenciáját
-     LZWBinFa& operator<< ( char b ) {
+     LZWBinFa &operator<<(char b)
+     {
           // Mit kell betenni éppen, '0'-t?
-          if ( b == '0' ) {
+          if (b == '0')
+          {
                /* Van '0'-s gyermeke az aktuális csomópontnak?
                   megkérdezzük Tőle, a "fa" mutató éppen reá mutat */
-               if ( !fa->nullasGyermek () ) {	// ha nincs, hát akkor csinálunk
+               if (!fa->nullasGyermek())
+               { // ha nincs, hát akkor csinálunk
                     // elkészítjük, azaz páldányosítunk a '0' betű akt. parammal
-                    Csomopont *uj = new Csomopont ( '0' );
+                    Csomopont *uj = new Csomopont('0');
                     // az aktuális csomópontnak, ahol állunk azt üzenjük, hogy
                     // jegyezze már be magának, hogy nullás gyereke mostantól van
                     // küldjük is Neki a gyerek címét:
-                    fa->ujNullasGyermek ( uj );
+                    fa->ujNullasGyermek(uj);
                     // és visszaállunk a gyökérre (mert ezt diktálja az alg.)
                     fa = gyoker;
-               } else {		// ha van, arra rálépünk
+               }
+               else
+               { // ha van, arra rálépünk
                     // azaz a "fa" pointer már majd a szóban forgó gyermekre mutat:
-                    fa = fa->nullasGyermek ();
+                    fa = fa->nullasGyermek();
                }
           }
           // Mit kell betenni éppen, vagy '1'-et?
-          else {
-               if ( !fa->egyesGyermek () ) {
-                    Csomopont *uj = new Csomopont ( '1' );
-                    fa->ujEgyesGyermek ( uj );
+          else
+          {
+               if (!fa->egyesGyermek())
+               {
+                    Csomopont *uj = new Csomopont('1');
+                    fa->ujEgyesGyermek(uj);
                     fa = gyoker;
-               } else {
-                    fa = fa->egyesGyermek ();
+               }
+               else
+               {
+                    fa = fa->egyesGyermek();
                }
           }
 
@@ -177,7 +192,8 @@ public:
         (Ha a rekurzív függvénnyel általában gondod van => K&R könyv megfelelő része: a 3. ea. izometrikus
         részében ezt "letáncoltuk" :) és külön idéztük a K&R álláspontját :)
       */
-     void kiir ( void ) {
+     void kiir(void)
+     {
           // Sokkal elegánsabb lenne (és más, a bevezetésben nem kibontandó reentráns kérdések miatt is, mert
           // ugye ha most két helyről hívják meg az objektum ilyen függvényeit, tahát ha kétszer kezd futni az
           // objektum kiir() fgv.-e pl., az komoly hiba, mert elromlana a mélység... tehát a mostani megoldásunk
@@ -186,7 +202,7 @@ public:
           melyseg = 0;
           // ha nem mondta meg a hívó az üzenetben, hogy hova írjuk ki a fát, akkor a
           // sztenderd out-ra nyomjuk
-          kiir ( gyoker, std::cout );
+          kiir(gyoker, std::cout);
      }
      /* már nem használjuk, tartalmát a dtor hívja
      void szabadit (void)
@@ -199,9 +215,9 @@ public:
 
      /* A változatosság kedvéért ezeket az osztálydefiníció (class LZWBinFa {...};) után definiáljuk,
         hogy kénytelen légy az LZWBinFa és a :: hatókör operátorral minősítve definiálni :) l. lentebb */
-     int getMelyseg ( void );
-     double getAtlag ( void );
-     double getSzoras ( void );
+     int getMelyseg(void);
+     double getAtlag(void);
+     double getSzoras(void);
 
      /* Vágyunk, hogy a felépített LZW fát ki tudjuk nyomni ilyenformán: std::cout << binFa;
         de mivel a << operátor is a sztenderd névtérben van, de a using namespace std-t elvből
@@ -215,46 +231,52 @@ public:
          amely ismeri a mi LZW binfánkat...
          - globális függvényként: operator<<(kiFile, binFa) és pont ez látszik a következő sorban:
         */
-     friend std::ostream & operator<< ( std::ostream & os, LZWBinFa & bf ) {
-          bf.kiir ( os );
+     friend std::ostream &operator<<(std::ostream &os, LZWBinFa &bf)
+     {
+          bf.kiir(os);
           return os;
      }
-     void kiir ( std::ostream & os ) {
+     void kiir(std::ostream &os)
+     {
           melyseg = 0;
-          kiir ( gyoker, os );
+          kiir(gyoker, os);
      }
 
 private:
-     class Csomopont {
+     class Csomopont
+     {
      public:
           /* A paraméter nélküli konstruktor az elepértelmezett '/' "gyökér-betűvel" hozza
              létre a csomópontot, ilyet hívunk a fából, aki tagként tartalmazza a gyökeret.
              Máskülönben, ha valami betűvel hívjuk, akkor azt teszi a "betu" tagba, a két
              gyermekre mutató mutatót pedig nullra állítjuk, C++-ban a 0 is megteszi. */
-          Csomopont ( char b = '/' ) :betu ( b ), balNulla ( 0 ), jobbEgy ( 0 ) {
-          };
-          ~Csomopont () {
-          };
+          Csomopont(char b = '/') : betu(b), balNulla(0), jobbEgy(0){};
+          ~Csomopont(){};
           // Aktuális csomópont, mondd meg nékem, ki a bal oldali gyermeked
           // (a C verzió logikájával műxik ez is: ha nincs, akkor a null megy vissza)
-          Csomopont *nullasGyermek () const {
+          Csomopont *nullasGyermek() const
+          {
                return balNulla;
           }
           // Aktuális csomópon,t mondd meg nékem, ki a jobb oldali gyermeked?
-          Csomopont *egyesGyermek () const {
+          Csomopont *egyesGyermek() const
+          {
                return jobbEgy;
           }
           // Aktuális csomópont, ímhol legyen a "gy" mutatta csomópont a bal oldali gyereked!
-          void ujNullasGyermek ( Csomopont * gy ) {
+          void ujNullasGyermek(Csomopont *gy)
+          {
                balNulla = gy;
           }
           // Aktuális csomópont, ímhol legyen a "gy" mutatta csomópont a jobb oldali gyereked!
-          void ujEgyesGyermek ( Csomopont * gy ) {
+          void ujEgyesGyermek(Csomopont *gy)
+          {
                jobbEgy = gy;
           }
           // Aktuális csomópont: Te milyen betűt hordozol?
           // (a const kulcsszóval jelezzük, hogy nem bántjuk a példányt)
-          char getBetu () const {
+          char getBetu() const
+          {
                return betu;
           }
           /*
@@ -275,10 +297,8 @@ private:
           Csomopont *jobbEgy;
           // nem másolható a csomópont (ökörszabály: ha van valamilye a szabad tárban,
           // letiltjuk a másoló konstruktort, meg a másoló értékadást)
-          Csomopont ( const Csomopont & );
-          Csomopont & operator= ( const Csomopont & );
-          
-
+          Csomopont(const Csomopont &);
+          Csomopont &operator=(const Csomopont &);
      };
 
      /* Mindig a fa "LZW algoritmus logikája szerinti aktuális" csomópontjára mutat */
@@ -294,26 +314,30 @@ private:
      */
 
      /* Kiírja a csomópontot az os csatornára. A rekurzió kapcsán lásd a korábbi K&R-es utalást... */
-     void kiir ( Csomopont * elem, std::ostream & os ) {
+     void kiir(Csomopont *elem, std::ostream &os)
+     {
           // Nem létező csomóponttal nem foglalkozunk... azaz ez a rekurzió leállítása
-          if ( elem != NULL ) {
+          if (elem != NULL)
+          {
                ++melyseg;
-               kiir ( elem->egyesGyermek (), os );
+               kiir(elem->egyesGyermek(), os);
                // ez a postorder bejáráshoz képest
                // 1-el nagyobb mélység, ezért -1
-               for ( int i = 0; i < melyseg; ++i )
+               for (int i = 0; i < melyseg; ++i)
                     os << "---";
-               os << elem->getBetu () << "(" << melyseg - 1 << ")" << std::endl;
-               kiir ( elem->nullasGyermek (), os );
+               os << elem->getBetu() << "(" << melyseg - 1 << ")" << std::endl;
+               kiir(elem->nullasGyermek(), os);
                --melyseg;
           }
      }
 
-     void szabadit ( Csomopont * elem ) {
+     void szabadit(Csomopont *elem)
+     {
           // Nem létező csomóponttal nem foglalkozunk... azaz ez a rekurzió leállítása
-          if ( elem != NULL ) {
-               szabadit ( elem->egyesGyermek () );
-               szabadit ( elem->nullasGyermek () );
+          if (elem != NULL)
+          {
+               szabadit(elem->egyesGyermek());
+               szabadit(elem->nullasGyermek());
                // ha a csomópont mindkét gyermekét felszabadítottuk
                // azután szabadítjuk magát a csomópontot:
                delete elem;
@@ -322,37 +346,36 @@ private:
 
      // 0.0.8, az állatorvosi tesztelésekhez a védéseken
      // a copy ctor hívja
-     Csomopont *  masol ( Csomopont * elem, Csomopont * regifa ) {
+     Csomopont *masol(Csomopont *elem, Csomopont *regifa)
+     {
 
-          Csomopont * ujelem = NULL;
+          Csomopont *ujelem = NULL;
 
-          if ( elem != NULL ) {
-               ujelem = new Csomopont ( elem->getBetu() );
+          if (elem != NULL)
+          {
+               ujelem = new Csomopont(elem->getBetu());
 
-               ujelem->ujEgyesGyermek ( masol ( elem->egyesGyermek (), regifa ) );
-               ujelem->ujNullasGyermek ( masol ( elem->nullasGyermek (), regifa ) );
+               ujelem->ujEgyesGyermek(masol(elem->egyesGyermek(), regifa));
+               ujelem->ujNullasGyermek(masol(elem->nullasGyermek(), regifa));
 
-               if ( regifa == elem )
+               if (regifa == elem)
                     fa = ujelem;
-
           }
 
           return ujelem;
      }
 
-protected:			// ha esetleg egyszer majd kiterjesztjük az osztályt, mert
-// akarunk benne valami újdonságot csinálni, vagy meglévő tevékenységet máshogy... stb.
-// akkor ezek látszanak majd a gyerek osztályban is
-
+protected: // ha esetleg egyszer majd kiterjesztjük az osztályt, mert
+           // akarunk benne valami újdonságot csinálni, vagy meglévő tevékenységet máshogy... stb.
+           // akkor ezek látszanak majd a gyerek osztályban is
      /* A fában tagként benne van egy csomópont, ez erősen ki van tüntetve, Ő a gyökér: */
      Csomopont *gyoker;
      int maxMelyseg;
      double atlag, szoras;
 
-     void rmelyseg ( Csomopont * elem );
-     void ratlag ( Csomopont * elem );
-     void rszoras ( Csomopont * elem );
-
+     void rmelyseg(Csomopont *elem);
+     void ratlag(Csomopont *elem);
+     void rszoras(Csomopont *elem);
 };
 
 // Néhány függvényt az osztálydefiníció után definiálunk, hogy lássunk ilyet is ... :)
@@ -362,81 +385,82 @@ protected:			// ha esetleg egyszer majd kiterjesztjük az osztályt, mert
 
 // Egyébként a melyseg, atlag és szoras fgv.-ek a kiir fgv.-el teljesen egy kaptafa.
 
-int
-LZWBinFa::getMelyseg ( void )
+int LZWBinFa::getMelyseg(void)
 {
      melyseg = maxMelyseg = 0;
-     rmelyseg ( gyoker );
+     rmelyseg(gyoker);
      return maxMelyseg - 1;
 }
 
 double
-LZWBinFa::getAtlag ( void )
+LZWBinFa::getAtlag(void)
 {
      melyseg = atlagosszeg = atlagdb = 0;
-     ratlag ( gyoker );
-     atlag = ( ( double ) atlagosszeg ) / atlagdb;
+     ratlag(gyoker);
+     atlag = ((double)atlagosszeg) / atlagdb;
      return atlag;
 }
 
 double
-LZWBinFa::getSzoras ( void )
+LZWBinFa::getSzoras(void)
 {
-     atlag = getAtlag ();
+     atlag = getAtlag();
      szorasosszeg = 0.0;
      melyseg = atlagdb = 0;
 
-     rszoras ( gyoker );
+     rszoras(gyoker);
 
-     if ( atlagdb - 1 > 0 )
-          szoras = std::sqrt ( szorasosszeg / ( atlagdb - 1 ) );
+     if (atlagdb - 1 > 0)
+          szoras = std::sqrt(szorasosszeg / (atlagdb - 1));
      else
-          szoras = std::sqrt ( szorasosszeg );
+          szoras = std::sqrt(szorasosszeg);
 
      return szoras;
 }
 
-void
-LZWBinFa::rmelyseg ( Csomopont * elem )
+void LZWBinFa::rmelyseg(Csomopont *elem)
 {
-     if ( elem != NULL ) {
+     if (elem != NULL)
+     {
           ++melyseg;
-          if ( melyseg > maxMelyseg )
+          if (melyseg > maxMelyseg)
                maxMelyseg = melyseg;
-          rmelyseg ( elem->egyesGyermek () );
+          rmelyseg(elem->egyesGyermek());
           // ez a postorder bejáráshoz képest
           // 1-el nagyobb mélység, ezért -1
-          rmelyseg ( elem->nullasGyermek () );
+          rmelyseg(elem->nullasGyermek());
           --melyseg;
      }
 }
 
-void
-LZWBinFa::ratlag ( Csomopont * elem )
+void LZWBinFa::ratlag(Csomopont *elem)
 {
-     if ( elem != NULL ) {
+     if (elem != NULL)
+     {
           ++melyseg;
-          ratlag ( elem->egyesGyermek () );
-          ratlag ( elem->nullasGyermek () );
+          ratlag(elem->egyesGyermek());
+          ratlag(elem->nullasGyermek());
           --melyseg;
-          if ( elem->egyesGyermek () == NULL && elem->nullasGyermek () == NULL ) {
+          if (elem->egyesGyermek() == NULL && elem->nullasGyermek() == NULL)
+          {
                ++atlagdb;
                atlagosszeg += melyseg;
           }
      }
 }
 
-void
-LZWBinFa::rszoras ( Csomopont * elem )
+void LZWBinFa::rszoras(Csomopont *elem)
 {
-     if ( elem != NULL ) {
+     if (elem != NULL)
+     {
           ++melyseg;
-          rszoras ( elem->egyesGyermek () );
-          rszoras ( elem->nullasGyermek () );
+          rszoras(elem->egyesGyermek());
+          rszoras(elem->nullasGyermek());
           --melyseg;
-          if ( elem->egyesGyermek () == NULL && elem->nullasGyermek () == NULL ) {
+          if (elem->egyesGyermek() == NULL && elem->nullasGyermek() == NULL)
+          {
                ++atlagdb;
-               szorasosszeg += ( ( melyseg - atlag ) * ( melyseg - atlag ) );
+               szorasosszeg += ((melyseg - atlag) * (melyseg - atlag));
           }
      }
 }
@@ -485,24 +509,22 @@ main ()
  de mivel nekünk sokkal egyszerűbb is elég, alig hagyunk meg belőle valamit...
  */
 
-void
-usage ( void )
+void usage(void)
 {
      std::cout << "Usage: lzwtree in_file -o out_file" << std::endl;
 }
 
-
-int
-main ( int argc, char *argv[] )
+int main(int argc, char *argv[])
 {
      // http://progpater.blog.hu/2011/03/12/hey_mikey_he_likes_it_ready_for_more_3
      // alapján a parancssor argok ottani elegáns feldolgozásából kb. ennyi marad:
      // "*((*++argv)+1)"...
 
      // a kiírás szerint ./lzwtree in_file -o out_file alakra kell mennie, ez 4 db arg:
-     if ( argc != 4 ) {
+     if (argc != 4)
+     {
           // ha nem annyit kapott a program, akkor felhomályosítjuk erről a júzetr:
-          usage ();
+          usage();
           // és jelezzük az operációs rendszer felé, hogy valami gáz volt...
           return -1;
      }
@@ -511,27 +533,29 @@ main ( int argc, char *argv[] )
      char *inFile = *++argv;
 
      // a -o kapcsoló jön?
-     if ( * ( ( *++argv ) + 1 ) != 'o' ) {
-          usage ();
+     if (*((*++argv) + 1) != 'o')
+     {
+          usage();
           return -2;
      }
 
      // ha igen, akkor az 5. előadásból kimásoljuk a fájlkezelés C++ változatát:
-     std::fstream beFile ( inFile, std::ios_base::in );
+     std::fstream beFile(inFile, std::ios_base::in);
 
      // fejlesztgetjük a forrást: http://progpater.blog.hu/2011/04/17/a_tizedik_tizenegyedik_labor
-     if ( !beFile ) {
+     if (!beFile)
+     {
           std::cout << inFile << " nem letezik..." << std::endl;
-          usage ();
+          usage();
           return -3;
      }
 
-     std::fstream kiFile ( *++argv, std::ios_base::out );
+     std::fstream kiFile(*++argv, std::ios_base::out);
 
-     unsigned char b;		// ide olvassik majd a bejövő fájl bájtjait
-     LZWBinFa binFa;	
-     	// s nyomjuk majd be az LZW fa objektumunkba
-    
+     unsigned char b; // ide olvassik majd a bejövő fájl bájtjait
+     LZWBinFa binFa;
+     // s nyomjuk majd be az LZW fa objektumunkba
+
      // a bemenetet binárisan olvassuk, de a kimenő fájlt már karakteresen írjuk, hogy meg tudjuk
      // majd nézni... :) l. az említett 5. ea. C -> C++ gyökkettes átírási példáit
 
@@ -584,34 +608,31 @@ main ( int argc, char *argv[] )
 
      binFa << '0';
 
-     kiFile << binFa;   // ehhez kell a globális operator<< túlterhelése, lásd fentebb
+     kiFile << binFa; // ehhez kell a globális operator<< túlterhelése, lásd fentebb
      // (jó ez az OO, mert mi ugye nem igazán erre gondoltunk, amikor írtuk, mégis megy, hurrá)
 
-     kiFile << "depth = " << binFa.getMelyseg () << std::endl;
-     kiFile << "mean = " << binFa.getAtlag () << std::endl;
-     kiFile << "var = " << binFa.getSzoras () << std::endl;
+     kiFile << "depth = " << binFa.getMelyseg() << std::endl;
+     kiFile << "mean = " << binFa.getAtlag() << std::endl;
+     kiFile << "var = " << binFa.getSzoras() << std::endl;
 
-	LZWBinFa binFa2 =  binFa;
-	LZWBinFa binFa4=  binFa;
-	std::cout <<"Swap" << std::endl;
-	std::swap(binFa2,binFa4);
-	std::cout <<"Vector" << std::endl;
-	 std::vector<LZWBinFa> v;
-	 v.push_back(std::move (binFa ));
-	 std::cout <<"Új fa" << std::endl;
-     LZWBinFa binFa3 = std::move (binFa2);
-    
-     
-     
- 
+     LZWBinFa binFa2 = binFa;
+     LZWBinFa binFa4 = binFa;
+     binFa2 = binFa4;
 
-     //kiFile << "depth = " << binFa2.getMelyseg () << std::endl;
+     kiFile << "mean = " << binFa2.getAtlag() << std::endl;
+     std::cout << "Swap" << std::endl;
+     std::swap(binFa2, binFa4);
+     std::cout << "Vector" << std::endl;
+     std::vector<LZWBinFa> v;
+     v.push_back(std::move(binFa));
+     std::cout << "Új fa" << std::endl;
+     LZWBinFa binFa3 = std::move(binFa2);
+
      //kiFile << "mean = " << binFa2.getAtlag () << std::endl;
      //kiFile << "var = " << binFa2.getSzoras () << std::endl;
 
-     kiFile.close ();
-     beFile.close ();
-
+     kiFile.close();
+     beFile.close();
 
      return 0;
 }

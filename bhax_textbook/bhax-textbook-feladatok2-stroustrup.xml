@@ -76,8 +76,80 @@ szemantikáját, a mozgató konstruktort alapozd a mozgató értékadásra!
           Megoldás forrása:   
     </para>
     <para>
-
+    Másoló konstruktor akkor kerül meghívásra C++ esetén, ha inicializálatlan objektumhoz értéket rendelünk. Gyakran van szükség 
+    több példányra ugyanabból az objektumból, ekkor szükséges a másoló konstruktor. Ha nem adunk meg saját másoló konstruktort, akkor 
+    automatikusan keletkezik egy, ami csak egyszerűen lemásolja a nem statikus adattagokat, ezt hívjuk shallow copynak. Ha az adott osztályunk mutatókat vagy 
+    referenciákat tartalmaz, ez az alapértelmezett másoló konstruktor nem megfelelő, mert nem a mutatott adatokat, hanem a mutatót magát másolja át.
+    Továbbá a másoló konstruktor paramétere az osztály egy objektumára vonatkozó referencia kell, hogy legyen, különben végtelen ciklus keletkezik, mert 
+    a paraméterátadáshoz is a másoló konstruktort használjuk. A másoló konstruktor hívódik meg az alábbi esetekben: 
+    változó kezdeti értékének beállításakor, nem referencia  függvényparaméter átadásakor, függvény nem referenciával visszatérésekor és kivétel dobásánál és 
+    elkapásánál. A másoló konstruktor és az értékadó operátor lehet private elérésű, ekkor az osztály objektumai nem hozhatóak létre és nem 
+    másolhatóak, de az osztály publikus tagfüggvényei így is elérik őket. A másoló értékadás pedig akkor kerül meghívásra, ha már egy 
+    létező objektumnak akarunk egy olyan új értéket adni, ami egy már létező másik objektum.
     </para>
+
+    <para>
+         Példaként a binfa másoló konstruktora, ami meghívásra kerül, amikor egy új binfa objektumot hozunk létre a régiből, ami egy másolata az eredetinek.
+         A másoló konstruktorba referenciaként kapjuk a régi, lemásolandó objektumot. Ezután a régi fa minden csomópontjának értékén végig megyünk, hogy beállítsuk
+         az új fa csomópontjait, ez a másol függvényben kerül sorra. Pontosan ugyanaz a fa lesz kiépítve az új binfába, mint a régibe ami úgy történik, hogy egyszerűen 
+         megyünk végig a régi fa csomópontjain és közben állítjuk be az új fa értékeit, a régi fa értékeivel. Az ujelem mutató mutat az aktuálisan lemásolt csomópontra,
+         ,ami ha egyenlő az aktuális régi fa csomópontjával akkor beállítjuk az új fa aktuális csomópontjának. Másoló értékadáskor (operator=) pedig 
+         visszaadjuk arra az objektumra való mutatót, amire mutatni fog az átállítandó objektum. Példaként a binfa2 a binfa4-re fog mutatni.
+    </para>
+
+    <programlisting language="c++">
+      <![CDATA[ 
+
+    //Másoló konstruktor
+ LZWBinFa ( const LZWBinFa & regi ) {
+          std::cout << "LZWBinFa copy ctor" << std::endl;
+
+          gyoker = masol(regi.gyoker,regi.fa);
+     }
+Csomopont *  masol ( Csomopont * elem, Csomopont * regifa ) {
+
+          Csomopont * ujelem = NULL;
+
+          if ( elem != NULL ) {
+               ujelem = new Csomopont ( elem->getBetu() );
+
+               ujelem->ujEgyesGyermek ( masol ( elem->egyesGyermek (), regifa ) );
+               ujelem->ujNullasGyermek ( masol ( elem->nullasGyermek (), regifa ) );
+
+               if ( regifa == elem )
+                    fa = ujelem;
+
+          }
+
+          return ujelem;
+     }
+    //Másoló értékadás
+     LZWBinFa &operator=(LZWBinFa &fa)
+     {
+          std::cout << "LZWBinFa copy assign" << std::endl;
+
+          return *this;
+     }
+
+]]>
+    </programlisting>
+
+    <programlisting language="c++">
+      <![CDATA[ 
+int
+main ( int argc, char *argv[] )
+{
+
+LZWBinFa binFa;
+//masolo konstruktor
+LZWBinFa binFa2 =  binFa;  
+LZWBinFa binFa4 = binFa;
+//masolo ertekadas
+binFa2 = binFa4;
+
+]]>
+    </programlisting>
+
 
   </section>
 
