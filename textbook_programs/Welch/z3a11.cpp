@@ -126,9 +126,11 @@ public:
      }
      LZWBinFa &operator=(LZWBinFa &regi)
      {
-
           std::cout << "LZWBinFa copy assign" << std::endl;
-
+          Csomopont *ujgyoker = new Csomopont();
+          ujgyoker = masol(regi.gyoker, regi.fa);
+          szabadit(regi.gyoker);
+          gyoker = ujgyoker;
           return *this;
      }
 
@@ -618,8 +620,9 @@ int main(int argc, char *argv[])
      LZWBinFa binFa2 = binFa;
      LZWBinFa binFa4 = binFa;
      binFa2 = binFa4;
+     std::vector<LZWBinFa> t;
+     t.push_back(binFa);
 
-     kiFile << "mean = " << binFa2.getAtlag() << std::endl;
      std::cout << "Swap" << std::endl;
      std::swap(binFa2, binFa4);
      std::cout << "Vector" << std::endl;
@@ -627,10 +630,9 @@ int main(int argc, char *argv[])
      v.push_back(std::move(binFa));
      std::cout << "Új fa" << std::endl;
      LZWBinFa binFa3 = std::move(binFa2);
-
      //kiFile << "mean = " << binFa2.getAtlag () << std::endl;
      //kiFile << "var = " << binFa2.getSzoras () << std::endl;
-
+     //kiFile << "mean = " << binFa2.getAtlag() << std::endl;
      kiFile.close();
      beFile.close();
 
