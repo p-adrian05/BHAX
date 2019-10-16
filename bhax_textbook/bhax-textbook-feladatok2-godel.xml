@@ -1,0 +1,184 @@
+<chapter xmlns="http://docbook.org/ns/docbook" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:lang="hu">
+    <info>
+        <title>Helló, Gödel!</title>
+        <keywordset>
+            <keyword/>
+        </keywordset>
+    </info>
+    <section>
+        <title>Gengszterek</title>
+        <para>
+         Gengszterek rendezése lambdával a Robotautó Világbajnokságban
+        </para>
+        <para>https://youtu.be/DL6iQwPx1Yw (8:05-től)   </para>
+        <para>
+            Megoldás forrása:  
+        </para>
+
+        <para>
+            A C++11 verzió elhozta C++-ba is a lambda kifejezéseket. A szintaxis alapján 
+            a [] zárójelek közé adjuk meg azokat a változókat, amelyek a lambda kifejezések definíciójának 
+            helyén vannak. Ezeket capturing változóknak nevezzük, nem kötelező megadni. A paraméterek átadása érték szerinti, kivéve 
+            ha referencia szerint adjuk meg. Ezután következnek ()-ben az argumentumok megadása, amivel a függvény dolgozik. {} jelöli a függvény törzsét.
+        </para>
+        <screen>
+            <![CDATA[ 
+      [](int x, int y) { return x + y; }
+]]>
+        </screen>
+         <programlisting language="c++">
+            <![CDATA[ 
+            std::sort(gangsters.begin(), gangsters.endl(), [this,cop](unsigned x,unsigned y) {return dst(cop, x)<dst(cop,y);});
+]]>
+        </programlisting>
+        <para>
+          A sort metódus rendezi egy valamilyen adatszerkezetben tárolt objektumokat, primitíveket. A sort metódusnak meg kell adni az első két 
+          paraméter helyére a sorba rendezendő adatszerkezet kezdetét és végét, mettől meddig rendezze a tárolt adatokat, azután saját metódust adhatunk meg, ami alapján 
+          rendezi az objektumokat, jelen esetben gangstereket, ami lehet lambda kifejezés is. Ebben az esetben először megadjuk azokat a változókat, amiket a 
+          lambda kifejezés használhat a külvilágból, arról a helyről ahonnan definiálva van. Utána a két argumentum következik, majd a függvénytörzs, amiben definiáljuk 
+          a sorba rendezés alapját. Jelen esetben egy függvény által, annak paraméterként átadva a cop és az akutális x és y paramétert egy a dst függvény által 
+          visszaadott érték szerint történik a rendezés. Tehát a gangster vektorban minden tagja növekvő sorrendbe lesz rendezve a rendőrtől való távolságuk alapján,
+        </para>
+</section>
+<section>
+        <title>C++11 Custom Allocator</title>
+        <para>
+CustomAlloc-os példa, lásd C forrást az UDPROG repóban!
+        </para>
+        <para>https://prezi.com/jvvbytkwgsxj/high-level-programming-languages-2-c11-allocators/</para>
+        <para>
+            Megoldás forrása:  
+        </para>
+
+        <para>
+            
+        </para>
+</section>
+<section>
+        <title>STL map érték szerinti rendezése</title>
+        <para>
+         Például: https://github.com/nbatfai/future/blob/master/cs/F9F2/fenykard.cpp#L180
+        </para>
+        <para>
+            Megoldás forrása:  
+        </para>
+<programlisting language="c++">
+            <![CDATA[ 
+#include <iostream>
+#include <map>
+#include <vector>
+#include <algorithm>
+
+typedef std::pair<std::string,int> pair;
+
+int main()
+{
+	std::map<std::string,int> map = {
+		{"János", 34}, {"Jenő", 45}, {"András", 21}, {"Béla", 39}
+	};
+    
+   std::map<std::string, int>::iterator it;
+
+  std::cout << "The map is : \n"; 
+ std::cout << "KEY:ELEMENT\n"; 
+for ( it = map.begin(); it != map.end(); it++ )
+{
+    std::cout << it->first  
+              << ':'
+              << it->second 
+              << std::endl ;
+}
+ std::cout << '\n';
+	std::vector<pair> vector;
+
+	std::copy(map.begin(),
+			map.end(),
+			std::back_inserter<std::vector<pair>>(vector));
+
+	std::sort(vector.begin(), vector.end(),
+			[](const pair& l, const pair& r) {
+				if (l.second != r.second)
+					return l.second < r.second;
+
+				return l.first < r.first;
+			});
+    std::cout << "The map after sorted by value : \n"; 
+ std::cout << "KEY:ELEMENT\n"; 
+
+
+	for (auto const &pair: vector) {
+		std::cout << pair.first << ":" << pair.second << '\n';
+	}
+
+	return 0;
+}
+]]>
+        </programlisting>
+        <para>
+            
+        </para>
+</section>
+<section>
+        <title>Alternatív Tabella rendezése</title>
+        <para>
+         Mutassuk be a https://progpater.blog.hu/2011/03/11/alternativ_tabella a programban a java.lang Interface Comparable szerepét!
+        </para>
+        <para>
+            Megoldás forrása:  
+        </para>
+
+        <para>
+            
+        </para>
+</section>
+<section>
+        <title>GIMP Scheme hack</title>
+        <para>
+            Megoldás forrása:<link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/attention_raising/GIMP_Lisp/Mandala/bhax_mandala9.scm">https://github.com/p-adrian05/BHAX/blob/master/attention_raising/GIMP_Lisp/Mandala/bhax_mandala9.scm</link>
+        </para>
+
+        <para>
+            A lisben történő mandala rajzolása a megadott szöveg forgatásával jön létre.
+            A gimb menüjébe úgy tudjuk elérhetővé tenni a programunkat, hogy a gimp program script 
+            mappájába másoljuk a lisp forrásunkat és a create menu opciónál lesz látható. A programnak meg kell adni a szöveget, középre igazított szöveget,
+            a betűtípust, annak méretét, a kép méreteit, tovább a szöveg színét és a színek átmenetét.
+        </para>    
+             <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/program.jpg" scale="40" />
+                </imageobject>
+            </mediaobject>   
+        <para>A programot a Script-fu termináljából is futtathatjuk, bemásolva a program forrását és megadva a fent felsorolt paramétereket. </para>
+        <screen>
+<![CDATA[
+  (script-fu-bhax-mandala "Bátfai Norbert" "BHAX" "Montez" 120 1920 1080 '(255 0 0) "Shadows 3")
+ ]]>
+         </screen> 
+        <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/program2.jpg" scale="40" />
+                </imageobject>
+            </mediaobject>
+        <para>Különböző betütípusokat is letölthetünk a gimphez, amiket egyszerűen csak bemásolunk a gimp fonts mappájába és azokat használva fel 
+            a mandalához. Az alábbi példákhoz felhasznált betűtípusok: Montez, Sacramanto, AlexBrush. Érdemes kézírásos betűtípusokat választani az eredmény 
+            látványossá tételéhez.
+        </para>   
+        <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/montez.png" scale="90" />
+                </imageobject>
+            </mediaobject>   
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/sacramento.png" scale="90" />
+                </imageobject>
+            </mediaobject>   
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="img/alexBrush.png" scale="90" />
+                </imageobject>
+            </mediaobject>   
+</section>
+</chapter>  
