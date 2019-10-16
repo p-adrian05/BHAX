@@ -17,7 +17,8 @@
             Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Chomsky2/Mandel">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Chomsky2/Mandel</link>
     </para>
     <para>
-    Általános fordítás esetén hibát dob a fordító, miszerint UTF-8 kódolás számára nem található karakterek vannak a kódban. 
+    Általános fordítás esetén hibát dob a fordító, miszerint UTF-8 kódolás számára nem található karakterek vannak a kódban. A javac fordító alapértelmezetten a rendszer által beállított karakterkódolást használja, azonban 
+    a javac-nak megmondható, milyen kódolású fájlokat kell feldolgoznia. 
     </para>
     <mediaobject>
       <imageobject>
