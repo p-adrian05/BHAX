@@ -3,49 +3,47 @@
 #include <boost/filesystem.hpp>
 
 using namespace boost::filesystem;
+using namespace std;
 
-class Tourist
+class Reader
 {
 private:
-    unsigned int numOfClasses;
+    int numberOfClasses;
 
 public:
-    Tourist() : numOfClasses(0)
+    Reader()
     {
+        numberOfClasses = 0;
     }
 
-    unsigned int getNumOfClasses()
+    void readClasses(path path)
     {
-        return numOfClasses;
-    }
-    void listJDK(path thePath)
-    {
-
-        if (is_regular_file(thePath))
+        if (is_regular_file(path))
         {
-            std::string ext(".java");
-            if (!ext.compare(extension(thePath)))
+            string ext(".java");
+            if (!ext.compare(extension(path)))
             {
-                std::cout << thePath << std::endl;
+                cout << path;
+                numberOfClasses++;
             }
-            numOfClasses++;
         }
-        else if (is_directory(thePath))
-            for (directory_entry &entry : directory_iterator(thePath))
+        else if (is_directory(path))
+            for (directory_entry &entry : directory_iterator(path))
             {
-                listJDK(entry.path());
+                readClasses(entry.path());
             }
+    }
+    int getNumberOfClasses()
+    {
+        return numberOfClasses;
     }
 };
 
 int main()
 {
-    Tourist theTourist;
-    std::cout << "Searching for Java classes\n";
-
-    theTourist.listJDK("src");
-
-    std::cout << "Found " << theTourist.getNumOfClasses() << " classes.\n";
+    Reader reader;
+    reader.readClasses("src");
+    cout << "Number of classes:" << reader.getNumberOfClasses() << "\n";
 
     return 0;
 }

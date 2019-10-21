@@ -15,54 +15,81 @@ osztályát (miután kicsomagoltuk az src.zip állományt, arra ráengedve)!
     </para>
 
     <para>
-            Megoldás forrása:
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Stroustrup/jdkreader.cpp">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Stroustrup/jdkreader.cpp</link>
     </para>
-    <para>
-    </para>
+
     <programlisting language="C++">
       <![CDATA[ 
 #include <iostream>
 #include <string>
-#include <fstream>
 #include <boost/filesystem.hpp>
 
-void readClasses(String path,std::vector<string> &classes);
-int main(int argc, char *argv[]){
+using namespace boost::filesystem;
+using namespace std;
 
-std::string path;
-  std::vector<string> classes; if(argc==1){
-         path = argv[0];
-         readClasses(path,&classes);
-    }
-    
-
-    for(int i = 0;i<classes.size();i++)
-    {
-        std::cout<<classes[i] <<"\n"<<;
-    }
-
-
-}
-
-void readClasses ( boost::filesystem::path path, std::vector<string> &classes )
+class Reader
 {
+private:
+    int numberOfClasses;
 
-        if ( is_regular_file ( path ) ) {
+public:
+    Reader()
+    {
+        numberOfClasses = 0;
+    }
 
-                std::string ext ( ".java" );
-                if ( !ext.compare ( boost::filesystem::extension ( path ) ) ) {
+    void readClasses(path path)
+    {
+        if (is_regular_file(path))
+        {
+            string ext(".java");
+            if (!ext.compare(extension(path)))
+            {
+               cout << path;
+                numberOfClasses++;
+            }
+        }
+        else if (is_directory(path))
+            for (directory_entry &entry : directory_iterator(path))
+            {
+                readClasses(entry.path());
+            }
+    }
+    int getNumberOfClasses()
+    {
+        return numberOfClasses;
+    }
+};
 
-                        classes.push_back(path.string());
-                }
+int main()
+{
+    Reader reader;
+    reader.readClasses("src");
+    cout << "Number of classes:" << reader.getNumberOfClasses() << "\n";
 
-        } else if ( is_directory ( path ) )
-                for ( boost::filesystem::directory_entry & entry : boost::filesystem::directory_iterator ( path ) )
-                        readClasses ( entry.path(), classes );
-
+    return 0;
 }
 ]]>
     </programlisting>
 
+    <para>
+        A feladat megoldásához használjuk a boost könyvtárat. A program végigmeny a src mappában található összes fájlon és mappán, keresve 
+        a .java kiterjesztésú fájlokat. A Reader osztályban található readClasses metódusnak átadjuk az src mappa nevét, amiben dolgozik majd. 
+        A path egy egy file-t fog jelenteni és ellenőrzi, hogy ha file és nem könyvtár és .java kiterjesztéssel rendelkezik, akkor kiiratjuk és 
+        megnöveljük a számlálót. Viszont ha a path egy könyvtár, akkor rekurzívan megyünk végig az egész könyvtárszerkezeten. A main-ben létrehozzuk a Reader 
+        objektumot, a konstruktorja beállítja a osztályokat számoló változót 0-ra, majd meghívjuk a readClasses függvényt átadva a mappa nevét majd  kiiratjuk 
+        a talált .java kiterjesztésű fájlok számát JDK13 esetén. A fordításkor fontos linkelni a boost könyvtárakat.
+    </para>
+    <screen>
+      <![CDATA[ 
+   g++ -o jdkreader jdkreader.cpp -lboost_filesystem -lboost_system
+]]>
+    </screen>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="img/jdkclasses.jpg" scale="70" />
+      </imageobject>
+    </mediaobject>
 
 
   </section>
