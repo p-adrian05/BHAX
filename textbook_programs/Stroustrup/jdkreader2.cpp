@@ -1,42 +1,46 @@
-
 #include <iostream>
-#include <vector>
 #include <string>
-#include <stdio.h>
 #include <boost/filesystem.hpp>
-#include <boost/filesystem/fstream.hpp>
 
-
-void readClasses(std::string path, std::vector<std::string> &classes);
-int main(int argc, char const *argv[])
+using namespace boost::filesystem;
+using namespace std;
+class Reader
 {
+private:
+    int numberOfClasses;
 
-    std::string path;
-    std::vector<std::string> classes;
-    if (argc == 1)
-    {
-        path = argv[0];
-        readClasses(path, classes);
-    }
+public:
+    Reader() : numberOfClasses(0) {}
 
-    for (int i = 0; i < classes.size(); i++)
+    void readClasses(path path)
     {
-        std::cout << classes[i] << "\n";
-    }
-    std::cout << classes.size() << " classes found\n";
-    return 0;
-}
-void readClasses(boost::filesystem::path path, std::vector<std::string> &classes)
-{
-    if (is_regular_file(path))
-    {
-        std::string ext(".java");
-        if (!ext.compare(boost::filesystem::extension(path)))
+
+        if (is_regular_file(path))
         {
-            classes.push_back(path.string());
+            string ext(".java");
+            if (!ext.compare(extension(path)))
+            {
+                cout << path << std::endl;
+            }
+            numberOfClasses++;
         }
+        else if (is_directory(path))
+            for (directory_entry &entry : directory_iterator(path))
+            {
+                readClasses(entry.path());
+            }
     }
-    else if (is_directory(path))
-        for (boost::filesystem::directory_entry &entry : boost::filesystem::directory_iterator(path))
-            readClasses(entry.path(), classes);
+    int getNum()
+    {
+        return numberOfClasses;
+    }
+};
+
+int main()
+{
+    Reader reader;
+    reader.readClasses("src");
+    cout << "Number of classes:" << reader.getNum() << "\n";
+
+    return 0;
 }

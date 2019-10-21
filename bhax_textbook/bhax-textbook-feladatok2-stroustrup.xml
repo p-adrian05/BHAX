@@ -73,7 +73,7 @@ void readClasses ( boost::filesystem::path path, std::vector<string> &classes )
 szemantikáját, a mozgató konstruktort alapozd a mozgató értékadásra!  
     </para>
     <para>
-          Megoldás forrása:   
+          Megoldás forrása:   <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a11.cpp">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Welch/z3a11.cpp</link>
     </para>
     <para>
     Másoló konstruktor akkor kerül meghívásra C++ esetén, ha inicializálatlan objektumhoz értéket rendelünk. Gyakran van szükség 
@@ -93,8 +93,8 @@ szemantikáját, a mozgató konstruktort alapozd a mozgató értékadásra!
          A másoló konstruktorba referenciaként kapjuk a régi, lemásolandó objektumot. Ezután a régi fa minden csomópontjának értékén végig megyünk, hogy beállítsuk
          az új fa csomópontjait, ez a másol függvényben kerül sorra. Pontosan ugyanaz a fa lesz kiépítve az új binfába, mint a régibe ami úgy történik, hogy egyszerűen 
          megyünk végig a régi fa csomópontjain és közben állítjuk be az új fa értékeit, a régi fa értékeivel. Az ujelem mutató mutat az aktuálisan lemásolt csomópontra,
-         ,ami ha egyenlő az aktuális régi fa csomópontjával akkor beállítjuk az új fa aktuális csomópontjának. Másoló értékadás esetén (operator=) is hasonló dolog történik, de 
-         ez esetben mielőtt az értékadás megtörténik, régi objektumot felszabadítjuk.
+         ,ami ha egyenlő az aktuális régi fa csomópontjával akkor beállítjuk az új fa aktuális csomópontjának. Másoló értékadás esetén (operator=) is hasonló dolog történik.
+        Mielőtt a másolás megtörténik, először felszabadítjuk az eredeti fát, majd létrehozzuk a gyokeret és az új gyokerbe masoljuk át a másolandó, régi fa elemeit.
     </para>
 
     <programlisting language="c++">
@@ -124,13 +124,12 @@ Csomopont *  masol ( Csomopont * elem, Csomopont * regifa ) {
           return ujelem;
      }
     //Másoló értékadás
-    LZWBinFa &operator=(LZWBinFa &regi)
+   LZWBinFa &operator=(LZWBinFa &regi)
      {
           std::cout << "LZWBinFa copy assign" << std::endl;
-          Csomopont *ujgyoker = new Csomopont();
-          ujgyoker = masol(regi.gyoker, regi.fa);
-          szabadit(regi.gyoker);
-          gyoker = ujgyoker;
+          szabadit(gyoker);
+          gyoker = new Csomopont();
+          gyoker = masol(regi.gyoker, regi.fa);
           return *this;
      }
 
@@ -252,22 +251,6 @@ LZWBinFa binFa3 = std::move(binFa2);
 
 
   </section>
-
-  <section>
-    <title>Hibásan implementált RSA törése</title>
-    <para>
-			Készítsünk betű gyakoriság alapú törést egy hibásan implementált RSA kódoló:
-https://arato.inf.unideb.hu/batfai.norbert/UDPROG/deprecated/Prog2_3.pdf (71-73 fólia) által
-készített titkos szövegen.
-    </para>
-    <para>
-          Megoldás forrása:  
-    </para>
-    <para>
-
-    </para>
-
-  </section>
   <section>
     <title>Változó argumentumszámú ctor</title>
     <para>
@@ -276,7 +259,7 @@ készített titkos szövegen.
 hét/Perceptron osztály feladatot is.)
     </para>
     <para>
-          Megoldás forrása:  
+          Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Stroustrup/Perceptron/main.cpp">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Stroustrup/Perceptron/main.cpp</link>
     </para>
 
     <para>

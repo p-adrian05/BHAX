@@ -1,42 +1,51 @@
 #include <iostream>
-#include <vector>
 #include <string>
-#include <stdio.h>
 #include <boost/filesystem.hpp>
-#include <boost/filesystem/fstream.hpp>
 
-using namespace std;
+using namespace boost::filesystem;
 
-void readClasses(string path, vector<string> &classes);
-int main(int argc, char const *argv[])
+class Tourist
 {
+private:
+    unsigned int numOfClasses;
 
-    string path;
-    vector<string> classes;
-    if (argc == 1)
+public:
+    Tourist() : numOfClasses(0)
     {
-        path = argv[0];
-        readClasses(path, classes);
     }
 
-    for (int i = 0; i < classes.size(); i++)
+    unsigned int getNumOfClasses()
     {
-        std::cout << classes[i] << "\n";
+        return numOfClasses;
     }
-    cout << "All in all there were " << classes.size() << " classes found\n";
-    return 0;
-}
-void readClasses(boost::filesystem::path path, vector<string> &classes)
-{
-    if (is_regular_file(path))
+    void listJDK(path thePath)
     {
-        std::string ext(".java");
-        if (!ext.compare(boost::filesystem::extension(path)))
+
+        if (is_regular_file(thePath))
         {
-            classes.push_back(path.string());
+            std::string ext(".java");
+            if (!ext.compare(extension(thePath)))
+            {
+                std::cout << thePath << std::endl;
+            }
+            numOfClasses++;
         }
+        else if (is_directory(thePath))
+            for (directory_entry &entry : directory_iterator(thePath))
+            {
+                listJDK(entry.path());
+            }
     }
-    else if (is_directory(path))
-        for (boost::filesystem::directory_entry &entry : boost::filesystem::directory_iterator(path))
-            readClasses(entry.path(), classes);
+};
+
+int main()
+{
+    Tourist theTourist;
+    std::cout << "Searching for Java classes\n";
+
+    theTourist.listJDK("src");
+
+    std::cout << "Found " << theTourist.getNumOfClasses() << " classes.\n";
+
+    return 0;
 }

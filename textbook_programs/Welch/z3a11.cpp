@@ -127,10 +127,9 @@ public:
      LZWBinFa &operator=(LZWBinFa &regi)
      {
           std::cout << "LZWBinFa copy assign" << std::endl;
-          Csomopont *ujgyoker = new Csomopont();
-          ujgyoker = masol(regi.gyoker, regi.fa);
-          szabadit(regi.gyoker);
-          gyoker = ujgyoker;
+          szabadit(gyoker);
+          gyoker = new Csomopont();
+          gyoker = masol(regi.gyoker, regi.fa);
           return *this;
      }
 
