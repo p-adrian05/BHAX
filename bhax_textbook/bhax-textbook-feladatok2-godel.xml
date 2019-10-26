@@ -18,7 +18,8 @@
         </para>
 
         <para>
-            A C++11 verzió elhozta C++-ba is a lambda kifejezéseket. A szintaxis alapján 
+            A C++11 verzió elhozta C++-ba is a lambda kifejezéseket. Segítségével jobban átláthatóbb, tisztább 
+            kód írható. A szintaxis alapján 
             a [] zárójelek közé adjuk meg azokat a változókat, amelyek a lambda kifejezések definíciójának 
             helyén vannak. Ezeket capturing változóknak nevezzük, nem kötelező megadni. A paraméterek átadása érték szerinti, kivéve 
             ha referencia szerint adjuk meg. Ezután következnek ()-ben az argumentumok megadása, amivel a függvény dolgozik. {} jelöli a függvény törzsét.
@@ -28,7 +29,7 @@
       [](int x, int y) { return x + y; }
 ]]>
         </screen>
-         <programlisting language="c++">
+        <programlisting language="c++">
             <![CDATA[ 
             std::sort(gangsters.begin(), gangsters.endl(), [this,cop](unsigned x,unsigned y) {return dst(cop, x)<dst(cop,y);});
 ]]>
@@ -39,10 +40,10 @@
           rendezi az objektumokat, jelen esetben gangstereket, ami lehet lambda kifejezés is. Ebben az esetben először megadjuk azokat a változókat, amiket a 
           lambda kifejezés használhat a külvilágból, arról a helyről ahonnan definiálva van. Utána a két argumentum következik, majd a függvénytörzs, amiben definiáljuk 
           a sorba rendezés alapját. Jelen esetben egy függvény által, annak paraméterként átadva a cop és az akutális x és y paramétert egy a dst függvény által 
-          visszaadott érték szerint történik a rendezés. Tehát a gangster vektorban minden tagja növekvő sorrendbe lesz rendezve a rendőrtől való távolságuk alapján,
+          visszaadott érték szerint történik a rendezés. Tehát a gangster vektorban minden tagja növekvő sorrendbe lesz rendezve a rendőrtől való távolságuk alapján.
         </para>
-</section>
-<section>
+    </section>
+    <section>
         <title>C++11 Custom Allocator</title>
         <para>
 CustomAlloc-os példa, lásd C forrást az UDPROG repóban!
@@ -53,10 +54,10 @@ CustomAlloc-os példa, lásd C forrást az UDPROG repóban!
         </para>
 
         <para>
-            
+
         </para>
-</section>
-<section>
+    </section>
+    <section>
         <title>STL map érték szerinti rendezése</title>
         <para>
          Például: https://github.com/nbatfai/future/blob/master/cs/F9F2/fenykard.cpp#L180
@@ -64,36 +65,22 @@ CustomAlloc-os példa, lásd C forrást az UDPROG repóban!
         <para>
             Megoldás forrása:  
         </para>
-<programlisting language="c++">
+        <para>
+           Egy Map adatszerkezetben kulcs-érték párokat tárolunk, amit sorba rendezni a kulcs alapján szokás, de érték szerint is lehetséges.
+           Ebben a példában nevek a kulcsok és a kor az érték. Első lépésként átmásoljuk a map tartalmát egy kulcs-érték párokat tároló vektorba.
+           Majd meghívjuk a sort függvényt a vektorra, és egy lambda kifejezéssel definiáljuk a függvényt ami alapján rendezze a vektort, ami két paraméterrel dolgozik, 
+           a first a kulcsot, a second függvény pedig az értéket adja vissza, amit összehasonlít egymással és növekvő sorrendben rendezi érték szerint a vektor tartalmát.
+        </para>
+
+        <programlisting language="c++">
             <![CDATA[ 
-#include <iostream>
-#include <map>
-#include <vector>
-#include <algorithm>
-
-typedef std::pair<std::string,int> pair;
-
 int main()
 {
 	std::map<std::string,int> map = {
 		{"János", 34}, {"Jenő", 45}, {"András", 21}, {"Béla", 39}
 	};
-    
-   std::map<std::string, int>::iterator it;
-
-  std::cout << "The map is : \n"; 
- std::cout << "KEY:ELEMENT\n"; 
-for ( it = map.begin(); it != map.end(); it++ )
-{
-    std::cout << it->first  
-              << ':'
-              << it->second 
-              << std::endl ;
-}
- std::cout << '\n';
-	std::vector<pair> vector;
-
-	std::copy(map.begin(),
+   std::vector<pair> vector;
+   std::copy(map.begin(),
 			map.end(),
 			std::back_inserter<std::vector<pair>>(vector));
 
@@ -101,13 +88,10 @@ for ( it = map.begin(); it != map.end(); it++ )
 			[](const pair& l, const pair& r) {
 				if (l.second != r.second)
 					return l.second < r.second;
-
-				return l.first < r.first;
 			});
-    std::cout << "The map after sorted by value : \n"; 
- std::cout << "KEY:ELEMENT\n"; 
 
-
+ std::cout << "The map after sorted by value : \n"; 
+ std::cout << "KEY:VALUE\n"; 
 	for (auto const &pair: vector) {
 		std::cout << pair.first << ":" << pair.second << '\n';
 	}
@@ -116,11 +100,13 @@ for ( it = map.begin(); it != map.end(); it++ )
 }
 ]]>
         </programlisting>
-        <para>
-            
-        </para>
-</section>
-<section>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/map.jpg" scale="90" />
+            </imageobject>
+        </mediaobject>
+    </section>
+    <section>
         <title>Alternatív Tabella rendezése</title>
         <para>
          Mutassuk be a https://progpater.blog.hu/2011/03/11/alternativ_tabella a programban a java.lang Interface Comparable szerepét!
@@ -130,55 +116,58 @@ for ( it = map.begin(); it != map.end(); it++ )
         </para>
 
         <para>
-            
+
         </para>
-</section>
-<section>
+    </section>
+    <section>
         <title>GIMP Scheme hack</title>
         <para>
             Megoldás forrása:<link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/attention_raising/GIMP_Lisp/Mandala/bhax_mandala9.scm">https://github.com/p-adrian05/BHAX/blob/master/attention_raising/GIMP_Lisp/Mandala/bhax_mandala9.scm</link>
         </para>
-
         <para>
-            A lisben történő mandala rajzolása a megadott szöveg forgatásával jön létre.
+            A lisben történő mandala rajzolása a megadott szöveg forgatásával jön létre, minél bonyolultabb betütípust 
+            érdemes választani a látványosság érdekében. A közepére egy szabadon választott szöveg kerül. Erről egy másoaltot 
+            készítünk, majd az eredeti szövegre vizszintes tükrözés történik. Ezután ezt a két réteget össze kell vonni és elforgatni 
+            90 fokkal, majd ugyanezt megismételve csak már 45 fokkal forgatva és harmadjára is 30 fokkal forgatva.. Ezután történik a két kör 
+            kirajzolása a szöveg köré, majd a megadott színátmenetet alkalmazzuk az összevont képen.
             A gimb menüjébe úgy tudjuk elérhetővé tenni a programunkat, hogy a gimp program script 
             mappájába másoljuk a lisp forrásunkat és a create menu opciónál lesz látható. A programnak meg kell adni a szöveget, középre igazított szöveget,
             a betűtípust, annak méretét, a kép méreteit, tovább a szöveg színét és a színek átmenetét.
-        </para>    
-             <mediaobject>
-                <imageobject>
-                    <imagedata fileref="img/program.jpg" scale="40" />
-                </imageobject>
-            </mediaobject>   
+        </para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/program.jpg" scale="40" />
+            </imageobject>
+        </mediaobject>
         <para>A programot a Script-fu termináljából is futtathatjuk, bemásolva a program forrását és megadva a fent felsorolt paramétereket. </para>
         <screen>
-<![CDATA[
+            <![CDATA[
   (script-fu-bhax-mandala "Bátfai Norbert" "BHAX" "Montez" 120 1920 1080 '(255 0 0) "Shadows 3")
  ]]>
-         </screen> 
+        </screen>
         <mediaobject>
-                <imageobject>
-                    <imagedata fileref="img/program2.jpg" scale="40" />
-                </imageobject>
-            </mediaobject>
+            <imageobject>
+                <imagedata fileref="img/program2.jpg" scale="40" />
+            </imageobject>
+        </mediaobject>
         <para>Különböző betütípusokat is letölthetünk a gimphez, amiket egyszerűen csak bemásolunk a gimp fonts mappájába és azokat használva fel 
             a mandalához. Az alábbi példákhoz felhasznált betűtípusok: Montez, Sacramanto, AlexBrush. Érdemes kézírásos betűtípusokat választani az eredmény 
             látványossá tételéhez.
-        </para>   
+        </para>
         <mediaobject>
-                <imageobject>
-                    <imagedata fileref="img/montez.png" scale="90" />
-                </imageobject>
-            </mediaobject>   
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="img/sacramento.png" scale="90" />
-                </imageobject>
-            </mediaobject>   
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="img/alexBrush.png" scale="90" />
-                </imageobject>
-            </mediaobject>   
-</section>
+            <imageobject>
+                <imagedata fileref="img/montez.png" scale="90" />
+            </imageobject>
+        </mediaobject>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/sacramento.png" scale="90" />
+            </imageobject>
+        </mediaobject>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/alexBrush.png" scale="90" />
+            </imageobject>
+        </mediaobject>
+    </section>
 </chapter>  
