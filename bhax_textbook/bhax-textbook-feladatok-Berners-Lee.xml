@@ -65,7 +65,7 @@
             Az interfész egy új referencia típus. Az osztályokhoz képest itt hiányoznak metódusok definiálása, implementációi, csak deklarálva vannak. C++ estén nincs konkrétan interface, de ugyanazt az eredményt lehet 
             létrehozni egy absztrakt osztály létrehozásával, amiben minden metódust virtual jelzővel látunk el. Java esetén külön létezik az interface és absztrakt osztály fogalma. 
             Bármennyi interfészt lehet implementálni, de mindig csak 1 osztályt lehet kiterjeszteni. Amikor az osztály implementál egy interfészt, akkor kötelező minden az interfészben megfogalmazott metódust felülírni, implementálni.
-            Ezáltal az adott osztály minden olyan helyen használható lesz, ahol az interfész típusa van megadva, ez érvényes az intefészt implementáló osztályt kiterjesztő osztályokra is.
+            Ezáltal az adott osztály minden olyan helyen használható lesz, ahol az interfész típusa van megadva, ez érvényes az interfészt implementáló osztályt kiterjesztő osztályokra is.
             Az interfész gyakorlatilag egy tulajdonságot biztosít az osztálynak és ez alapján biztosak lehetünk benne az olyan helyeken, ahol csak egy bizonyos tulajdonságú (adott iterface-t implementáló) osztályt kaphatunk.
             Java interfésznél minden metódus automatikusan public és abstract.
         </para>
@@ -115,6 +115,41 @@
             vagy befejezi a ciklust. A reuturn[kifejezés] pedig szabályosan befejezteti a függévényt és visszaadja a vezérlést a hívónak.
         </para>
 
+    </section>
+
+    <section>
+        <title>5.hét Objektumorientált programozási nyelvek típusrendszere</title>
+        <para>
+            Típusok tagjai: mezők, (nevesített) konstansok,tulajdonságok, metódusok, események, operátorok, indexelők, konstruktorok, destruktorok, beágyazott típusok. 
+        </para>
+        <para>
+            Típusokból léteznek egyszerű, primitív vagy objektumok, osztályok. A 8db primitív típus: boolean, char, byte, short, int, 
+            long, float, double. A primitív változók magukat az értéket tárolják, azonban a nem primitívek objektumhivatkozásokat tartalmaznak.
+            Az objektumhivatkozások típusozására az osztályokat valamint interfészeket és tömb típusokat is használhatjuk. Konstans lehet bármilyen típus, ami létezik. Kötelező inicializálni, kezdőértéket megadni, ami állandó, nem lehet megváltoztatni, inicializált értéke
+            állandó.
+        </para>
+        <para>
+            A metódusok egy osztály, objektum viselkedését, funkcióit adják meg, ha van visszatérési értéke akkor függvényeknek nevezzük. 
+            A konstruktor pedig egy olyan sepciális tagfüggvény, amelynek neve megegyezik az osztály nevével és automatikusan
+            meghívódik az osztály példányosításakor. A konstruktor építi fel az objektumot, abban az értelemben,
+            hogy a törzsében megadott változókat inicializálja egy alapértelmezett értékre, vagy a paraméterként átadott értékekre.
+            Fontos, hogy a konstruktor neve meg kell egyezzen az objektum nevével és ha nem definiálunk saját konstruktort, akkor alapértelmezetten 
+            létrejön egy üres konstruktor. A destruktor ellenkező hatást vált ki, felszabadítja az objektum által használt erőforrásokat. Jelölése C++ esetén ~ a név előtt, 
+            java esetén a garbage collector gondoskodik erről a feladatról automatikusan. 
+        </para>
+        <para>
+            Az operátorok értékeken történő műveletek végézésére használhatóak, azonban túlterhelhetőek saját működést definiálva ezáltal.
+        </para>
+        <para>
+             A beágyazott típus egy osztályon belül definiált másik osztály, ezáltal a két osztály szorosan összekapcsolódik és a beágyazott osztály 
+             nem létezhet az ezt tartalmazó osztályon kívűl.
+        </para>
+        <para>
+         Az indexelés segítségével megcímezhetünk, indexelhetünk objektumot, ennek hatására lehetőségünk van ez objektum adatainak hozzáféréséhez.
+         Mindezt a get – set párossal tudjuk megvalósítani, értékeket olvasunk ki. 
+         A this szót alkalmaznunk kell, mely arra utal, hogy az adott objektumról beszélünk. Az eseménye előre definiált metódusok,
+          amik adott esemény bekövetkezésekor elkezdenek futni. A tulajdonságok C# esetén a Getter/Setter metódusokat váltják ki. Úgy kezelhetőek, mint változók, azonban függvények. 
+        </para>
     </section>
 
 

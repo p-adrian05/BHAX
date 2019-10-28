@@ -14,10 +14,6 @@
         </para>
         <para>https://youtu.be/DL6iQwPx1Yw (8:05-től)   </para>
         <para>
-            Megoldás forrása:  
-        </para>
-
-        <para>
             A C++11 verzió elhozta C++-ba is a lambda kifejezéseket. Segítségével jobban átláthatóbb, tisztább 
             kód írható. A szintaxis alapján 
             a [] zárójelek közé adjuk meg azokat a változókat, amelyek a lambda kifejezések definíciójának 
@@ -63,13 +59,13 @@ CustomAlloc-os példa, lásd C forrást az UDPROG repóban!
          Például: https://github.com/nbatfai/future/blob/master/cs/F9F2/fenykard.cpp#L180
         </para>
         <para>
-            Megoldás forrása:  
+            Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Godel/map.cpp">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Godel/map.cpp</link>
         </para>
         <para>
            Egy Map adatszerkezetben kulcs-érték párokat tárolunk, amit sorba rendezni a kulcs alapján szokás, de érték szerint is lehetséges.
-           Ebben a példában nevek a kulcsok és a kor az érték. Első lépésként átmásoljuk a map tartalmát egy kulcs-érték párokat tároló vektorba.
-           Majd meghívjuk a sort függvényt a vektorra, és egy lambda kifejezéssel definiáljuk a függvényt ami alapján rendezze a vektort, ami két paraméterrel dolgozik, 
-           a first a kulcsot, a second függvény pedig az értéket adja vissza, amit összehasonlít egymással és növekvő sorrendben rendezi érték szerint a vektor tartalmát.
+           Ebben a példában nevek a kulcsok és a kor az érték.A map létrehozásakor meg kell először a kulcs, majd az értékek típusát. Első lépésként átmásoljuk a map tartalmát egy kulcs-érték párokat tároló vektorba.
+           Majd meghívjuk a sort függvényt a vektorra, és egy lambda kifejezéssel definiáljuk a függvényt ami alapján rendezze a vektort, ami két paraméterrel dolgozik,1-1 kulcs érték párt kap. 
+           A first a kulcsot, a second függvény pedig az értéket adja vissza, amit összehasonlít egymással és növekvő sorrendben rendezi érték szerint a vektor tartalmát.
         </para>
 
         <programlisting language="c++">
@@ -114,10 +110,61 @@ int main()
         <para>
             Megoldás forrása:  
         </para>
-
         <para>
-
+            Az interfész egy új referencia típus. Az osztályokhoz képest itt hiányoznak metódusok definiálása, implementációi, csak deklarálva vannak és tagváltozókkal ellentétben csak konstans értékek lehetnek. 
+            Amikor egy osztály implementál egy interfészt, akkor kötelező minden az interfészben megfogalmazott metódust felülírni, implementálni.
+            Ezáltal az adott osztály minden olyan helyen használható lesz, ahol az interfész típusa van megadva, ez érvényes az interfészt implementáló osztályt kiterjesztő osztályokra is.
+            Az interfész gyakorlatilag egy tulajdonságot biztosít az osztálynak és ez alapján biztosak lehetünk benne az olyan helyeken, ahol csak egy bizonyos tulajdonságú (adott iterface-t implementáló) osztályt kaphatunk.
         </para>
+        <para>
+           Példaként a Csapat osztály implementál egy interfészt ami a Comparable.
+            Ezután kötelezően implementálni kell a compareTo metódust, definiálva hogy hogyan hasonlítson
+             össze két Csapat objektumot egymással, jelen esetben ez a csapatok értékei alapján történik meg.  
+        </para>
+        <programlisting language="c++">
+            <![CDATA[ 
+ class Csapat implements Comparable<Csapat> {
+
+    protected String nev;
+    protected double ertek;
+
+    public Csapat(String nev, double ertek) {
+        this.nev = nev;
+        this.ertek = ertek;
+    }
+
+    public int compareTo(Csapat csapat) {
+        if (this.ertek < csapat.ertek) {
+            return -1;
+        } else if (this.ertek > csapat.ertek) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+]]>
+        </programlisting>
+        <para>
+           A Comparable interfész implementálása akkor szükséges ha a beépített sort metódust szeretnénk használni az objektumok 
+           rendezéséhez. Ugyanis a rendezés csak azokon a listákon lehetséges, amelynek minden eleme implementálta a Comparable 
+           interfészt. A példa kódban a csapatokat tartalmazó tömbünk van, amit rendezni szeretnénk, miután a tömböt listává alakítottuk. 
+           Ezután átadjuk ezt a listát a sort metódusnak, ami rendezi az objektumokat a bennük definiált compareTo függvény által, a visszatérési 
+           értékek alapján.
+        </para>
+        <programlisting language="c++">
+            <![CDATA[ 
+    Csapat csapatok[] = new Csapat[csapatNevekMeret];
+
+        for (int i = 0; i < csapatNevekMeret; i++) {
+            csapatok[i] = new Csapat(s[i], h[i]);
+        }
+
+        java.util.List<Csapat> rendezettCsapatok = java.util.Arrays.asList(csapatok);
+        java.util.Collections.sort(rendezettCsapatok);
+]]>
+        </programlisting>
+
     </section>
     <section>
         <title>GIMP Scheme hack</title>
