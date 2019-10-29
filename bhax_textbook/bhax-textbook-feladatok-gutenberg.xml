@@ -27,7 +27,7 @@
         <para>Imperatív nyelvek: a programozó egy programszöveget ír, algoritmust kódol ami működteti a processzort.
              Alcsoportjai: eljárásorientált és objektumorientált nyelvek.
         </para>
-        <para>Deklaratív nyelvek: Nem algoritmikus nyelvek, a proramozó csak a problémát oldja meg, a nyelvi implementációkban
+        <para>Deklaratív nyelvek: Nem algoritmikus nyelvek, a programozó csak a problémát oldja meg, a nyelvi implementációkban
             van beépítve a megoldás megkeresésének módja, a programozónak nincs lehetősége memóriaműveletekre. Alcsoportjai:
             Funkcionális és logikai nyelvek.
         </para>

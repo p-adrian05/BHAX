@@ -151,7 +151,113 @@
           amik adott esemény bekövetkezésekor elkezdenek futni. A tulajdonságok C# esetén a Getter/Setter metódusokat váltják ki. Úgy kezelhetőek, mint változók, azonban függvények. 
         </para>
     </section>
+    <section>
+        <title>6.hét Interfészek,  kollekciók, funkcionális nyelvi elemek, lambda kifejezések.</title>
+        <para>
+            Az interfész egy új referencia típus. Az osztályokhoz képest itt hiányoznak metódusok definiálása, implementációi, csak deklarálva vannak és tagváltozókkal ellentétben csak konstans értékek lehetnek. C++ estén nincs konkrétan interface, de ugyanazt az eredményt lehet 
+            létrehozni egy absztrakt osztály létrehozásával, amiben minden metódust virtual jelzővel látunk el. Java esetén külön létezik az interface és absztrakt osztály fogalma. 
+            Bármennyi interfészt lehet implementálni, de mindig csak 1 osztályt lehet kiterjeszteni. Amikor az osztály implementál egy interfészt, akkor kötelező minden az interfészben megfogalmazott metódust felülírni, implementálni.
+            Ezáltal az adott osztály minden olyan helyen használható lesz, ahol az interfész típusa van megadva, ez érvényes az interfészt implementáló osztályt kiterjesztő osztályokra is.
+            Az interfész gyakorlatilag egy tulajdonságot biztosít az osztálynak és ez alapján biztosak lehetünk benne az olyan helyeken, ahol csak egy bizonyos tulajdonságú (adott iterface-t implementáló) osztályt kaphatunk.
+        </para>
+        <para>
+            A  kollekciók, gyűjtemények olyan típuskonstrukciós eszközök, melyeknek célja egy vagy több típusba tartozó 
+            objektumok példányainak memóriában történő összefoglaló jellegű tárolása, manipulálása és lekérdezése. A legjellemzőbb 
+            gyűjteményfajták a tömb és az objektumok mutatókon vagy referenciákon keresztül történő összekapcsolása. Java 2-től viszont 
+            a gyűjtemény keretrendszer lett létrehozva, ezzel sok új gyűjteménytípus használata vált lehetővé könnyedén. Az interfészek 
+            hierarchiájának tetején a Collection interfész áll, ami az összes gyűjteménynek leszármazottja.
+        </para>
+        <para>
+            A funkcionális programnyelvek deklaratív nyelvek csoportjába tartozik, tehát nem algoritmikus nyelvek, a programozó csak a problémát oldja meg, a nyelvi implementációkban
+            van beépítve a megoldás megkeresésének módja, a programozónak nincs lehetősége memóriaműveletekre. Nincsenek a nyelvben változók, értékadások, objektumok értéke nem változhat meg a program futása során és az elágazás és ciklus helyett a függvény mintaillesztés és rekurzió létezik.
+            Tehát a program végrehajtása egy függvény kiértékelése, amely bemenő paraméterek által egy kimenetet állít elő.
+        </para>
+        <para>
+           A lambda kifejezés bevezetésével lehetőség lett arra hogy egyszerűbb, átláthatóbb kódot lehessen írni, egysoros függvények 
+           írása lehetséges. Nincs nevük, csak ott kell megírni, ahol ténylegesen használva lesznek. Gyakori felhasználása
+            interfészek implementálásakor, amikor csak a viselkedést adjuk át, nem pedig egy olyan objektumot ami implementálta az adott interfészt.
+        </para>
 
+    </section>
+    <section>
+        <title>7.hét Adatfolyamok kezelése, streamek, állománykezelés, szerializáció.</title>
+        <para>
+        Az adatfolyamok bájtok sorozatát jelenti. Két típusa van: input stream és output stream, benemeti, kimeneti adatfolyam.
+            <screen>
+                <![CDATA[
+                input stream jelölése >> operátor
+                output stream jelölése << operátor 
+        ]]>
+            </screen>
+        Az istream típusú objektum csak olvasható, míg az ostream osztály példányai csak írható adatfolyamként használható. 
+        Beolvasáskor cin, kiíráskor cout szavakat használjuk. Ahhoz, hogy az std:: előtagot elhagyjuk, iostream állomány kell beépíteni.
+            <screen>
+                <![CDATA[
+                int i;
+                cout << "Enter az integer" << endl;
+                cin >> i;
+        ]]>
+            </screen>
+        Az adatfolyamokat egy bufferrel látják el, mivel ezek összegyűjtik a karaktersorozatokat és több cout kiíratás csak egy rendszerhívással fogja kiírni 
+        a képernyőre. 
+        Java esetén az adatfolyamoknak objektumok felelnek meg. Háromféle adatfolyamosztály létezik: Az adarfolyam iránya alapján megkülönböztetünk bemeneti és kimeneti adatfolyamokat. 
+        Az adatfolyamot alkotó adatok típusa alapján léteznek bájt és karakterszervezésű adatfolyamok és feladatuk alapján két csoport van: az adatfolyam forrását vagy nyelőjét határozzák meg, 
+        a másikba pedig meglévő adatfolyamot egészítenek ki. 
+        </para>
+        <para>
+        A C++ az állománykezeléshez is adatfolyamokat használ. Az ifstream (input file stream), illetve az ofstream (output file stream) osztályok.
+        A kétirányú adatfolyamot peddig az fstream osztály végzi. Az állomány megnyitását a konstruktor végzi, lezárását pedig a destruktor.
+        A megynitandó állomány nevét a konstruktornak adjuk át, továbbá opcionálisan második paraméterként megadhatók jelzőbitek, amelyekkel formázási beállításokat adhatunk meg.
+        Ezeket ios:: előtaggal kell ellátni. Konstruktor és destruktoron kívűl létezik külön open és close függvény is.
+        Az istream és ostream adatfolyamok megnyitható írásra és olvasásra, az értelmezett műveletek azonban az adatfolyamok mögött lévő buffer típusától függenek.
+        Java esetén nem működik az adatfolyamok használata, mivel nem biztosítja egyszerre ugyanazon fájl írását és olvasását, helyette egy közvetlen elérésű fájllal dolgozik, ami egy objektum.
+        Minden ilyen objektum egy fájlmutatót tartalmaz, ami jelöli a pocíciót a fájlban és a ki és beolvasó műveletek a mutatótól kezdődően végzik a ki és beolvasást.
+        </para>
+        <para>
+           A szerializáció az objektumok byte– sorozattá alakítását jelenti, és az adatok külső tárolásában játszik központi szerepet. Csak az az osztály szerializálható, amelyik implementálja a Serilizable interfészt, ezáltal az osztály 
+            leszármazottai is szerializálhatók lesznek. Az ObjectOutputStream és az ObjectInputStream osztályok definiálják azokat az 
+            adatfolyamokat, amelyekre objektumokat lehet kiírni, illetve objektumokat lehet beolvasni.
+        </para>
+
+    </section>
+    <section>
+        <title>8.hét Kivételkezelés, reflexió, A fordítást és a kódgenerálást támogató nyelvi elemek (annotációk, attribútumok). </title>
+        <para>
+            A Kivételkezelés azt teszi lehetővé, hogy a program kezelje a megszakításokat és nem az op. rendszer. Ez a programrész akkor lép működésbe, amikor egy kivétel következik be és reagál az eseményre.
+            Lehetőség van program szinten is a kivételek maszkolására. Egyes kivételek figyelése letiltható vagy engedélyezhető. Letiltás esetén a program 
+            nem vesz tudomást a kivételről, fut tovább. A kivételnek van neve és kódja.
+            A nyelveknek számos kérdés feltehető a kivételkezeléssel kapcsolatosan. Pl: Vannak-e beépített kivételek a nyelvben? 0-val való 
+            osztás, indextúllépés. Lehet-e saját kivételeket írni? A legtöbb nyelvben igen. Hogyan folytatódik a program kivételkezelés után? 
+            Leáll vagy fut tovább hibától függően.
+        </para>
+        <para>
+         A Java program működésekor módszerek hívódnak meg. Egy sepciális esemény bekövetkeztekor egy kivétel-objektum jön létre, ekkor a módszer ezt eldobja és a 
+   JVM hatáskörébe kerül a kivétel, aminek feladata, hogy adott objektumhoz megfelelő kivételkezelőt találjon. Ez megfelelő típusú ha a kivételkezelő típusa megegyezik a kivétel 
+   típusával vagy ha a kivételkezelő típusa őse a kivétel típusának. A kivételeknek két csoportja van: ellenőrzött és nem ellenőrzött kivételek. 
+   Az ellenőrzötthöz tartoznak azok a kivételek, amely felléphet egy metódus láthatósági körében. Nem ellenőrzötthöz pedig olyan események, ahol bárhol bekövetkezhetnek és ellenőrzése lehetetlen.
+   Egy módszer fejében meg kell adni azokat, az ellenőrzött kivételeket, amelyet a módszer nem kezel. Ez a THROWS kivételnév_lista utasítással történik.
+   A Throwable ojbektumnak két alosztálya van: Error (rendszerhibák, nem ellenőrzött kivételek), Exception (ellenőrzött kivételek osztálya).
+        </para>
+        <para>
+        Az annotációk metaadatok, úgy szolgáltatnak információkat egy programról, hogy annak nem részei. 
+        Az annotációk nincsenek közvetlen hatással annak a kódnak a működésére, amelyet annotálnak. 
+        Információkat nyújthatnak a fordítóprogram számára, amelyeket az a hibák felderítésében vagy a megjegyzések elnyomásában hasznosíthat.
+        Az annotációk a Java nyelv 5-ös verziójában kerültek be a nyelvbe. Egy annotációtípus tulajdonképpen egy speciális interfésztípus, 
+        amelynek a nevét felhasználásuk során egy @ jel előzi meg. Egy meglehetősen ismert példa az @Override annotáció, amelynek megadása esetén a fordítónak ellenőriznie kell,
+         hogy a metódus, amelyre előírták, felüldefiniálja-e a szuperosztály valamely metódusát, és ha nem, akkor fordítási hibát kell jeleznie.
+        </para>
+
+    </section>
+    <section>
+        <title>9.hét Multiparadigmás nyelvek és programozás multiparadigmás nyelveken.</title>
+        <para>
+            A paradigma egy nyelv eszközeit, képességeit írja le. A programozási nyelveket osztályozhatóak aszerint milyen paradigmát 
+            teljesítenek, pl funkcionális vagy objektum orientált. Minden paradigmának megvan a területe, ahol használható, viszont vannak 
+            helyzetek amikor több paradigma együttes használata szükséges az adott feladat hatékony elvégzése érdekében.
+            Ezt biztosítjá a multiparadigmás programnyelvek, ezáltal különböző stílusban lehetséges dolgozni, mindig a lehető legjobb 
+            eszközt használva egy porbléma leghatékonyabb megoldására.
+        </para>
+    </section>
 
     <section>
         <title>A Python nyelv bemutatása</title>
