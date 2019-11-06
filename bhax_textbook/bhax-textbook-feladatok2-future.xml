@@ -1,0 +1,116 @@
+<chapter xmlns="http://docbook.org/ns/docbook" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:lang="hu">
+    <info>
+        <title>Helló, !</title>
+        <keywordset>
+            <keyword/>
+        </keywordset>
+    </info>
+    <section>
+        <title>FUTURE tevékenység editor</title>
+        <para>
+         Javítsunk valamit a ActivityEditor.java JavaFX programon! https://github.com/nbatfai/future/tree/master/cs/F6
+        </para>
+         <para>
+            Megoldás forrása: 
+        </para>
+                 <programlisting language="java">
+            <![CDATA[ 
+             if (f.mkdir()) {
+                    javafx.scene.control.TreeItem<java.io.File> newAct
+ //                           = new javafx.scene.control.TreeItem<java.io.File>(f, new javafx.scene.image.ImageView(actIcon));
+                           = new FileTreeItem(f, new javafx.scene.image.ImageView(actIcon));                            
+                    getTreeItem().getChildren().add(newAct);
+                } else {
+
+                    System.err.println("Cannot create " + f.getPath());
+
+                }
+  
+            });
+]]>
+        </programlisting>
+        <para>
+        A program hibája, hogy csak egy új almappát lehet létrehozni ugyanabba a mappába. Ezt úgy lehet kijavítani, hogy ahelyett hogy egy 
+        ugyanolyan nevű mappát hoznánk létre mint az elsőnek létrehozott, egy olyan mappát hozunk létre aminek a neve már különböző az előzőtől, 
+        egy sorszámot a végéhez hozzáadva amit mindig növelünk. 
+    
+        </para>
+        <programlisting language="java">
+            <![CDATA[ 
+            private int a = 1;
+
+        public TextFieldTreeCell(javafx.scene.control.TextArea propsEdit) {
+            this.propsEdit = propsEdit;
+
+            javafx.scene.control.MenuItem subaMenuItem = new javafx.scene.control.MenuItem("Új altevékenység");//"New subactivity");
+            addMenu.getItems().add(subaMenuItem);
+            subaMenuItem.setOnAction((javafx.event.ActionEvent evt) -> {
+                java.io.File file = getTreeItem().getValue();
+
+                java.io.File f = new java.io.File(file.getPath() + System.getProperty("file.separator") + "Új altevékenység");
+                
+
+                if (f.mkdir()) {
+                      javafx.scene.control.TreeItem<java.io.File> newAct
+                  
+                           = new FileTreeItem(f, new javafx.scene.image.ImageView(actIcon));                            
+                   getTreeItem().getChildren().add(newAct);
+                } else {
+
+                     javafx.scene.control.TreeItem<java.io.File> newAct
+       
+                           = new FileTreeItem(f = new java.io.File(file.getPath() + System.getProperty("file.separator") + "Új altevékenység"+" "+ a), new javafx.scene.image.ImageView(actIcon));                            
+                   getTreeItem().getChildren().add(newAct);
+                   a++;
+
+               }
+  
+            });
+]]>
+        </programlisting>
+         <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/masp.jpg" scale="90" />
+            </imageobject>
+        </mediaobject>
+    </section>
+
+    <section>
+        <title>OOCWC Boost ASIO hálózatkezelése</title>
+        <para>
+         Mutassunk rá a scanf szerepére és használatára! https://github.com/nbatfai/robocar-
+emulator/blob/master/justine/rcemu/src/carlexer.ll
+        </para>
+        <para>
+            Megoldás forrása: 
+        </para>
+        <para>
+          
+        </para>
+
+    </section>
+    <section>
+        <title>SamuCam</title>
+        <para>
+         Mutassunk rá a webcam (pl. Androidos mobilod) kezelésére ebben a projektben:
+https://github.com/nbatfai/SamuCam
+        </para>
+        <para>
+            Megoldás forrása:  
+        </para>
+        <para>
+         
+        </para>
+    </section>
+    <section>
+        <title>BrainB</title>
+        <para>
+            Megoldás forrása:
+        </para>
+        <para>
+          
+        </para>
+    </section>
+</chapter>  
