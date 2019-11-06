@@ -39,20 +39,7 @@
           visszaadott érték szerint történik a rendezés. Tehát a gangster vektorban minden tagja növekvő sorrendbe lesz rendezve a rendőrtől való távolságuk alapján.
         </para>
     </section>
-    <section>
-        <title>C++11 Custom Allocator</title>
-        <para>
-CustomAlloc-os példa, lásd C forrást az UDPROG repóban!
-        </para>
-        <para>https://prezi.com/jvvbytkwgsxj/high-level-programming-languages-2-c11-allocators/</para>
-        <para>
-            Megoldás forrása:  
-        </para>
 
-        <para>
-
-        </para>
-    </section>
     <section>
         <title>STL map érték szerinti rendezése</title>
         <para>
