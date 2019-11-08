@@ -10,16 +10,20 @@
     <section>
         <title>FUTURE tevékenység editor</title>
         <para>
-         Javítsunk valamit a ActivityEditor.java JavaFX programon! https://github.com/nbatfai/future/tree/master/cs/F6
+         Javítsunk valamit a ActivityEditor.java JavaFX programon! 
         </para>
-         <para>
-            Megoldás forrása: 
+        <para>
+            Megoldás forrása: <link xlink:href="https://github.com/nbatfai/future/tree/master/cs/F6">https://github.com/nbatfai/future/tree/master/cs/F6</link>
+
         </para>
-                 <programlisting language="java">
+        <para>
+           A hibásan működő programrész:
+        </para>
+        <programlisting language="java">
             <![CDATA[ 
              if (f.mkdir()) {
                     javafx.scene.control.TreeItem<java.io.File> newAct
- //                           = new javafx.scene.control.TreeItem<java.io.File>(f, new javafx.scene.image.ImageView(actIcon));
+
                            = new FileTreeItem(f, new javafx.scene.image.ImageView(actIcon));                            
                     getTreeItem().getChildren().add(newAct);
                 } else {
@@ -32,10 +36,24 @@
 ]]>
         </programlisting>
         <para>
+           Hibás működés közben:
+        </para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/rosszjava.png" scale="50" />
+            </imageobject>
+        </mediaobject>
+        <para>
+        A TextFieldTreeCell osztály konstruktorában van az Új altevékenység hozzádásának implementálása. A mappára kattintás esetén 
+        egy almenü ugrik fel, egy Új altevékenység hozzáadása gomb. Ezt létrehozva, hozzáadjuk a helyi felugró menü elemeihez, majd meghívjuk 
+        rajta  az onAction metódust,llambda kifejezést használva, amiben meghatározzuk mi történjen egy esemény,jelen esetben jobb klikk esemény
+         bekövetkeztekor. Egy File típusú objektum tárolja majd a 
+        kattintott elem értékét. Ezután ennek az elemnek létrehozunk egy új fájlt gyermekeként hozzáadva.
+        </para>
+        <para>
         A program hibája, hogy csak egy új almappát lehet létrehozni ugyanabba a mappába. Ezt úgy lehet kijavítani, hogy ahelyett hogy egy 
         ugyanolyan nevű mappát hoznánk létre mint az elsőnek létrehozott, egy olyan mappát hozunk létre aminek a neve már különböző az előzőtől, 
         egy sorszámot a végéhez hozzáadva amit mindig növelünk. 
-    
         </para>
         <programlisting language="java">
             <![CDATA[ 
@@ -47,32 +65,27 @@
             javafx.scene.control.MenuItem subaMenuItem = new javafx.scene.control.MenuItem("Új altevékenység");//"New subactivity");
             addMenu.getItems().add(subaMenuItem);
             subaMenuItem.setOnAction((javafx.event.ActionEvent evt) -> {
-                java.io.File file = getTreeItem().getValue();
 
+                java.io.File file = getTreeItem().getValue();
                 java.io.File f = new java.io.File(file.getPath() + System.getProperty("file.separator") + "Új altevékenység");
-                
 
                 if (f.mkdir()) {
                       javafx.scene.control.TreeItem<java.io.File> newAct
-                  
                            = new FileTreeItem(f, new javafx.scene.image.ImageView(actIcon));                            
                    getTreeItem().getChildren().add(newAct);
                 } else {
-
                      javafx.scene.control.TreeItem<java.io.File> newAct
-       
                            = new FileTreeItem(f = new java.io.File(file.getPath() + System.getProperty("file.separator") + "Új altevékenység"+" "+ a), new javafx.scene.image.ImageView(actIcon));                            
                    getTreeItem().getChildren().add(newAct);
                    a++;
-
                }
   
             });
 ]]>
         </programlisting>
-         <mediaobject>
+        <mediaobject>
             <imageobject>
-                <imagedata fileref="img/masp.jpg" scale="90" />
+                <imagedata fileref="img/jojava.png" scale="50" />
             </imageobject>
         </mediaobject>
     </section>
@@ -80,14 +93,87 @@
     <section>
         <title>OOCWC Boost ASIO hálózatkezelése</title>
         <para>
-         Mutassunk rá a scanf szerepére és használatára! https://github.com/nbatfai/robocar-
-emulator/blob/master/justine/rcemu/src/carlexer.ll
+         Mutassunk rá a scanf szerepére és használatára! 
         </para>
         <para>
-            Megoldás forrása: 
+            Megoldás forrása:  Megoldás forrása: <link xlink:href="https://github.com/nbatfai/robocar-emulator/blob/master/justine/rcemu/src/carlexer.ll">https://github.com/nbatfai/robocar-emulator/blob/master/justine/rcemu/src/carlexer.ll</link>
+
         </para>
         <para>
-          
+            A scanf függvény bejövő stringek beolvasására, feldolgozására alkalmas. Visszatérési értéke a sikeresen beolvasott változók száma.
+            Akkor tér vissza, ha formátumsztring által meghatározott számú adatot beolvasott vagy hibát észlel, azaz az adatbevitel nem felel meg a formátumsztring előírásainak.
+        </para>
+        <programlisting language="c++">
+            <![CDATA[ 
+        int sscanf( const char* buffer, const char* format, argumentumlista );
+]]>
+        </programlisting>
+
+        <para>
+            A POS és WS definiált alakja:       
+        </para>
+        <programlisting language="c++"><![CDATA[ POS  : "<pos" , WS :  [ \t]* ]]></programlisting>
+
+        <programlisting language="c++">
+            <![CDATA[ 
+        {POS}{WS}{INT}{WS}{INT}{WS}{INT}	{
+					                         std::sscanf(yytext, "<pos %d %u %u", &m_id, &from, &to);
+					                         m_cmd = 10001;
+					                        }
+]]>
+        </programlisting>
+
+        <para>
+        A fenti kifejezés alakja tehát:  
+        </para>
+        <programlisting language="c++"><![CDATA[ <pos[\t]*{INT}[\t]*{INT}[\t]*{INT} ]]></programlisting>
+        <para>
+            A reguláris kifejezésekben használt * jelentése bárhányszor előfordulhat, tehát ez a kifejezés azt jelenti, hogy 
+            pos-al kell kezdődnie, három darab int érték lehet a szóban és közöttük 0 vagy bármennyi tabulátor. Ha megfelelt a beolvasott 
+            string a kifejezésnek, akkor történik a kiértékelés. A scanf függvény első paramétere maga a szöveg, amit a lexer helyesnek 
+            talált. A második paraméter a formázása az adatoknak amiket beolvas az m_id, from és to változókba.
+        </para>
+        <programlisting language="c++">
+            <![CDATA[ 
+        {INITG}{WS}{WORD}{WS}("c"|"g")	{
+				  std::sscanf(yytext, "<init guided %s %c>", name, &role);
+				  num = 1;
+				  m_guided = true;
+				  m_cmd = 3;
+				}
+]]>
+        </programlisting>
+        <para>
+            Ebben a példában annyi újdonság van az előzőhöz képest, hogy a role változóba beolvasott érték kizárólag
+            csak "c" vagy "g" érték lehet.
+        </para>
+        <programlisting language="c++">
+            <![CDATA[ 
+        {ROUTE}{WS}{INT}{WS}{INT}({WS}{INT})*	{
+				  int size{0};
+				  int ss{0};
+				  int sn{0};				  
+				  
+				  std::sscanf(yytext, "<route %d %d%n", &size, &m_id, &sn);
+				  ss += sn;
+				  for(int i{0}; i<size; ++i)
+				  {
+				    unsigned int u{0u};
+				    std::sscanf(yytext+ss, "%u%n", &u, &sn);
+				    route.push_back(u);
+				    ss += sn; 				    
+				  }
+				  m_cmd = 101;
+				}
+]]>
+        </programlisting>
+        <para>
+          A fenti kódrészlet már kicsit összetettebb. A beolvasott szövegnek route-tal kell kezdődnie és legalább két szám áll utána. 
+          A size változóban tároljuk a megfelelően illesztett szöveg hosszát, ss-ben az eddig 
+          feldolgozott szöveg méretét, sn-ben pedig az aktuálisan feldolgozandó szöveg teljes hosszát. Mivel bármennyi szám következhet az első kettő után, ezért
+         for ciklussal kell végigmenni a szón, mindig növelve a teljes méretet(ss) az aktuálisan beolvasott 
+          karakterek hosszával (sn). A teljes szó hoszzáig megy a ciklus, lépkedve a karaktereken, mindig hozzáadva a már beolvasott szöveghez az 
+          újat és növelve a feldolgozott szöveg méretét. A beolvasott számokat pedig a route tömbe rakjuk.
         </para>
 
     </section>
@@ -101,7 +187,7 @@ https://github.com/nbatfai/SamuCam
             Megoldás forrása:  
         </para>
         <para>
-         
+
         </para>
     </section>
     <section>
@@ -110,7 +196,7 @@ https://github.com/nbatfai/SamuCam
             Megoldás forrása:
         </para>
         <para>
-          
+
         </para>
     </section>
 </chapter>  

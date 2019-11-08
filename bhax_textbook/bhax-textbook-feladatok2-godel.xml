@@ -16,8 +16,7 @@
         <para>
             A C++11 verzió elhozta C++-ba is a lambda kifejezéseket. Segítségével jobban átláthatóbb, tisztább 
             kód írható. A szintaxis alapján 
-            a [] zárójelek közé adjuk meg azokat a változókat, amelyek a lambda kifejezések definíciójának 
-            helyén vannak. Ezeket capturing változóknak nevezzük, nem kötelező megadni. A paraméterek átadása érték szerinti, kivéve 
+            a [] zárójelek közé adjuk meg azokat a változókat, amelyek a függvényen kívűl találhatóak. Ezeket capturing változóknak nevezzük, nem kötelező megadni. A paraméterek átadása érték szerinti, kivéve 
             ha referencia szerint adjuk meg. Ezután következnek ()-ben az argumentumok megadása, amivel a függvény dolgozik. {} jelöli a függvény törzsét.
         </para>
         <screen>
@@ -151,7 +150,42 @@ int main()
         java.util.Collections.sort(rendezettCsapatok);
 ]]>
         </programlisting>
+        <para>A java.util.Collections forrásában található sort függvény.</para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/sort.jpg" scale="60" />
+            </imageobject>
+        </mediaobject>
+        <para>A függvény definíciójában látható, hogy a T típusnak, ami adott lista típusát jelöli, ki kell terjeszteni vagy egy 
+         szuper típusának kell implementálnia a Comparable interfészt. A listán meghívjuk a sort függvényt null paramétert átadva.</para>
+        <para>Tovább követve nézzük a java.util.List osztály sort függvényét.</para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/sort2.jpg" scale="60" />
+            </imageobject>
+        </mediaobject>
+        <para>Ezután követve tovább a java.util.Arrays osztályban meghívott sort metódus.</para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/sort6.jpg" scale="60" />
+            </imageobject>
+        </mediaobject>
+        <para>Következik a java.util.ComparableTimSort osztály.
+        </para>
+        <para>Itt megtaláljuk a binarySort rendező algoritmus meghívását:</para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/sort4.jpg" scale="60" />
+            </imageobject>
+        </mediaobject>
 
+        <para>Végül maga a rendező algoritmus, ahol a lista elemei Comparable típusra kapsztolódnak, mivel implementálták a Comparable 
+        interfészt, ezért ez lehetséges és ekkor kerül meghívásra a magunk által definiált compareTo metódus.</para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/sort5.jpg" scale="60" />
+            </imageobject>
+        </mediaobject>
     </section>
     <section>
         <title>GIMP Scheme hack</title>
