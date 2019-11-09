@@ -13,7 +13,10 @@
          Javítsunk valamit a ActivityEditor.java JavaFX programon! 
         </para>
         <para>
-            Megoldás forrása: <link xlink:href="https://github.com/nbatfai/future/tree/master/cs/F6">https://github.com/nbatfai/future/tree/master/cs/F6</link>
+        https://github.com/nbatfai/future/tree/master/cs/F6
+        </para>
+        <para>
+            Megoldás forrása:  
 
         </para>
         <para>
@@ -23,13 +26,10 @@
             <![CDATA[ 
              if (f.mkdir()) {
                     javafx.scene.control.TreeItem<java.io.File> newAct
-
                            = new FileTreeItem(f, new javafx.scene.image.ImageView(actIcon));                            
                     getTreeItem().getChildren().add(newAct);
                 } else {
-
                     System.err.println("Cannot create " + f.getPath());
-
                 }
   
             });
@@ -58,17 +58,13 @@
         <programlisting language="java">
             <![CDATA[ 
             private int a = 1;
-
         public TextFieldTreeCell(javafx.scene.control.TextArea propsEdit) {
             this.propsEdit = propsEdit;
-
             javafx.scene.control.MenuItem subaMenuItem = new javafx.scene.control.MenuItem("Új altevékenység");//"New subactivity");
             addMenu.getItems().add(subaMenuItem);
             subaMenuItem.setOnAction((javafx.event.ActionEvent evt) -> {
-
                 java.io.File file = getTreeItem().getValue();
                 java.io.File f = new java.io.File(file.getPath() + System.getProperty("file.separator") + "Új altevékenység");
-
                 if (f.mkdir()) {
                       javafx.scene.control.TreeItem<java.io.File> newAct
                            = new FileTreeItem(f, new javafx.scene.image.ImageView(actIcon));                            
@@ -181,22 +177,220 @@
         <title>SamuCam</title>
         <para>
          Mutassunk rá a webcam (pl. Androidos mobilod) kezelésére ebben a projektben:
-https://github.com/nbatfai/SamuCam
         </para>
+        <para>https://github.com/nbatfai/SamuCam  </para>
         <para>
             Megoldás forrása:  
         </para>
+        <para>A program lényege, hogy nem szöveges állományból kapja az adatokat a program, hanem egy élő webkamera képeiből. Ennek kezeléséért 
+        a SamuCam osztály a felelős. </para>
         <para>
-
+        A konstruktorban paraméterként kapja a parancssorban megadott webkamera ip cimét és beállítja az alapértelmezett méreteket és meghívja 
+        az openVideoStream() metódust.
         </para>
+        <programlisting language="c++">
+            <![CDATA[ 
+SamuCam::SamuCam ( std::string videoStream, int width = 176, int height = 144 )
+  : videoStream ( videoStream ), width ( width ), height ( height )
+{
+  openVideoStream();
+}
+]]>
+        </programlisting>
+        <para>
+       A konstruktorban meghívott openVideoStream() metódusban használt videoCapture osztály használatával történik a paraméterként 
+       kapott webkamera videó fájljának megnyitása, majd a videó tulajdonságainak beállítása történik, ablak szélesség, magasság és fps szám beállítása.
+        </para>
+        <programlisting language="c++">
+            <![CDATA[ 
+void SamuCam::openVideoStream()
+{
+  videoCapture.open ( videoStream );
+
+  videoCapture.set ( CV_CAP_PROP_FRAME_WIDTH, width );
+  videoCapture.set ( CV_CAP_PROP_FRAME_HEIGHT, height );
+  videoCapture.set ( CV_CAP_PROP_FPS, 10 );
+}
+]]>
+        </programlisting>
+        <para>
+     A run metódusban a cv::CascadeClassifier osztály objektumok felismerésére használható, mivel jelen esetben arcokat kell 
+     felismerni ezért szükséges előzetesen letölteni a lbpcascade_frontalface.xml fájlt, amit a program itt tölt be. 
+        </para>
+        <programlisting language="c++">
+            <![CDATA[ 
+void SamuCam::run()
+{
+
+  cv::CascadeClassifier faceClassifier;
+
+  std::string faceXML = "lbpcascade_frontalface.xml";
+  if ( !faceClassifier.load ( faceXML ) )
+    {
+      qDebug() << "error: cannot found" << faceXML.c_str();
+      return;
+    }
+]]>
+        </programlisting>
+        <programlisting language="c++">
+            <![CDATA[ 
+  cv::Mat frame;
+
+  while ( videoCapture.isOpened() )
+    {
+
+      QThread::msleep ( 50 );
+      while ( videoCapture.read ( frame ) )
+        {
+
+          if ( !frame.empty() )
+            {
+
+              cv::resize ( frame, frame, cv::Size ( 176, 144 ), 0, 0, cv::INTER_CUBIC );
+
+              std::vector<cv::Rect> faces;
+              cv::Mat grayFrame;
+
+              cv::cvtColor ( frame, grayFrame, cv::COLOR_BGR2GRAY );
+              cv::equalizeHist ( grayFrame, grayFrame );
+
+              faceClassifier.detectMultiScale ( grayFrame, faces, 1.1, 4, 0, cv::Size ( 60, 60 ) );
+
+              if ( faces.size() > 0 )
+                {
+
+                  cv::Mat onlyFace = frame ( faces[0] ).clone();
+
+                  QImage* face = new QImage ( onlyFace.data,
+                                              onlyFace.cols,
+                                              onlyFace.rows,
+                                              onlyFace.step,
+                                              QImage::Format_RGB888 );
+
+                  cv::Point x ( faces[0].x-1, faces[0].y-1 );
+                  cv::Point y ( faces[0].x + faces[0].width+2, faces[0].y + faces[0].height+2 );
+                  cv::rectangle ( frame, x, y, cv::Scalar ( 240, 230, 200 ) );
+
+
+                  emit  faceChanged ( face );
+                }
+
+              QImage*  webcam = new QImage ( frame.data,
+                                             frame.cols,
+                                             frame.rows,
+                                             frame.step,
+                                             QImage::Format_RGB888 );
+
+              emit  webcamChanged ( webcam );
+
+            }
+
+          QThread::msleep ( 80 );
+
+        }
+
+      if ( ! videoCapture.isOpened() )
+        {
+          openVideoStream();
+        }
+
+    }
+]]>
+        </programlisting>
+        <para>
+        A while ciklusban történik a képkockák feldolgozása. A cv::Mat frame fogja tárolni a felvétel képkockáit. Az első while ciklus 
+        addig megy, amíg megvan nyitva a felvétel, ezután a második while ciklusban 80 milliszekundomonként beolvas egy képkockát. 
+        Ezt a beolvasott képet eltároljuk a Mat frame-be, majd átméretezi és interporálja, szürke színre állítva a színteret. 
+        A detectMultiScale() függvény valósítja meg az arcfelismerést és egy négyzeteket tároló vektorba adja vissza az eredményt. A vektor 
+        első felismert arc objektumából egy képet készítünk majd egy webcamChanged signalt bocsájt ki, amit a SamuBrain fog feldolgozni és 
+        változtatni a paraméterként átadott új megjelenítendő képet. 
+        </para>
+        <para>
+       A program futtatása előtt le kell tölteni a megfelelő xml fájlt, majd futtatáskor a webkamera ip címét kell megadni. 
+        </para>
+        <programlisting language="c++">
+            <![CDATA[ 
+ wget https://github.com/Itseez/opencv/raw/master/data/lbpcascades/lbpcascade_frontalface.xml 
+./SamuCam --ip http://192.168.0.18:8080/video?x.mjpeg 2
+]]>
+        </programlisting>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/samucam.png" scale="20" />
+            </imageobject>
+        </mediaobject>
     </section>
     <section>
         <title>BrainB</title>
+        <para> Mutassuk be a Qt slot-signal mechanizmust ebben a BrainB projektben: https://github.com/nbatfai/esport-talent-search   </para>
         <para>
-            Megoldás forrása:
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Conway/brainB">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Conway/brainB</link>
         </para>
         <para>
+            A QT slot-signal mechanizmusa objektumok közötti kommunkiációra használatos. Például ha egy GUI elem megváltozik, akkor 
+            értesül egy másik elem erről, az objektumok típusuktól függetlenül képesek kommunikálni egymással. Amikor egy esemény bekövetkezik, 
+            végrehajtódik, akkor egy signal kerül kiküldésre és a slot függvény egy megfelelő signal jelzésére kerül meghívásra. A QT keretrendszerben 
+            vannak előre definiált signalok, de saját osztályokat is származtathatunk saját signalokat definiálva. A signal függvények csak 
+            deklarációval rendelkeznek és nincs visszatérési értékük. Meghívásuk az emit kulcsszóval történik. A slotok pedig mindenben megegyeznek egy 
+            hagyományos függvénnyel, de nincs visszatérési értékük. Fontos, hogy a slot-signal pároknak egymással kompatibilinek kell lenniük paramétereikben.
+        </para>
 
+        <programlisting language="c++">
+            <![CDATA[ 
+       
+        connect ( brainBThread, SIGNAL ( heroesChanged ( QImage, int, int ) ),
+                  this, SLOT ( updateHeroes ( QImage, int, int ) ) );
+
+        connect ( brainBThread, SIGNAL ( endAndStats ( int ) ),
+                  this, SLOT ( endAndStats ( int ) ) );
+]]>
+        </programlisting>
+        <para>
+            A BrainBwin osztály konstruktorában találhatunk a slot-signal mechanizmusra példát. A connect az összekötő kapocs a slot és signal 
+            között. Az első paraméter a signalt küldő objektum, a második kibocsájtott signal, a heroesChanged metódus. A harmadik egy mutató, ami 
+            a signalt kezelő objektumra mutat, this mivel abban az objektumban vagyunk ahol a kezelés megtörténik és a negyedik paraméter 
+            a slot, az a függvény ami végrehajtódik a signal hatására. Fontos, hogy a paraméterek megegyeznek, ebben az esetben biztosított 
+            a slot-signal kompatibilitás. Tehát amikor brainBThread heroesChanged signalja bekövetkezik, akkor lefutásra kerül a BrainBwin updateHeroes
+            függvénye. Működésben ez annyit csinál, hogy a brainBThread számítja az objektumok pozícióját az ablakban és küldi a signalt 
+            a kiszámított értékekkel, az updateHeroes pedig ez alapján frissíti a megjelenő elemeket.
         </para>
+        <para>
+            A második eset is ugyanígy működik. Amikor a brainBThread signalja kiváltódik, ha lejár a program futási ideje, akkor BrainBwin objektum endAndStats függvénye meghívódik 
+            és a program működése befejeződik. Az alábbi run metódus váltja ki a BrainBThread obejektumban az emit kulcsszóval endAndStats signalt:
+        </para>
+        <programlisting language="c++">
+            <![CDATA[ 
+      void BrainBThread::run()
+{
+        while ( time < endTime ) {
+                QThread::msleep ( delay );
+                if ( !paused ) {
+                        ++time;
+                        devel();
+                }
+               draw();
+        }
+        emit endAndStats ( endTime );
+}
+]]>
+        </programlisting>
+        <para>
+            A program célja az esportolók tesztelése, mennyire tudják követni a karakter mozgását. A Samu Entropy 
+            dobozt kell figyelni, a bal egérgombot lenyomva tartva kell a mozgó négyzetben lévő körben tartani az egérmutatót, 
+            miközben újabb dobozok jelennek meg. A folyamat során egyre több doboz jelenik meg a képernyőn, nehezítve a pötty követését. 
+            Ha 1 másodpercnél több ideig nincs találat, akkor a játékos elvesztette a dobozt, ebben az esetben lassul a mozgása a dobozoknak.
+        </para>
+        <para>Fordításkor az OpenCv könyvtárat, illetve a Qt keretrendszert használjuk.</para>
+        <screen><![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Conway/brainB$ /home/adrian/Qt/5.12.2/gcc_64/bin/qmake brainB.pro 
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Conway/brainB$ make
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/Conway/brainB$ ./BrainB
+    ]]>        </screen>
+
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/brainb.png" scale="20" />
+            </imageobject>
+        </mediaobject>
     </section>
 </chapter>  
