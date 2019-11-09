@@ -16,7 +16,7 @@
         https://github.com/nbatfai/future/tree/master/cs/F6
         </para>
         <para>
-            Megoldás forrása:  
+            Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Future/ActivityEditor.java">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Future/ActivityEditor.java</link>
 
         </para>
         <para>
@@ -92,7 +92,7 @@
          Mutassunk rá a scanf szerepére és használatára! 
         </para>
         <para>
-            Megoldás forrása:  Megoldás forrása: <link xlink:href="https://github.com/nbatfai/robocar-emulator/blob/master/justine/rcemu/src/carlexer.ll">https://github.com/nbatfai/robocar-emulator/blob/master/justine/rcemu/src/carlexer.ll</link>
+            Megoldás forrása: <link xlink:href="https://github.com/nbatfai/robocar-emulator/blob/master/justine/rcemu/src/carlexer.ll">https://github.com/nbatfai/robocar-emulator/blob/master/justine/rcemu/src/carlexer.ll</link>
 
         </para>
         <para>
@@ -180,7 +180,7 @@
         </para>
         <para>https://github.com/nbatfai/SamuCam  </para>
         <para>
-            Megoldás forrása:  
+            Megoldás forrása:<link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Future/SamuCam">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Future/SamuCam</link>
         </para>
         <para>A program lényege, hogy nem szöveges állományból kapja az adatokat a program, hanem egy élő webkamera képeiből. Ennek kezeléséért 
         a SamuCam osztály a felelős. </para>
