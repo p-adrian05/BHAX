@@ -1,0 +1,114 @@
+<chapter xmlns="http://docbook.org/ns/docbook" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:lang="hu">
+    <info>
+        <title>Helló, Schwarzenegger!</title>
+        <keywordset>
+            <keyword/>
+        </keywordset>
+    </info>
+    <section>
+        <title>Port scan</title>
+        <para>
+        Mutassunk rá ebben a port szkennelő forrásban a kivételkezelés szerepére!
+        </para>
+        <para>
+           https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/ch01.html#id527287
+        </para>
+         <para>
+            Megoldás forrása: 
+        </para>
+
+        <para>
+         A program a parancssorban megadott nevű gép TCP kapcsolatait deríti fel azzal, hogy megpróbál 0-1024-ig terjedő 
+         TCP portokon kapcsolatot létrehozni. Ezt javaban a Socket osztállyal lehet megtenni, aminek 
+         paraméterként átadjuk a host nevét és port számát. 
+        </para>
+        
+    
+        <programlisting language="c++">
+            <![CDATA[ 
+    public class KapuSzkenner {
+
+    public static void main(String[] args) {
+        
+        for(int i=0; i<1024; ++i)
+            
+            try {
+                
+                java.net.Socket socket = new java.net.Socket(args[0], i);
+                
+                System.out.println(i + " figyeli");
+                
+                socket.close();
+                
+            } catch (Exception e) {
+                
+                System.out.println(i + " nem figyeli");
+                 System.out.println(e);
+                
+            }
+    }
+}
+]]>
+        </programlisting>
+
+        <para>
+        A Socket osztály egy új socket létrehozásakor kivételt 2 kivételt dob: UnknownHostException 
+        és IOException. Az előbbi nem felismert host esetén, az utóbbi pedig I/O hiba esetén lép fel. 
+        A programban UnknownHostException kivételt kapjuk el, ezáltal megállapítva, 
+        hogy van e kapcsolat az aktuális portszámon, ha nem dob kivételt. Ha nincs kivétel, akkor 
+        bezárjuk a socketet megnyitása után. 
+        </para>
+         <programlisting language="c++">
+            <![CDATA[ 
+    public Socket(String host,int port) 
+        throws UnknownHostException,IOException
+]]>
+        </programlisting>
+        <screen >
+            <![CDATA[ 
+      0 nem figyeli
+java.net.UnknownHostException: niobe
+1 nem figyeli
+java.net.UnknownHostException: niobe
+2 nem figyeli
+]]>
+        </screen>
+        <para>
+         
+        </para>
+    </section>
+      <section>
+       </section>
+      <section>
+        <title>AOP</title>
+        <para>
+        Szőj bele egy átszövő vonatkozást az első védési programod Java átiratába! (Sztenderd védési
+feladat volt korábban.)
+        </para>
+         <para>
+            Megoldás forrása:  
+        </para>
+        <para>
+         
+        </para>        
+    </section>
+        </section>
+      <section>
+        <title>Junit teszt</title>
+        <para>
+      A https://progpater.blog.hu/2011/03/05/labormeres_otthon_avagy_hogyan_dolgozok_fel_egy_pedat poszt kézzel számított mélységét és szórását dolgozd be egy Junit tesztbe (sztenderd védési feladat
+volt korábban).
+        </para>
+         <para>
+            Megoldás forrása:  
+        </para>
+        <para>
+         
+        </para>        
+    </section>
+
+
+    
+</chapter> 
