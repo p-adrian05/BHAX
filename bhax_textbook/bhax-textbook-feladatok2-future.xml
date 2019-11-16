@@ -346,6 +346,16 @@ void SamuCam::run()
 ]]>
         </programlisting>
         <para>
+            A QT5-ben új szintaxis lépett életbe:
+        </para>
+        <programlisting language="c++">
+            <![CDATA[    
+
+    connect(brainBThread, &brainBThread::heroesChanged,
+            this, &this::updateValue);
+]]>
+        </programlisting>
+        <para>
             A BrainBwin osztály konstruktorában találhatunk a slot-signal mechanizmusra példát. A connect az összekötő kapocs a slot és signal 
             között. Az első paraméter a signalt küldő objektum, a második kibocsájtott signal, a heroesChanged metódus. A harmadik egy mutató, ami 
             a signalt kezelő objektumra mutat, this mivel abban az objektumban vagyunk ahol a kezelés megtörténik és a negyedik paraméter 

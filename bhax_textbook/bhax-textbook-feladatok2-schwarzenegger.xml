@@ -15,7 +15,7 @@
         <para>
            https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/ch01.html#id527287
         </para>
-         <para>
+        <para>
             Megoldás forrása: 
         </para>
 
@@ -24,8 +24,8 @@
          TCP portokon kapcsolatot létrehozni. Ezt javaban a Socket osztállyal lehet megtenni, aminek 
          paraméterként átadjuk a host nevét és port számát. 
         </para>
-        
-    
+
+
         <programlisting language="c++">
             <![CDATA[ 
     public class KapuSzkenner {
@@ -54,61 +54,168 @@
         </programlisting>
 
         <para>
-        A Socket osztály egy új socket létrehozásakor kivételt 2 kivételt dob: UnknownHostException 
+        A Socket osztály egy új socket létrehozásakor 2 kivételt dob: UnknownHostException 
         és IOException. Az előbbi nem felismert host esetén, az utóbbi pedig I/O hiba esetén lép fel. 
         A programban UnknownHostException kivételt kapjuk el, ezáltal megállapítva, 
-        hogy van e kapcsolat az aktuális portszámon, ha nem dob kivételt. Ha nincs kivétel, akkor 
-        bezárjuk a socketet megnyitása után. 
+        hogy a host milyen kapcsolatokat figyel. Ha nincs kivétel, akkor 
+        bezárjuk a socketet megnyitása után és azt jelenti, hogy létrejött a kapcsolat azon a porton, ellenkező 
+        esetben nem figyeli a host az adott portot, ezért nem lehet kapcsolatot létrehozni, kivételt dob.
         </para>
-         <programlisting language="c++">
-            <![CDATA[ 
-    public Socket(String host,int port) 
-        throws UnknownHostException,IOException
-]]>
-        </programlisting>
-        <screen >
-            <![CDATA[ 
-      0 nem figyeli
-java.net.UnknownHostException: niobe
-1 nem figyeli
-java.net.UnknownHostException: niobe
-2 nem figyeli
-]]>
-        </screen>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/socket.jpg" scale="80" />
+            </imageobject>
+        </mediaobject>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/port.jpg" scale="50" />
+            </imageobject>
+        </mediaobject>
         <para>
-         
+
         </para>
     </section>
-      <section>
-       </section>
-      <section>
+
+
+    <section>
         <title>AOP</title>
         <para>
         Szőj bele egy átszövő vonatkozást az első védési programod Java átiratába! (Sztenderd védési
 feladat volt korábban.)
         </para>
-         <para>
+        <para>
             Megoldás forrása:  
         </para>
         <para>
-         
-        </para>        
+         Az AOP aspektus orientált programozást jelenti. Áltanános megfogalmazva egy magasabb szintű absztrakciót vezet be az OO-hoz képest és 
+        a feladatokat bizonyos aspektusok szerint értelmezzük.
+         Ez a fajta programozás lehetővé teszi, hogy egy külső fájlból hozzáadjunk viselkedést a programhoz anélkül, hogy 
+         az eredeti kódhoz hozzányúlnánk. Például debuggoláskor nem kell az eredeti forráskódot teleszemetelni, hanem egy külső fájlban 
+         írjuk meg, mikor és mi hajtódjon végre.
+        </para>
+        <para>
+            Példaként az LZWBinfa java programot módosítjuk AspectJ nyelv segítségével, az alapértelmezett inorder fabejárás mellé a post és inorder 
+            bejárást is alkalmazzuk.
+        </para>
+        <para>
+             Az AspectJ használatához Eclipse SDK 4.10 verziója vagy ennél régebbi szükséges. Továbbá a JDK 1.8-as verziója és az ecplipse-hez 
+             szükséges AJDT dependency telepítése is szükséges.
+        </para>
+        <programlisting language="c++">
+            <![CDATA[ 
+    public aspect aop
+{
+	int treeHeight = 0;
+	
+	pointcut traverse(BinaryTree.Node node): call(* BinaryTree.writeOut(BinaryTree.Node)) && args(node);
+	
+	after(BinaryTree.Node node):traverse(node){
+		writeOutPre(node);
+		writeOutPost(node);
+	}
+
+	 public void writeOutPre(BinaryTree.Node node){
+        if(node != null)
+        {
+            ++treeHeight;
+            for(int i = 0; i < treeHeight; i++){
+                System.out.print(" ");
+            }
+            System.out.println(node.getValue() + " (" + (treeHeight-1) + ")"+"\n");
+            writeOutPre(node.left());
+            writeOutPre(node.right());
+            --treeHeight;
+        }
+    }
+	 public void writeOutPost(BinaryTree.Node node){
+        if(node != null)
+        {
+            ++treeHeight;
+            writeOutPost(node.left());
+            writeOutPost(node.right());
+            for(int i = 0; i < treeHeight; i++){
+                System.out.print(" ");
+            }
+            System.out.println(node.getValue() + " (" + (treeHeight-1) + ")"+"\n");
+            --treeHeight;
+        }
+    }
+}
+]]>
+        </programlisting>
+        <para>
+          A pointcut-ok tartalmazzák az alkalmazás join pointjait. Join point lehet egy függvényhívás vagy konstruktor hívás az eredeti 
+          programkódban. Ezért a pointcut-ban definiált szabály illeszkedik minden olyan join pointra, amire teljesül a szabály.
+          Ezután lehet definiálni advice-okat, amelyekben definiáljuk mi történjen egy join point meghívása előtt/után. Ezek az előtte utána aspektusok.
+        </para>
+        <para>
+           A traverse pointcut-ban megadjuk a mintát, amire illeszkedő join point után az after advice-al megadjuk mi történjen. Tehát 
+           ha az eredeti programban meghívódik a writeOut függvény, akkor miután az lefut, azután közvetlenül meghívódik a két függvény ami 
+           a pre és post order bejárást végzi.
+        </para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/aop.jpg" scale="60" />
+            </imageobject>
+        </mediaobject>
+
     </section>
-        </section>
-      <section>
+
+    <section>
         <title>Junit teszt</title>
         <para>
       A https://progpater.blog.hu/2011/03/05/labormeres_otthon_avagy_hogyan_dolgozok_fel_egy_pedat poszt kézzel számított mélységét és szórását dolgozd be egy Junit tesztbe (sztenderd védési feladat
 volt korábban).
         </para>
-         <para>
+        <para>
             Megoldás forrása:  
         </para>
         <para>
-         
-        </para>        
+          A JUnit egy olyan keretrendszer, ameny java program tesztelésére szolgál. A tesztvezérelt fejlesztés 
+          szabályai szerint a kód írásával párhuzamosan kerül fejlesztésre, a kódot tesztelő osztályok fejlesztése is. Ezt teszi 
+          hatékonyabbá, az egységtesztek könyebben karbantarthatásával és csoportosan futtatásával a JUnit keretrendszer. 
+        </para>
+
+        <programlisting language="java">
+            <![CDATA[ 
+   class BinaryTreeTest {
+	BinaryTree tree= new BinaryTree();
+	String testInput= "01111001001001000111";
+	@Test
+	void test() {
+		for(int i=0;i<testInput.length();i++) {
+			tree.addItem(testInput.charAt(i));
+		}
+		
+		assertEquals(2.75, tree.getAtlag(),0.01);
+		assertEquals(4, tree.getMelyseg(),0.001);
+		assertEquals(0.957427, tree.getSzoras(),0.00001);
+	}
+
+}
+]]>
+        </programlisting>
+        <para>
+            A feladatban a binfa program átal számolt szórás, átlag és melység helyességének ellenőrzése a cél. A 01111001001001000111
+            inputra kézzel számolt értékeket vetjük össze a program által számolt értékeihez, ellenőrzive a program helyes működését.
+        </para>
+        <para>
+           A teszt elvégzéséhez egy új teszt osztályt hozunk létre, amiben létrehozunk egy új 
+           fa objektumot, aminek megadjuk azt az inputot, amin kézzel történt a feldolgozás.
+           A test() metódusban létrehozzuk a fát, karakterenként végigolvasva az inputot, minden 
+           karaktert a fába téve. A @Test annotáció jelzi a JUnitnak, hogy egy teszt metódussal van dolga, ezért nem lehet private és
+           static. Ezután az assertEquals metódussal történik az ellenőrzés. 
+           Első paraméterként megkapja a saját magunk által számolt, helyesnek vélt értékeket, a második paraméter 
+           a program átal számolt érték, a harmadik delta paraméter pedig a megengedett eltérés mértékét írja le.
+           Ha megegyeznek a saját magunk által megadott és a program által számolt értékek, akkor helyesen számol a program és sikeres a teszt.
+        </para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/junit.jpg" scale="50" />
+            </imageobject>
+        </mediaobject>
     </section>
 
 
-    
+
 </chapter> 
