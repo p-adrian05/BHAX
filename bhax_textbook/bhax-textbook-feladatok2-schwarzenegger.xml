@@ -16,7 +16,7 @@
            https://www.tankonyvtar.hu/hu/tartalom/tkt/javat-tanitok-javat/ch01.html#id527287
         </para>
         <para>
-            Megoldás forrása: 
+            Megoldás forrása: <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Schwarzenegger2/KapuSzkenner.java">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Schwarzenegger2/KapuSzkenner.java</link>
         </para>
 
         <para>
@@ -84,7 +84,7 @@
 feladat volt korábban.)
         </para>
         <para>
-            Megoldás forrása:  
+            Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Schwarzenegger2/AOP">https://github.com/p-adrian05/BHAX/tree/master/textbook_programs/Schwarzenegger2/AOP</link>
         </para>
         <para>
          Az AOP aspektus orientált programozást jelenti. Áltanános megfogalmazva egy magasabb szintű absztrakciót vezet be az OO-hoz képest és 
@@ -168,7 +168,7 @@ feladat volt korábban.)
 volt korábban).
         </para>
         <para>
-            Megoldás forrása:  
+            Megoldás forrása:  <link xlink:href="https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Schwarzenegger2/JUNIT/BinaryTreeTest.java">https://github.com/p-adrian05/BHAX/blob/master/textbook_programs/Schwarzenegger2/JUNIT/BinaryTreeTest.java</link>
         </para>
         <para>
           A JUnit egy olyan keretrendszer, ameny java program tesztelésére szolgál. A tesztvezérelt fejlesztés 
