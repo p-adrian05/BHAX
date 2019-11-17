@@ -1,0 +1,161 @@
+<chapter xmlns="http://docbook.org/ns/docbook" 
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0" xml:lang="hu">
+    <info>
+        <title>Helló, Calvin!</title>
+        <keywordset>
+            <keyword/>
+        </keywordset>
+    </info>
+    <section>
+        <title>MNIST</title>
+        <para>
+        Az alap feladat megoldása, +saját kézzel rajzolt képet is ismerjen fel, 
+        </para>
+        <para>
+         https://progpater.blog.hu/2016/11/13/hello_samu_a_tensorflow-bol Háttérként ezt vetítsük le:
+        </para>
+        <para>
+      https://prezi.com/0u8ncvvoabcr/no-programming-programming/ 
+        </para>
+        <para>
+            Megoldás forrása: 
+        </para>
+        <para>
+
+        </para>
+        <para>
+            A program működéséhez szükséges telepíteni a python fejlesztői környezetet és a Tensorflow-t, ami gépi tanuláshoz használt, nyílt forráskódú könyvtár. 
+            Telepítéséhez a következő parancsok szükségesek:
+            <screen>
+                <![CDATA[
+sudo apt update
+sudo apt install python3-dev python3-pip
+sudo pip3 install -U virtualenv  # system-wide install
+virtualenv --system-site-packages -p python3 ./venv
+source ./venv/bin/activate  # sh, bash, ksh, or zsh
+pip install --upgrade pip
+pip list  # show packages installed within the virtual environment
+pip install --upgrade tensorflow
+python -c "import tensorflow as tf; tf.enable_eager_execution(); print(tf.reduce_sum(tf.random_normal([1000, 1000])))"
+ ]]>
+            </screen>
+
+        </para>
+        <para>
+            Az MNIST egy hatalmas adatbázis, ami kézzel írott számokat tartalmaz. Neurális hálózatok, képelemzési szoftverek tanítására nagy segítséget nyújt, ugyanis az adatbázisban 
+            foglalt képek mintaként szolgálnak, amik segítségével lehetséges a bemeneti képek elemzése.
+        </para>
+        <para>Jelen esetben 60000 képpel tanítjuk a hálózatot és 10000-rel pedig a pontoságát mérjük fel.</para>
+
+        <para>
+             A tanulás után a programot teszteljük az MNIST adatbázisból kiválaszlott képekkel. Jelen esetben a 3-mas és 9-essel.
+             Az következőképpen futtatjuk: <command> python softmax.py</command>
+        </para>
+        <screen>
+            <![CDATA[
+adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/mnist$ python softmax.py Extracting /tmp/tensorflow/mnist/input_data/train-images-idx3-ubyte.gz
+Extracting /tmp/tensorflow/mnist/input_data/train-labels-idx1-ubyte.gz
+Extracting /tmp/tensorflow/mnist/input_data/t10k-images-idx3-ubyte.gz
+Extracting /tmp/tensorflow/mnist/input_data/t10k-labels-idx1-ubyte.gz
+2019-04-26 15:45:51.710441: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2019-04-26 15:45:51.731503: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3100260000 Hz
+2019-04-26 15:45:51.731691: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x564660691c20 executing computations on platform Host. Devices:
+2019-04-26 15:45:51.731709: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): <undefined>, <undefined>
+-- A halozat tanitasa
+0.0 %
+10.0 %
+20.0 %
+30.0 %
+40.0 %
+50.0 %
+60.0 %
+70.0 %
+80.0 %
+90.0 %
+----------------------------------------------------------
+-- A halozat tesztelese
+-- Pontossag:  0.9151
+----------------------------------------------------------
+-- A MNIST 30. tesztkepenek felismerese, mutatom a szamot, a tovabblepeshez csukd be az ablakat
+-- Ezt a halozat ennek ismeri fel:  3
+----------------------------------------------------------
+-- A MNIST 12. tesztkepenek felismerese, mutatom a szamot, a tovabblepeshez csukd be az ablakat
+-- Ezt a halozat ennek ismeri fel:  9
+----------------------------------------------------------
+ ]]>
+        </screen>
+        <para>A felismerés után megkapjuk a felismerendő képet a helyesség ellenőrzéseképpen.</para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/3.png" scale="50" />
+            </imageobject>
+        </mediaobject>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/9.png" scale="50" />
+            </imageobject>
+        </mediaobject>
+    </section>
+    <section>
+        <title>Android telefonra a TF objektum detektálója</title>
+        <para>
+        Telepítsük fel, próbáljuk ki! 
+        </para>
+        <para>
+            Megoldás forrása: <link xlink:href="https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/android">https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/android</link>
+        </para>
+        <para>
+            Az alkalmazás a tensorflowt használatát mutatja be androidos telefonon. 
+            A projektet csak importálni kell Android studioba és a build.gradle fájlban átírni 
+            a def nativeBuildSystem = 'bazel' helyett def nativeBuildSystem = 'none'-ra. Ezután csak 
+            egy csak apk fájlt kell generálni amit telepíteni kell a telefonra. Az első három 
+            kép a TF Detect appal készült, ami a Tensorflow Object Detection APi-t használja a 
+            felismeréshez az utolsó kép pedig a TF Classify appal készült, ami pedig a Google Inception 
+            modeljét használja.
+        </para>
+
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/tf1.png" scale="30" />
+            </imageobject>
+        </mediaobject>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/tf2.png" scale="30" />
+            </imageobject>
+        </mediaobject>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/tf3.png" scale="30" />
+            </imageobject>
+        </mediaobject>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/tf4.png" scale="30" />
+            </imageobject>
+        </mediaobject>
+
+    </section>
+    <section>
+        <title>Minecraft MALMO-s példa</title>
+        <para>
+       A https://github.com/Microsoft/malmo felhasználásával egy ágens példa, lásd pl.: 
+        </para>
+        <para>
+    https://youtu.be/bAPSu3Rndi8,
+        </para>
+        <para>
+  https://bhaxor.blog.hu/2018/11/29/eddig_csaltunk_de_innentol_mi, 
+        </para>
+        <para>
+  https://bhaxor.blog.hu/2018/10/28/minecraft_steve_szemuvege 
+        </para>
+        <para>
+
+        </para>
+
+    </section>
+
+
+</chapter> 
