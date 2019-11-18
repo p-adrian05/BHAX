@@ -13,12 +13,6 @@
         Az alap feladat megoldása, +saját kézzel rajzolt képet is ismerjen fel, 
         </para>
         <para>
-         https://progpater.blog.hu/2016/11/13/hello_samu_a_tensorflow-bol Háttérként ezt vetítsük le:
-        </para>
-        <para>
-      https://prezi.com/0u8ncvvoabcr/no-programming-programming/ 
-        </para>
-        <para>
             Megoldás forrása: 
         </para>
         <para>
@@ -43,59 +37,63 @@ python -c "import tensorflow as tf; tf.enable_eager_execution(); print(tf.reduce
 
         </para>
         <para>
-            Az MNIST egy hatalmas adatbázis, ami kézzel írott számokat tartalmaz. Neurális hálózatok, képelemzési szoftverek tanítására nagy segítséget nyújt, ugyanis az adatbázisban 
-            foglalt képek mintaként szolgálnak, amik segítségével lehetséges a bemeneti képek elemzése.
+            Ez a program egyben példa is a 
+            multiparadigmás programozásra, ugyanis egy objektum orientált programozási nyelvet a pythont és egy adatfolyam programozást képviselő 
+            Tensorflow-t használja. Az adatfolyam programozásban a számítás irányított gráf, adatok, tokenek áramlanak. Az MNIST egy hatalmas adatbázis, ami kézzel írott digitalizált számokat tartalmaz. Neurális hálózatok, képelemzési szoftverek tanítására nagy segítséget nyújt, ugyanis az adatbázisban 
+            foglalt képek mintaként szolgálnak, amik segítségével lehetséges a bemeneti képek elemzése. 
         </para>
-        <para>Jelen esetben 60000 képpel tanítjuk a hálózatot és 10000-rel pedig a pontoságát mérjük fel.</para>
-
-        <para>
-             A tanulás után a programot teszteljük az MNIST adatbázisból kiválaszlott képekkel. Jelen esetben a 3-mas és 9-essel.
-             Az következőképpen futtatjuk: <command> python softmax.py</command>
-        </para>
+        <para>Jelen esetben 60000 képpel tanítjuk a neurális hálózatot és 10000-rel pedig a pontoságát mérjük fel. A képek mérete nagyon alacsony, 
+        a gyorsabb feldolgozás érdekében, illetve a feldolgozás előtt a képeket leskálázza.</para>
         <screen>
             <![CDATA[
-adrian@adrian-MS-7817:~/Desktop/BHAX/textbook_programs/mnist$ python softmax.py Extracting /tmp/tensorflow/mnist/input_data/train-images-idx3-ubyte.gz
-Extracting /tmp/tensorflow/mnist/input_data/train-labels-idx1-ubyte.gz
-Extracting /tmp/tensorflow/mnist/input_data/t10k-images-idx3-ubyte.gz
-Extracting /tmp/tensorflow/mnist/input_data/t10k-labels-idx1-ubyte.gz
-2019-04-26 15:45:51.710441: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
-2019-04-26 15:45:51.731503: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3100260000 Hz
-2019-04-26 15:45:51.731691: I tensorflow/compiler/xla/service/service.cc:150] XLA service 0x564660691c20 executing computations on platform Host. Devices:
-2019-04-26 15:45:51.731709: I tensorflow/compiler/xla/service/service.cc:158]   StreamExecutor device (0): <undefined>, <undefined>
--- A halozat tanitasa
-0.0 %
-10.0 %
-20.0 %
-30.0 %
-40.0 %
-50.0 %
-60.0 %
-70.0 %
-80.0 %
-90.0 %
-----------------------------------------------------------
--- A halozat tesztelese
--- Pontossag:  0.9151
-----------------------------------------------------------
--- A MNIST 30. tesztkepenek felismerese, mutatom a szamot, a tovabblepeshez csukd be az ablakat
--- Ezt a halozat ennek ismeri fel:  3
-----------------------------------------------------------
--- A MNIST 12. tesztkepenek felismerese, mutatom a szamot, a tovabblepeshez csukd be az ablakat
--- Ezt a halozat ennek ismeri fel:  9
-----------------------------------------------------------
+def readimg():
+    file = tf.read_file("sajat2.png")
+    img = tf.image.decode_png(file)
+    return img
+
+
+print("-- A MNIST sajat tesztkepenek felismerese, mutatom a szamot, a tovabblepeshez csukd be az ablakat")
+  img = readimg()
+  image=img.eval()
+  image = image.reshape(28*28)
+  matplotlib.pyplot.imshow(image.reshape(28, 28), cmap = matplotlib.pyplot.cm.binary)
+  matplotlib.pyplot.savefig("2.png")  
+  matplotlib.pyplot.show()
+
+  classification=sess.run(tf.argmax(y, 1), feed_dict = {x: [image]})
+   print("-- Ezt a halozat ennek ismeri fel: ", classification[0])
  ]]>
         </screen>
-        <para>A felismerés után megkapjuk a felismerendő képet a helyesség ellenőrzéseképpen.</para>
+        <para>Saját kép beolvasásához definiálni kell egy függvényt, ami már rögtön dekódolja a tensorflow-nak megfelelően, majd a eval() meghívása a képen egy 1 dimenziós vektorrá alakítja.
+            Ezután átméretezi a megfelelő méretre és megmutatja a felhasználónak, majd elmenti a megadott néven. A classification tömb első eleme
+            pedig a legnagyobb valószínűséggel felsimert számot, 0-9 ig terjedő számjegyet fogja adni. 
+        </para>
+        <para>
+             A tanulás után a programot teszteljük az MNIST adatbázisból kiválaszlott képekkel. Jelen esetben a 3-mas és 9-essel, illetve saját 
+             írott, rajzolt képet is megadhatunk.
+             Az következőképpen futtatjuk: <command> python softmax.py</command>
+        </para>
+
+
+        <para>A felismerés után megkapjuk a felismert számú képet.</para>
         <mediaobject>
             <imageobject>
-                <imagedata fileref="img/3.png" scale="50" />
+                <imagedata fileref="img/mnist1.png" scale="40" />
             </imageobject>
         </mediaobject>
+        <para>Saját rajzolt kettes szám felismerése:</para>
         <mediaobject>
             <imageobject>
-                <imagedata fileref="img/9.png" scale="50" />
+                <imagedata fileref="img/mnist2.png" scale="40" />
             </imageobject>
         </mediaobject>
+
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/mnist3.png" scale="40" />
+            </imageobject>
+        </mediaobject>
+
     </section>
     <section>
         <title>Android telefonra a TF objektum detektálója</title>
@@ -152,9 +150,27 @@ Extracting /tmp/tensorflow/mnist/input_data/t10k-labels-idx1-ubyte.gz
   https://bhaxor.blog.hu/2018/10/28/minecraft_steve_szemuvege 
         </para>
         <para>
-
+            A telepítéshez szükséges parancsok az install_linux.md fájlban találhatóak.
+            Először a python könyvtárakat kell telepíteni az első paranccsal, majd a malmo sémákat kell hozzáadni a Pathühoz. Mivel a program 
+            Java 8-cal működik, ezért le kell tölteni és ezt is beállítani környezeti változónak.
         </para>
-
+        <screen>
+            <![CDATA[
+sudo apt-get install libboost-all-dev libpython3.5 openjdk-8-jdk ffmpeg python-tk python-imaging-tk
+export MALMO_XSD_PATH=/home/adrian/malmo/Schemas
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+ ]]>
+        </screen>
+        <para>
+           Végül a Minecraft mappába belépve, a <command>./launchClient.sh</command>
+ parancsot kiadva, indulnia kell a játéknak, de 
+           nálam ismeretlen okokból nem indult.
+        </para>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="img/malmo.png" scale="50" />
+            </imageobject>
+        </mediaobject>
     </section>
 
 
