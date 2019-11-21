@@ -1,4 +1,0 @@
-sudo apt-get install libboost-all-dev libpython3.5 openjdk-8-jdk ffmpeg python-tk python-imaging-tk
-export MALMO_XSD_PATH=/home/adrian/Desktop/Malmo-0.36.0-Linux-Ubuntu-18.04-64bit_withBoost_Python3.6/Schemas
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-

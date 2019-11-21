@@ -39,7 +39,8 @@ python -c "import tensorflow as tf; tf.enable_eager_execution(); print(tf.reduce
         <para>
             Ez a program egyben példa is a 
             multiparadigmás programozásra, ugyanis egy objektum orientált programozási nyelvet a pythont és egy adatfolyam programozást képviselő 
-            Tensorflow-t használja. Az adatfolyam programozásban a számítás irányított gráf, adatok, tokenek áramlanak. Az MNIST egy hatalmas adatbázis, ami kézzel írott digitalizált számokat tartalmaz. Neurális hálózatok, képelemzési szoftverek tanítására nagy segítséget nyújt, ugyanis az adatbázisban 
+            Tensorflow-t használja. Az adatfolyam programozásban a számítás irányított gráf, adatok, tokenek áramlanak. Az MNIST egy hatalmas adatbázis, 
+            ami kézzel írott digitalizált számokat tartalmaz. Neurális hálózatok, képelemzési szoftverek tanítására nagy segítséget nyújt, ugyanis az adatbázisban 
             foglalt képek mintaként szolgálnak, amik segítségével lehetséges a bemeneti képek elemzése. 
         </para>
         <para>Jelen esetben 60000 képpel tanítjuk a neurális hálózatot és 10000-rel pedig a pontoságát mérjük fel. A képek mérete nagyon alacsony, 
@@ -65,8 +66,10 @@ print("-- A MNIST sajat tesztkepenek felismerese, mutatom a szamot, a tovabblepe
  ]]>
         </screen>
         <para>Saját kép beolvasásához definiálni kell egy függvényt, ami már rögtön dekódolja a tensorflow-nak megfelelően, majd a eval() meghívása a képen egy 1 dimenziós vektorrá alakítja.
-            Ezután átméretezi a megfelelő méretre és megmutatja a felhasználónak, majd elmenti a megadott néven. A classification tömb első eleme
-            pedig a legnagyobb valószínűséggel felsimert számot, 0-9 ig terjedő számjegyet fogja adni. 
+            Ezután átméretezi a megfelelő méretre és megmutatja a felhasználónak, majd elmenti a megadott néven.
+            A tf.argmax függvény értékeket ad vissza, amelyek a felismert szám valószínűségét mutatják. Az y 0-9-ig van indexelve és értéke azt mutatja, hogy 
+            mekkora a valószínűsége annak, hogy az adott képen az y indexnek megfelelő szám van. 
+            Ezáltal a classification első y indexű eleme lesz a legnagyobb valószínűséggel rendelkező eltalált szám, mivel ennek lesz a legnagyobb értéke.
         </para>
         <para>
              A tanulás után a programot teszteljük az MNIST adatbázisból kiválaszlott képekkel. Jelen esetben a 3-mas és 9-essel, illetve saját 
@@ -138,37 +141,36 @@ print("-- A MNIST sajat tesztkepenek felismerese, mutatom a szamot, a tovabblepe
     <section>
         <title>Minecraft MALMO-s példa</title>
         <para>
-       A https://github.com/Microsoft/malmo felhasználásával egy ágens példa, lásd pl.: 
+       A  https://github.com/Microsoft/malmo/releases felhasználásával egy ágens példa, lásd pl.: 
         </para>
         <para>
-    https://youtu.be/bAPSu3Rndi8,
+            A Minecraft Malmo a Microsoft-nak egy mesterséges intelligencia kíséreleti és kutatási projektje ami a Minecraft-on alapszik.
+            Ennek lényege, hogy a játékhoz hozzáadtak Pythonban írt gyakorló pályákat, ahol a mesterséges intelligencia tanul a játékosok 
+            cselekvéseiből és próbálja utánozni azokat egy ágens formájában.
         </para>
         <para>
-  https://bhaxor.blog.hu/2018/11/29/eddig_csaltunk_de_innentol_mi, 
-        </para>
-        <para>
-  https://bhaxor.blog.hu/2018/10/28/minecraft_steve_szemuvege 
-        </para>
-        <para>
+
             A telepítéshez szükséges parancsok az install_linux.md fájlban találhatóak.
-            Először a python könyvtárakat kell telepíteni az első paranccsal, majd a malmo sémákat kell hozzáadni a Pathühoz. Mivel a program 
-            Java 8-cal működik, ezért le kell tölteni és ezt is beállítani környezeti változónak.
+            Először a python könyvtárakat kell telepíteni az első paranccsal, majd a malmo sémákat kell hozzáadni a Pathoz. Mivel a program 
+            Java 8-cal működik, ezért le kell tölteni és ezt is beállítani környezeti változónak. A játéknak egy pre-built verziója lett letöltve és 
+            elindítva.
         </para>
         <screen>
             <![CDATA[
+           
 sudo apt-get install libboost-all-dev libpython3.5 openjdk-8-jdk ffmpeg python-tk python-imaging-tk
-export MALMO_XSD_PATH=/home/adrian/malmo/Schemas
+export MALMO_XSD_PATH=/home/adrian/Desktop/Malmo-0.36.0-Linux-Ubuntu-18.04-64bit_withBoost_Python3.6/Schemas
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
  ]]>
         </screen>
         <para>
            Végül a Minecraft mappába belépve, a <command>./launchClient.sh</command>
- parancsot kiadva, indulnia kell a játéknak, de 
-           nálam ismeretlen okokból nem indult.
+ parancsot kiadva, elindul a játék és a gyakorló példákat a Python Examples mappában lehet megtalálni és indítva az első gyakorló pályát a 
+            <command>python3 tutorial_1.py</command>.
         </para>
         <mediaobject>
             <imageobject>
-                <imagedata fileref="img/malmo.png" scale="50" />
+                <imagedata fileref="img/malmo.png" scale="30" />
             </imageobject>
         </mediaobject>
     </section>
